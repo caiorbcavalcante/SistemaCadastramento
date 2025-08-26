@@ -12,8 +12,8 @@ export function Authentication(request: requestAuth, response: Response, next: N
         const [, token] = authToken.split(" ")
 
                 try{
-                        const payload = verify(token, "token") as {id_user:String}
-                        request.userId = payload.id_user as string
+                        const payload = verify(token, "token") as {id_user:number}
+                       // request.userId = payload.id_user as number
                         return next()
 
                 }catch(error){

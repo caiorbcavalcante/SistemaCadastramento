@@ -14,19 +14,21 @@ export class UserController{
     getUser = async (request:Request, response:Response) => {
         try{ 
         
-        const id_user = (request as any).id_user
+        const {id_user} = request.params
 
         if(!id_user){
             return response.status(401).json({message:"'Usuário não autenticado'"})
         }
 
-        const user = await this.userService.getUser(id_user)
+        const user = await this.userService.getUser(parseInt(id_user))
 
         if(!user){
             return response.status(404).json({message:"Usuário não encontrado"})
         }
 
-        return response.status(200).json({message:"Usuario encontrado"})
+        return response.status(200).json({user:user?.id_user,
+            name:user?.name,
+            email: user?.email})
     }catch{
           return response.status(500).json({ message: "Erro ao buscar usuário"});
     }
@@ -34,14 +36,15 @@ export class UserController{
 
 
 
-    getUserId = async (request:Request<{ user: string }>, response:Response) => {
-        const {id_user} = request.params
-        const user = await this.userService.getUserId(id_user)
+    getAllUser= async (request:Request, response:Response) => {
+      try{ 
 
-        if(user){ 
+        const users = await this.userService.getAllUser()
 
-       return response.status(200).json({ message: "usuario listado", id_user})
-        }
+        return response.status(200).json({users})
+      }catch{
+        return  response.status(500).json({message:"erro ao listar usuarios"})
+      }
     }
 
 }
