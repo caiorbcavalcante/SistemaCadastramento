@@ -3,10 +3,7 @@ import { User } from "../entities/User"
 import { UserRepository } from "../repositories/Users.repositories"
 
 export class UserService{
-    getAllUser() {
-        throw new Error('Method not implemented.')
-    }
-
+ 
     userRepository:UserRepository
 
     constructor(userRepository = new UserRepository())
@@ -18,7 +15,9 @@ export class UserService{
     return await this.userRepository.getUser(id_user)
     }
 
-    getAllUser= async(id_user:Number, email:string, password:string):Promise{
-
+    getAllUser= async():Promise<User[] | null>=>{
+        return await this.userRepository.getAllUser()
     }
+
+    createUser=async(name:string,):
 }
