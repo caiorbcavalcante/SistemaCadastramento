@@ -36,17 +36,39 @@ export class UserController{
 
 
 
-    getAllUser= async (request:Request, response:Response) => {
-      try{ 
+     getAllUser = async (request: Request, response: Response) => {
+        try {
+            const users = await this.userService.getAllUser()
 
-        const users = await this.userService.getAllUser()
+            if (!users || users.length === 0) {
+             return response.status(404).json({ message: "Nenhum usuário encontrado" })
+        }
 
-        return response.status(200).json({users})
-      }catch{
-        return  response.status(500).json({message:"erro ao listar usuarios"})
-      }
+        const usersMap = users.map(user => ({
+            id_user: user.id_user,
+            name: user.name,
+            email: user.email
+        }))
+
+        return response.status(200).json({ users: usersMap })
+    } catch (error) {
+        console.error(error)
+        return response.status(500).json({ message: "Erro ao listar usuários" })
     }
+}
 
+    createUser= async (request: Request, response: Response) => {
+        try{
+            const user = request.body
+            if(!user.name || !user.email || !user.password){
+                return response.status(400).json({message:"Nome,email e senha são obrigatorios"})
+            }
+            await this.userService.createUser(user.name, user.email, user.password)
+            return response.status(201).json({message:"Usuario criado com sucesso"})
+        }catch{
+            return response.status(500).json({message:"N foi possiviel criar um usuario"})
+        }
+    }
 }
 
 

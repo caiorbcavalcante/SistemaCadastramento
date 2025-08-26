@@ -16,5 +16,9 @@ export class UserRepository{
       return  await this.manager.findOne({
     where:{ id_user:id_user} })
 }
+
+    getAllUser= async():Promise<User[] | null> =>{
+        return await this.manager.find()
+    }
     
 }
