@@ -19,5 +19,8 @@ export class UserService{
         return await this.userRepository.getAllUser()
     }
 
-    createUser=async(name:string,):
+    createUser=async(name:string,email:string, password:string):Promise<User> =>{
+        const user = new User(name,email,password)
+        return await this.userRepository.createUser(user as User)
+    }
 }

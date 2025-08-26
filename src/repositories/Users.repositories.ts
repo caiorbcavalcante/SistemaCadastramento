@@ -20,5 +20,7 @@ export class UserRepository{
     getAllUser= async():Promise<User[] | null> =>{
         return await this.manager.find()
     }
-    
+    createUser =async(user:User): Promise<User> =>{
+        return await this.manager.save(user)
+    }
 }
