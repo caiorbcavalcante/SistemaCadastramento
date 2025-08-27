@@ -3,10 +3,6 @@ import { Barber } from "../entities/Barber"
 import { BarberRepository } from "../repositories/Barbers.repositories"
 
 export class BarbersService{
-    getAllBarbers() {
-        throw new Error('Method not implemented.')
-    }
-
     barberRepository:BarberRepository
 
     constructor(barberRepository = new BarberRepository())
@@ -18,7 +14,16 @@ export class BarbersService{
     return await this.barberRepository.getBarber(id_barber)
     }
 
-    getAllBarbers= async(id_barber:Number, email:string, password:string): Promise{
+    getAllBarbers = async(): Promise<Barber[] | null> =>{
+        return await this.barberRepository.getAllBarbers()
+    }
 
+    createBarber = async(name:string, email:string, password:string): Promise<Barber> =>{
+        const barber = new Barber(name, email, password)
+        return await this.barberRepository.createBarber(barber as Barber)
     }
 }
+
+
+
+

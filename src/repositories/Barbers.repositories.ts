@@ -18,7 +18,7 @@ export class BarberRepository{
         return await this.manager.find();
     }
 
-    createUser = async(barber:Barber) : Promise <Barber> =>{
+    createBarber = async(barber:Barber) : Promise <Barber> =>{
         return await this.manager.save(barber);
     }
 }
