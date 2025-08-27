@@ -19,6 +19,6 @@ export class BarbersService{
     }
 
     getAllBarbers= async(id_barber:Number, email:string, password:string): Promise{
-
+        
     }
 }

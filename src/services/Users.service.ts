@@ -23,4 +23,12 @@ export class UserService{
         const user = new User(name,email,password)
         return await this.userRepository.createUser(user as User)
     }
+
+    updateUser= async(id:number,name:string, email:string, password:string):Promise<User | null>=>{
+        return await this.userRepository.updateUser(id,name,email,password)
+    }
+
+    deleteUser=async(id_user:number):Promise<boolean>=>{
+        return await this.userRepository.deleteUser(id_user)
+    }
 }

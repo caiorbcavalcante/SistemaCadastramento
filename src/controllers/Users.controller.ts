@@ -57,6 +57,7 @@ export class UserController{
 
     createUser= async (request: Request, response: Response) => {
         try{
+
             const user = request.body
             if(!user.name || !user.email || !user.password){
                 return response.status(400).json({message:"Nome,email e senha são obrigatorios"})
@@ -64,9 +65,51 @@ export class UserController{
             await this.userService.createUser(user.name, user.email, user.password)
             return response.status(201).json({message:"Usuario criado com sucesso"})
         }catch{
-            return response.status(500).json({message:"N foi possiviel criar um usuario"})
+            return response.status(500).json({message:"Nãoo foi possiviel criar um usuario"})
         }
     }
+
+    updateUser = async (request:Request, response:Response) =>{
+        try{
+            const id = Number(request.params.id_user)
+            const user = request.body
+
+            if (!user.name || !user.email || !user.password) {
+            return response.status(400).json({ message: "Nome, email e senha são obrigatórios" })
+        }
+
+            const updateUser = await this.userService.updateUser(id, user.name, user.email, user.password)
+            if(!updateUser){
+            return response.status(404).json({message:"Usuario inexistente"})
+        }
+            return response.status(200).json({message:"Usuario atualizado com sucesso", 
+                name:updateUser?.name, 
+                email:updateUser?.email})
+
+        }catch{
+            return response.status(500).json({message:"Não foi possiviel atualizar um usuario"})
+        }
+    }
+    deleteUser = async (request: Request, response: Response) => {
+    try {
+        const { id_user } = request.params;
+
+        if (!id_user) {
+            return response.status(400).json({ message: "ID do usuário não informado" });
+        }
+
+        const deleted = await this.userService.deleteUser(Number(id_user));
+
+        if (!deleted) {
+            return response.status(404).json({ message: "Usuário não encontrado" });
+        }
+
+        return response.status(200).json({ message: "Usuário deletado com sucesso" });
+    } catch {
+        return response.status(500).json({ message: "Erro ao deletar usuário" });
+    }
+};
+
 }
 
 
