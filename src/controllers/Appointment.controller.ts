@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { AppointmentService } from '../services/Appointment.service.ts'
+import { AppointmentService } from '../services/Appointment.service'
 
 export class AppointmentController {
     appointmentService: AppointmentService
