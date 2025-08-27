@@ -18,7 +18,7 @@ export class BarbersService{
     return await this.barberRepository.getBarber(id_barber)
     }
 
-    getAllBarbers= async(id_barber:Number, email:string, password:string):Promise{
+    getAllBarbers= async(id_barber:Number, email:string, password:string): Promise{
 
     }
 }
