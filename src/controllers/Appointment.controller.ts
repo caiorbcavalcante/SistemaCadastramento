@@ -84,4 +84,24 @@ export class AppointmentController {
             return res.status(500).json({ message: "Erro ao deletar agendamento" })
         }
     }
+
+    getAppointmentsByUser = async(request: Request, response: Response) => {
+        try {
+            const {userId} =request.params
+
+            if(!userId){
+                return response.status(400).json({message: "ID do usuário não informado"})
+            }
+
+            const appointments = await this.userService.getAppointmentsByUser(Number(userId))
+
+            
+            if (!appointments || appointments.length === 0) {
+                return response.status(404).json({ message: "Nenhum agendamento encontrado para este usuário" });
+        }
+            return response.status(200).json({appointments})
+        }catch{
+             return response.status(500).json({message: "Error ao buscar agendamento do usuario"})
+        }
+    }
 }
