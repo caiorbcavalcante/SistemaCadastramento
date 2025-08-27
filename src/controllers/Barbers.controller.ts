@@ -37,7 +37,7 @@ export class BarbersController{
     getAllBarbers= async (request:Request, response:Response) => {
       try{ 
 
-        const barbers = await this.barbersService.getAllUser()
+        const barbers = await this.barbersService.getAllBarbers()
 
         return response.status(200).json({barbers})
       }catch{

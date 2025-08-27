@@ -14,7 +14,7 @@ export class BarbersService{
         this.barberRepository = barberRepository
     }
 
-    getUser = async (id_barber:number):Promise<Barber | null> =>{
+    getBarber = async (id_barber:number):Promise<Barber | null> =>{
     return await this.barberRepository.getBarber(id_barber)
     }
 

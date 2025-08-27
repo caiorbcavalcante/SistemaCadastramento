@@ -1,7 +1,5 @@
-
 import { Response, Request } from 'express'
 import { UserService } from '../services/Users.service'
-
 
 export class UserController{
     userService:UserService
