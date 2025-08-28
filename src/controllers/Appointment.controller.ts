@@ -1,4 +1,4 @@
-import { Request, Response } from 'express'
+import { request, Request, Response } from 'express'
 import { AppointmentService } from '../services/Appointment.service'
 
 export class AppointmentController {
@@ -99,9 +99,40 @@ export class AppointmentController {
             if (!appointments || appointments.length === 0) {
                 return response.status(404).json({ message: "Nenhum agendamento encontrado para este usuário" });
         }
-            return response.status(200).json({appointments})
+        const appoitmentsMap = appointments.map(a:Appoitment =>({
+            id_appoitment: a.id_appointment,
+            barberId:a.id_barber,
+            barberName: a.barber.name,
+            date: a.date,
+            service:a.service
+
+        }))
+            return response.status(200).json({appoitmentsMap})
         }catch{
              return response.status(500).json({message: "Error ao buscar agendamento do usuario"})
+        }
+    }
+    getAppointmentsByBarber= async(request:Request, response:Response) =>{
+        try{
+            const {id_barber} = request.params
+             if(!id_barber){
+                return response.status(400).json({message: "ID do barbeiro não informado"})
+            }
+            const appointments = await this.userService.getAppointmentsByBarber(id_barber)
+
+            if(!appointments || appointments.length === 0){
+                return response.status(404).json({message:"Nenhum agendamento encontrado para este barbeiro"})
+            }
+            const appointmentsMap = appointments.map(a:Appoitment => ({
+                id_appointment: a.id_appointment,
+                userId: a.user.id_user,
+                userName: a.user.name,
+                date: a.date,
+                service:a.service
+            }))
+            return response.status(200).json({appointmentsMap})
+        }catch{
+            return response.status(500).json({message: "Error ao buscar agendamento do barbeiro"})
         }
     }
 }

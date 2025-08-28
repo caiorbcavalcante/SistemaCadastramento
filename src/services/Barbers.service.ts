@@ -1,6 +1,7 @@
 import { AppDataSource } from "../app-data-source"
 import { Barber } from "../entities/Barber"
 import { BarberRepository } from "../repositories/Barbers.repositories"
+import jwt from "jsonwebtoken";
 
 export class BarbersService{
     barberRepository:BarberRepository
@@ -14,19 +15,46 @@ export class BarbersService{
     return await this.barberRepository.getBarber(id_barber)
     }
 
-<<<<<<< HEAD
-    getAllBarbers= async(id_barber:Number, email:string, password:string): Promise{
-        
-=======
     getAllBarbers = async(): Promise<Barber[] | null> =>{
         return await this.barberRepository.getAllBarbers()
->>>>>>> 6b507e3372b4d1bd73a7894b226f76a96db81f54
     }
 
     createBarber = async(name:string, email:string, password:string): Promise<Barber> =>{
         const barber = new Barber(name, email, password)
         return await this.barberRepository.createBarber(barber as Barber)
     }
+
+    updateBarber = async(id:number, name: string, email:string, password:string): Promise<Barber | null> =>{
+        return await this.barberRepository.updateBarber(id, name, email, password)
+    }
+
+    deleteBarber = async(id_barber: number): Promise <boolean> =>{
+        return await this.barberRepository.deleteBarber(id_barber);
+    }
+
+    getAutenticationByEmailPassword = async(email:string, password:string):Promise<Barber | null>=>{
+            return await this.barberRepository.getAutenticationByEmailPassword(email,password)
+        }
+
+    getToken = async(email: string, password: string): Promise<string> => {
+
+        const barber = await this.getAutenticationByEmailPassword(email, password)
+        if (!barber) {
+            throw new Error ("Usuário ou senha inválida")
+        }
+
+        const token = jwt.sign(
+        {id_barber:barber.id_barber, email:barber.email},
+        process.env.JWT_SECRET as string,
+        {expiresIn: "1h"}
+    )
+
+    return token
+    }
+
+
+
+    
 }
 
 

@@ -1,4 +1,4 @@
-import { AppDataSource } from "../app-data-source"
+import jwt from "jsonwebtoken";
 import { User } from "../entities/User"
 import { UserRepository } from "../repositories/Users.repositories"
 
@@ -30,5 +30,24 @@ export class UserService{
 
     deleteUser=async(id_user:number):Promise<boolean>=>{
         return await this.userRepository.deleteUser(id_user)
+    }
+
+    getAutenticationByEmailPassword = async(email:string, password:string):Promise<User | null>=>{
+        return await this.userRepository.getAutenticationByEmailPassword(email,password)
+    }
+
+    getToken = async(email:string, password:string):Promise<string>=>{
+        const user = await this.getAutenticationByEmailPassword(email, password)
+
+        if(!user){
+            throw new Error ("Usuario ou senha invalidos")
+    }
+
+    const token = jwt.sign(
+        {id_user:user.id_user, email:user.email},
+        process.env.JWT_SECRET as string,
+        {expiresIn:"1h"}
+    )
+    return token
     }
 }

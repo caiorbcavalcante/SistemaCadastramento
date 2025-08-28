@@ -32,4 +32,9 @@ export class UserRepository{
         const result = await this.manager.delete({ id_user })
         return result.affected !== 0;
     }
+    getAutenticationByEmailPassword = async(email:string, password:string):Promise<User | null>=>{
+        return await this.manager.findOne({
+            where:{email, password}}
+        )
+    }
 }

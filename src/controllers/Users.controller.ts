@@ -1,6 +1,6 @@
-import { Response, Request } from 'express'
+import { Response, Request,  } from 'express'
 import { UserService } from '../services/Users.service'
-
+//botar admin em getalluser
 export class UserController{
     userService:UserService
 
@@ -28,7 +28,7 @@ export class UserController{
             name:user?.name,
             email: user?.email})
     }catch{
-          return response.status(500).json({ message: "Erro ao buscar usuário"});
+          return response.status(500).json({ message: "Erro ao buscar usuário"})
     }
     }
 
@@ -92,23 +92,37 @@ export class UserController{
     }
     deleteUser = async (request: Request, response: Response) => {
     try {
-        const { id_user } = request.params;
+        const { id_user } = request.params
 
         if (!id_user) {
-            return response.status(400).json({ message: "ID do usuário não informado" });
+            return response.status(400).json({ message: "ID do usuário não informado" })
         }
 
-        const deleted = await this.userService.deleteUser(Number(id_user));
+        const deleted = await this.userService.deleteUser(Number(id_user))
 
         if (!deleted) {
-            return response.status(404).json({ message: "Usuário não encontrado" });
+            return response.status(404).json({ message: "Usuário não encontrado" })
         }
 
-        return response.status(200).json({ message: "Usuário deletado com sucesso" });
+        return response.status(200).json({ message: "Usuário deletado com sucesso" })
     } catch {
-        return response.status(500).json({ message: "Erro ao deletar usuário" });
+        return response.status(500).json({ message: "Erro ao deletar usuário" })
     }
-};
+}
+    getToken = async(request:Request, response:Response)=>{
+        try{
+            const {email,password} = request.body
+            if(!email || !password){
+                return response.status(400).json({message:"Os campos email e senha são obrigatorios"})
+            }
+           const token = await this.userService.getToken(email,password)
+           
+        return response.status(200).json({message:"Login efetuado com sucesso", token})
+        }catch{
+             return response.status(500).json({ message: "Erro ao logar" })
+        }
+    }
+
 
 }
 

@@ -1,55 +1,24 @@
-import { DatabaseMemory } from "../DatabaseMemory.js"
+import { Appointment } from "../entities/Appointment";
+import { UserRepository } from "../repositories/Users.repositories";
+import { UserService } from "./Users.service";
 
-interface Appointment {
-  cliente: string
-  barbeiro: string
-  data: string
-  serviço: string
-}
+
 
 export class AppointmentService {
-  private db: DatabaseMemory
+     userRepository:UserRepository
 
-  constructor(db = new DatabaseMemory()) {
-    this.db = db
-  }
+     constructor(userRepository = new UserRepository()){
+        this.userRepository = userRepository
+     }
 
-  // Criar agendamento
-  create(appointment: Appointment): string {
-    const id = this.db.create(appointment)
-    return id
-  }
+    
+     getAppointmentsByUser = async (id_user:number):Promise<Appointment[] | null> => {
+        return await this.userRepository.getAppointmentsByUser(id_user)
+    }
 
-  // Listar todos os agendamentos, ou filtrar por search
-  getAll(search?: string) {
-    return this.db.list(search)
-  }
+    getAppointmentsByBarber = async (id_barber:number):Promise<Appointment[] | null> => {
+        return await this.userRepository.getAppointmentsByBarber(id_barber)
+    }
 
-  // Buscar por id
-  getById(id: string) {
-    const appointments = this.db.list()
-    return appointments.find(a => a.id === id) || null
-  }
 
-  // Atualizar agendamento
-  update(id: string, data: Partial<Appointment>) {
-    const appointments = this.db.list()
-    const existing = appointments.find(a => a.id === id)
-    if (!existing) return false
-
-    // Atualiza só os campos passados
-    const updated = { ...existing, ...data }
-    this.db.update(id, updated)
-    return true
-  }
-
-  // Deletar agendamento
-  delete(id: string) {
-    const appointments = this.db.list()
-    const existing = appointments.find(a => a.id === id)
-    if (!existing) return false
-
-    this.db.delete(id)
-    return true
-  }
 }

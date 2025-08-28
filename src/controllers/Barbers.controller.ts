@@ -32,8 +32,6 @@ export class BarbersController{
     }
     }
 
-
-
     getAllBarbers= async (request:Request, response:Response) => {
       try{ 
 
@@ -44,6 +42,83 @@ export class BarbersController{
         return  response.status(500).json({message:"erro ao listar barbeiros"})
       }
     }
+
+    createBarber = async(request:Request, response: Response) =>{
+      try {
+        const barber = request.body
+
+        if (!barber.name || !barber.email || !barber.password){
+          return response.status(400).json({message: "Necessário nome, senha e email de usuário barbeiro"})
+        }
+
+        await this.barbersService.createBarber(barber.name, barber.email, barber.password)
+        return response.status(201).json({message: "Usuário de barbeiro cadastrado com sucesso! "})
+      } catch {
+        return response.status(500).json({message: "Erro ao criar usuário de barbeiro"})
+      }
+    }
+
+    updateBarber = async(request:Request, response: Response) => {
+      try {
+
+        const id = Number(request.params.id_barber)
+        const barber = request.body
+
+        if (!barber.name || !barber.email || !barber.password){
+          return response.status(400).json({message: "Necessário nome, senha e email de usuário barbeiro"})
+        }
+
+        const updateBarber = await this.barbersService.updateBarber(id, barber.name, barber.email, barber.password)
+
+        if (!updateBarber){
+          return response.status(404).json({message: "Conta de barbeiro não encontrada"})
+        } return response.status(200).json({message: "Conta de barbeiro atualizada com sucesso!",
+          name:updateBarber?.name,
+          email:updateBarber?.email
+        })
+
+
+      } catch{
+        return response.status(500).json({message: "Erro ao atualizar usuário de barbeiro"})
+      }
+    }
+
+    deleteBarber = async (request: Request, response: Response) => {
+      try {
+        const {id_barber} = request.params
+
+        if (!id_barber){
+          return response.status(400).json({message: "ID do usuário de barbeiro não informado"})
+        }
+
+        const deleted = await this.barbersService.deleteBarber(Number(id_barber))
+
+        if(!deleted) {
+          return response.status(404).json({message: "Usuário de barbeiro não encontrado"})
+        }
+
+        return response.status(200).json({message: "Usuário de barbeiro deletado com sucesso!"})
+
+      } catch {
+        return response.status(500).json({message: "Erro ao deletar usuário de barbeiro"})
+      }
+    }
+
+    getToken = async (request: Request, response: Response) => {
+      try {
+        const {email, password} = request.body
+
+        if (!email || !password) {
+          return response.status(400).json({message: "Insira email e senha de usuário de barbeiro"})}
+
+          const token = await this.barbersService.getToken(email, password)
+          return response.status(200).json({message: "Login efetuado com sucesso!", token})
+      } catch {
+        return response.status(500).json({message: "Erro em tentativa de login"})
+      }
+    }
+
+    
 
 }
 
