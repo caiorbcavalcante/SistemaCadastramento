@@ -1,19 +1,17 @@
 import { Response, Request, NextFunction } from "express";
 import { verify } from "jsonwebtoken";
 
-interface requestAuth extends Request {
-        userId:string
-}
 
-export function Authentication(request: requestAuth, response: Response, next: NextFunction){
+
+export function AuthenticationVerify(request: Request, response: Response, next: NextFunction){
         const authToken = request.headers.authorization
 
         if(authToken){
         const [, token] = authToken.split(" ")
 
                 try{
-                        const payload = verify(token, "token") as {id_user:number}
-                       // request.userId = payload.id_user as number
+                        const payload = verify(token, process.env.JWT_SECRET as string) as {id_user:number}
+                        
                         return next()
 
                 }catch(error){
