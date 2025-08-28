@@ -1,6 +1,6 @@
 import express from 'express'
-import { userRouter } from './routes/Users.routes'
-import { barbersRouter } from './routes/Barbers.routes'
+import { userRouter } from './routes/users.routes'
+import { barbersRouter } from './routes/barbers.routes'
 import { AppDataSource } from './app-data-source'
 
 const server = express()
