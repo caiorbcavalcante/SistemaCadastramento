@@ -11,6 +11,10 @@ export class AppointmentRepository{
         this.manager = AppDataSource.getRepository(Appointment)
     }
 
+    getAllAppointments = async(): Promisse<Appointment[] | null> => {
+        return await this.manager.find();
+    }
+
 
 
 

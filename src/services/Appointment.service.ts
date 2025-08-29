@@ -11,6 +11,10 @@ export class AppointmentService {
         this.appoitmentRepository = appoitmentRepository
      }
 
+     getAll = async():Promise<Appointment[] | null> => {
+        return await this this.appoitmentRepository.get
+     }
+
 
 
 
