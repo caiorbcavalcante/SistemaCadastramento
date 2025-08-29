@@ -90,7 +90,8 @@ export class AppointmentController {
             }
 
             return response.status(200).json({ message: "Agendamento deletado com sucesso" })
-        } catch {
+        } catch (err) {
+            console.error("Erro ao deletar agendamento:", err)
             return response.status(500).json({ message: "Erro ao deletar agendamento" })
         }
     }
