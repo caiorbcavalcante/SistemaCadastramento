@@ -39,7 +39,8 @@ export class AppointmentController {
             }
 
             return response.status(200).json({ appointment })
-        } catch {
+        } catch (err){
+            console.error("Falha ao buscar agendamento:", err)
             return response.status(500).json({ message: "Erro ao buscar agendamento" })
         }
     }
@@ -54,7 +55,8 @@ export class AppointmentController {
 
             const id = await this.appointmentService.create({ cliente, barbeiro, data, servico })
             return response.status(201).json({ id })
-        } catch {
+        } catch(err){
+            console.error("Erro ao criar agendamento:", err)
             return response.status(500).json({ message: "Erro ao criar agendamento" })
         }
     }
@@ -71,7 +73,8 @@ export class AppointmentController {
             }
 
             return response.status(200).json({ message: "Agendamento atualizado com sucesso" })
-        } catch {
+        } catch(err) {
+            console.error("Erro ao atualizar agendamento:", err)
             return response.status(500).json({ message: "Erro ao atualizar agendamento" })
         }
     }
