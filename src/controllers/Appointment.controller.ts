@@ -1,4 +1,4 @@
-import { request, Request, Response } from 'express'
+import { Request, Response } from 'express'
 import { AppointmentService } from '../services/Appointment.service'
 
 export class AppointmentController {
