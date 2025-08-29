@@ -4,7 +4,7 @@ import { AppDataSource } from "../app-data-source";
 import { User } from "../entities/User";
 
 
-export class AppoitmentRepository{
+export class AppointmentRepository{
     private manager:Repository<Appointment>
 
     constructor(){

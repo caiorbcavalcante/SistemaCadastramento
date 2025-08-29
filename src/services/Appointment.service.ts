@@ -1,11 +1,11 @@
 import { Appointment } from "../entities/Appointment";
-import { AppoitmentRepository } from "../repositories/Appoitments.repositories";
+import { AppointmentRepository } from "../repositories/Appoitments.repositories";
 
 
 
 
 export class AppointmentService {
-     appoitmentRepository:AppoitmentRepository
+     appoitmentRepository:AppointmentRepository
 
      constructor(appoitmentRepository = new AppointmentRepository()){
         this.appoitmentRepository = appoitmentRepository
