@@ -5,9 +5,17 @@ export const appointmentRouter = Router()
 
 const appointmentController = new AppointmentController()
 
+// Criar agendamento
 appointmentRouter.post("/appointments", appointmentController.createAppointment)
-appointmentRouter.get("/appoinments", appointmentController.getAllAppointments) 
-appointmentRouter.get("/appointments:id_appointments", appointmentController.getAppointment) 
-appointmentRouter.put("/appointments:id_appointments", appointmentController.createAppointment)
-appointmentRouter.delete("/appointments:id_appointments", appointmentController.deleteAppointment)
-//criar com op rsto do con rtroler que falta
+
+// Listar todos os agendamentos
+appointmentRouter.get("/appointments", appointmentController.getAllAppointments)
+
+// Buscar agendamento por id
+appointmentRouter.get("/appointments/:id_appointment", appointmentController.getAppointment)
+
+// Atualizar agendamento
+appointmentRouter.put("/appointments/:id_appointment", appointmentController.updateAppointment)
+
+// Deletar agendamento
+appointmentRouter.delete("/appointments/:id_appointment", appointmentController.deleteAppointment)
