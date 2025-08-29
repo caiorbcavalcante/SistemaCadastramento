@@ -8,7 +8,7 @@ export class CreateBarberTable1756415138522 implements MigrationInterface {
         name: "barbers", 
         columns: [
             {
-                name: "id",
+                name: "id_barber",
                 type: "int",
                 isPrimary: true,
                 isGenerated: true,
@@ -20,7 +20,13 @@ export class CreateBarberTable1756415138522 implements MigrationInterface {
                 isNullable: false,
             },
             {
-                name: "service",
+                name: "email",
+                type: "varchar",
+                isUnique: true,
+                isNullable: false,
+            },
+              {
+                name: "password",
                 type: "varchar",
                 isNullable: false,
             },

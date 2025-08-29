@@ -1,7 +1,8 @@
 import express from 'express'
-import { userRouter } from './routes/users.routes'
-import { barbersRouter } from './routes/barbers.routes'
+import { userRouter } from './routes/Users.routes'
+import { barbersRouter } from './routes/Barbers.routes'
 import { AppDataSource } from './app-data-source'
+import { appointmentRouter } from './routes/Appointment.routes'
 
 const server = express()
 
@@ -9,6 +10,7 @@ const server = express()
 server.use(express.json())
 server.use(userRouter)
 server.use(barbersRouter)
+server.use(appointmentRouter)
 
 AppDataSource.initialize()
   .then(() => {

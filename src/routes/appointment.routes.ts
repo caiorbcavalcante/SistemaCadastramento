@@ -6,7 +6,8 @@ export const appointmentRouter = Router()
 const appointmentController = new AppointmentController()
 
 appointmentRouter.post("/appointments", appointmentController.createAppointment)
-appointmentRouter.get("/appoinments", appointmentController.getAllAppointments) // Listar todos os agendamentos
-appointmentRouter.get("/appointments", appointmentController.getAppointment) // Listar appointment específico através do id
-appointmentRouter.put("/appointments:id", appointmentController.createAppointment)
-appointmentRouter.delete("/appointments:id", appointmentController.deleteAppointment)
+appointmentRouter.get("/appoinments", appointmentController.getAllAppointments) 
+appointmentRouter.get("/appointments:id_appointments", appointmentController.getAppointment) 
+appointmentRouter.put("/appointments:id_appointments", appointmentController.createAppointment)
+appointmentRouter.delete("/appointments:id_appointments", appointmentController.deleteAppointment)
+//criar com op rsto do con rtroler que falta

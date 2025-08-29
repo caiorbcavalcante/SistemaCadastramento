@@ -9,11 +9,9 @@ export class Appointment {
     @Column({nullable:false})
     date!: Date;
 
-    @Column({nullable:false})
-    service!: string;
 
-    constructor(date?: Date, service?: string) {
+    constructor(date?: Date) {
         if (date) this.date = date;
-        if (service) this.service = service;
+       
     }
 }

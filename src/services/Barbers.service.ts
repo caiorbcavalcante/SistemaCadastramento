@@ -44,7 +44,7 @@ export class BarbersService{
         }
 
         const token = jwt.sign(
-        {id_barber:barber.id_barber, email:barber.email},
+        {id_barber:barber.id_barber, email:barber.email, role:"barber"},
         process.env.JWT_SECRET as string,
         {expiresIn: "1h"}
     )

@@ -1,23 +1,27 @@
 import { Appointment } from "../entities/Appointment";
-import { UserRepository } from "../repositories/Users.repositories";
-import { UserService } from "./Users.service";
+import { AppoitmentRepository } from "../repositories/Appoitments.repositories";
+
 
 
 
 export class AppointmentService {
-     userRepository:UserRepository
+     appoitmentRepository:AppoitmentRepository
 
-     constructor(userRepository = new UserRepository()){
-        this.userRepository = userRepository
+     constructor(appoitmentRepository = new AppointmentRepository()){
+        this.appoitmentRepository = appoitmentRepository
      }
 
-    
+
+
+
+
+
      getAppointmentsByUser = async (id_user:number):Promise<Appointment[] | null> => {
-        return await this.userRepository.getAppointmentsByUser(id_user)
+        return await this.appoitmentRepository. getAppointmentsByUser(id_user)
     }
 
     getAppointmentsByBarber = async (id_barber:number):Promise<Appointment[] | null> => {
-        return await this.userRepository.getAppointmentsByBarber(id_barber)
+        return await this.appoitmentRepository.getAppointmentsByBarber(id_barber)
     }
 
 

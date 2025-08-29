@@ -8,17 +8,24 @@ export class AppointmentController {
         this.appointmentService = appointmentService
     }
 
-    // Listar todos os agendamentos
+  
     getAllAppointments = async (request: Request, response: Response) => {
-        try {
-            const appointments = await this.appointmentService.getAll()
-            return response.status(200).json({ appointments })
-        } catch {
-            return response.status(500).json({ message: "Erro ao listar agendamentos" })
+    try {
+        const appointments = await this.appointmentService.getAll();
+
+        if (!appointments || appointments.length === 0) {
+            return response.status(404).json({ message: "Nenhum agendamento encontrado" });
         }
+
+        return response.status(200).json({ appointments });
+    } catch (error) {
+        console.error("Erro ao listar agendamentos:", error);
+        return response.status(500).json({ message: "Erro ao listar agendamentos" });
+    }
     }
 
-    // Buscar agendamento por id
+
+  
     getAppointment = async (request: Request, response: Response) => {
         try {
             const { id } = request.params
@@ -37,7 +44,7 @@ export class AppointmentController {
         }
     }
 
-    // Criar agendamento
+  
     createAppointment = async (request: Request, response: Response) => {
         try {
             const { cliente, barbeiro, data, serviço } = request.body
@@ -52,7 +59,7 @@ export class AppointmentController {
         }
     }
 
-    // Atualizar agendamento
+    
     updateAppointment = async (request: Request, response: Response) => {
         try {
             const { id } = request.params
@@ -69,7 +76,7 @@ export class AppointmentController {
         }
     }
 
-    // Deletar agendamento
+    
     deleteAppointment = async (request: Request, response: Response) => {
         try {
             const { id } = request.params
@@ -104,7 +111,9 @@ export class AppointmentController {
             barberId:a.id_barber,
             barberName: a.barber.name,
             date: a.date,
-            service:a.service
+            id_service: a.service.id_service,
+            description: a.service.description,
+            price: a.service.price
 
         }))
             return response.status(200).json({appoitmentsMap})
