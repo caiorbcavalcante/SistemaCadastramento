@@ -47,12 +47,12 @@ export class AppointmentController {
   
     createAppointment = async (request: Request, response: Response) => {
         try {
-            const { cliente, barbeiro, data, serviço } = request.body
-            if (!cliente || !barbeiro || !data || !serviço) {
+            const { cliente, barbeiro, data, servico } = request.body
+            if (!cliente || !barbeiro || !data || !servico) {
                 return response.status(400).json({ message: "Todos os campos são obrigatórios" })
             }
 
-            const id = await this.appointmentService.create({ cliente, barbeiro, data, serviço })
+            const id = await this.appointmentService.create({ cliente, barbeiro, data, servico })
             return response.status(201).json({ id })
         } catch {
             return response.status(500).json({ message: "Erro ao criar agendamento" })
@@ -63,9 +63,9 @@ export class AppointmentController {
     updateAppointment = async (request: Request, response: Response) => {
         try {
             const { id } = request.params
-            const { cliente, barbeiro, data, serviço } = request.body
+            const { cliente, barbeiro, data, servico } = request.body
 
-            const success = await this.appointmentService.update(id, { cliente, barbeiro, data, serviço })
+            const success = await this.appointmentService.update(id, { cliente, barbeiro, data, servico })
             if (!success) {
                 return response.status(404).json({ message: "Agendamento não encontrado" })
             }
