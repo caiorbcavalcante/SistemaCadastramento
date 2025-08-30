@@ -37,11 +37,6 @@ export class AppointmentRepository{
         return result.affected !== 0
     }
 
-
-
-
-
-
     getAppointmentsByUser = async(id_user:number):Promise<Appointment[] | null> =>{
         return await this.manager.find({
             where:{user:{id_user}}
