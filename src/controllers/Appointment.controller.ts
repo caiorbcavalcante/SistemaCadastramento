@@ -11,7 +11,7 @@ export class AppointmentController {
   
     getAllAppointments = async (request: Request, response: Response) => {
     try {
-        const appointments = await this.appointmentService.getAll();
+        const appointments = await this.appointmentService.getAllAppointments();
 
         if (!appointments || appointments.length === 0) {
             return response.status(404).json({ message: "Nenhum agendamento encontrado" });
@@ -33,7 +33,7 @@ export class AppointmentController {
                 return response.status(400).json({ message: "ID do agendamento é obrigatório" })
             }
 
-            const appointment = await this.appointmentService.getById(id)
+            const appointment = await this.appointmentService.getAppointment(id)
             if (!appointment) {
                 return response.status(404).json({ message: "Agendamento não encontrado" })
             }
@@ -53,7 +53,7 @@ export class AppointmentController {
                 return response.status(400).json({ message: "Todos os campos são obrigatórios" })
             }
 
-            const id = await this.appointmentService.create({ cliente, barbeiro, data, servico })
+            const id = await this.appointmentService.createAppointment({ cliente, barbeiro, data, servico })
             return response.status(201).json({ id })
         } catch(err){
             console.error("Erro ao criar agendamento:", err)
@@ -67,7 +67,7 @@ export class AppointmentController {
             const { id } = request.params
             const { cliente, barbeiro, data, servico } = request.body
 
-            const success = await this.appointmentService.update(id, { cliente, barbeiro, data, servico })
+            const success = await this.appointmentService.updateAppointment(id, { cliente, barbeiro, data, servico })
             if (!success) {
                 return response.status(404).json({ message: "Agendamento não encontrado" })
             }
