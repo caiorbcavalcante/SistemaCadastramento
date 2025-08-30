@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Barber } from "./Barber";
 
 @Entity("users")
 export class User {
@@ -15,6 +16,9 @@ export class User {
     @Column({ nullable: false })
     password!: string;
 
+    @OneToMany(() => Barber, barber => barber.users)
+    barbers!: Barber[]
+
 
     constructor(name?:string, email?:string, password?:string){
        if(name) this.name = name
@@ -22,3 +26,4 @@ export class User {
         if(password)this.password=password
     }
 }
+ 

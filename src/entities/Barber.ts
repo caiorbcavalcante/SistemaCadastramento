@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { User } from "./User";
 
 @Entity ("barbers")
 
@@ -14,6 +15,10 @@ export class Barber {
 
     @Column({nullable: false})
     password!: string;
+    
+    @ManyToOne(() => User, user=>user.barbers)
+    users!:User
+
 
     constructor(name?: string, email?: string, password?: string){
         if(name) this.name = name
