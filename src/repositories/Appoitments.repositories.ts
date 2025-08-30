@@ -17,9 +17,27 @@ export class AppointmentRepository{
 
     getAppointment = async(id: string): Promise <Appointment | null> => {
         return await this.manager.findOne({
-            where: { id_Appointment: id_Appointment } 
+            where: {id_appointment: Number(id)}
         })
     }
+
+    createAppointment = async(appointment: Appointment): Promise <Appointment> => {
+        return await this.manager.save(appointment);
+    }
+
+    updateAppointment = async(id: string, appointment: Appointment): Promise <Appointment | null> => {
+        const numericId = Number(id)
+        await this.manager.update(numericId, appointment)
+        return await this.getAppointment(id)
+    }
+
+    deleteAppointment = async(id_appointment:string): Promise <boolean> => {
+        const numericId = Number(id_appointment)
+        const result = await this.manager.delete(numericId)
+        return result.affected !== 0
+    }
+
+
 
 
 
