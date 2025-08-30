@@ -19,3 +19,7 @@ appointmentRouter.put("/appointments/:id_appointment", appointmentController.upd
 
 // Deletar agendamento
 appointmentRouter.delete("/appointments/:id_appointment", appointmentController.deleteAppointment)
+
+appointmentRouter.get("/appointments/:id_barber", appointmentController.getAppointmentsByBarber)
+appointmentRouter.get("/appointments/:id_user", appointmentController.getAppointmentsByUser)
+

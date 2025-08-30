@@ -104,13 +104,13 @@ export class AppointmentController {
                 return response.status(400).json({message: "ID do usuário não informado"})
             }
 
-            const appointments = await this.userService.getAppointmentsByUser(Number(userId))
+            const appointments = await this.appointmentService.getAppointmentsByUser(Number(userId))
 
             
             if (!appointments || appointments.length === 0) {
                 return response.status(404).json({ message: "Nenhum agendamento encontrado para este usuário" });
         }
-        const appoitmentsMap = appointments.map(a:Appoitment =>({
+        const appoitmentsMap = appointments.map(a:Appointment =>({
             id_appoitment: a.id_appointment,
             barberId:a.id_barber,
             barberName: a.barber.name,
@@ -131,7 +131,7 @@ export class AppointmentController {
              if(!id_barber){
                 return response.status(400).json({message: "ID do barbeiro não informado"})
             }
-            const appointments = await this.userService.getAppointmentsByBarber(id_barber)
+            const appointments = await this.appointmentService.getAppointmentsByBarber(id_barber)
 
             if(!appointments || appointments.length === 0){
                 return response.status(404).json({message:"Nenhum agendamento encontrado para este barbeiro"})
@@ -141,7 +141,7 @@ export class AppointmentController {
                 userId: a.user.id_user,
                 userName: a.user.name,
                 date: a.date,
-                service:a.service
+                //service:a.service
             }))
             return response.status(200).json({appointmentsMap})
         }catch{
