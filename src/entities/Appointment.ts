@@ -9,7 +9,6 @@ export class Appointment {
     @Column({nullable:false})
     date!: Date;
 
-
     constructor(date?: Date) {
         if (date) this.date = date;
        
