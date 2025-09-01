@@ -47,19 +47,27 @@ export class AppointmentController {
 
   
     createAppointment = async (request: Request, response: Response) => {
-        try {
-            const { cliente, barbeiro, data, servico } = request.body
-            if (!cliente || !barbeiro || !data || !servico) {
-                return response.status(400).json({ message: "Todos os campos são obrigatórios" })
-            }
+    try {
+        const { clienteId, barbeiroId, data, servicoId } = request.body;
 
-            const id = await this.appointmentService.createAppointment({ cliente, barbeiro, data, servico })
-            return response.status(201).json({ id })
-        } catch(err){
-            console.error("Erro ao criar agendamento:", err)
-            return response.status(500).json({ message: "Erro ao criar agendamento" })
+        if (!clienteId || !barbeiroId || !data || !servicoId) {
+            return response.status(400).json({ message: "Todos os campos são obrigatórios" });
         }
+
+        const id = await this.appointmentService.createAppointment({
+            userId: clienteId,
+            barberId: barbeiroId,
+            serviceId: servicoId,
+            date: new Date(data)
+        });
+
+        return response.status(201).json({ id });
+    } catch (err) {
+        console.error("Erro ao criar agendamento:", err);
+        return response.status(500).json({ message: "Erro ao criar agendamento" });
     }
+    }
+
 
     
     updateAppointment = async (request: Request, response: Response) => {
@@ -84,7 +92,7 @@ export class AppointmentController {
         try {
             const { id } = request.params
 
-            const success = await this.appointmentService.delete(id)
+            const success = await this.appointmentService.deleteAppointment(id)
             if (!success) {
                 return response.status(404).json({ message: "Agendamento não encontrado" })
             }
@@ -110,9 +118,9 @@ export class AppointmentController {
             if (!appointments || appointments.length === 0) {
                 return response.status(404).json({ message: "Nenhum agendamento encontrado para este usuário" });
         }
-        const appoitmentsMap = appointments.map(a:Appointment =>({
+        const appoitmentsMap = appointments.map(a=>({
             id_appoitment: a.id_appointment,
-            barberId:a.id_barber,
+            barberId:a.barber.id_barber,
             barberName: a.barber.name,
             date: a.date,
             id_service: a.service.id_service,
@@ -136,12 +144,15 @@ export class AppointmentController {
             if(!appointments || appointments.length === 0){
                 return response.status(404).json({message:"Nenhum agendamento encontrado para este barbeiro"})
             }
-            const appointmentsMap = appointments.map(a:Appoitment => ({
+            const appointmentsMap = appointments.map(a => ({
                 id_appointment: a.id_appointment,
                 userId: a.user.id_user,
                 userName: a.user.name,
                 date: a.date,
-                //service:a.service
+                serviceId:a.service,
+                description: a.service.description,
+                price: a.service.price
+                
             }))
             return response.status(200).json({appointmentsMap})
         }catch{

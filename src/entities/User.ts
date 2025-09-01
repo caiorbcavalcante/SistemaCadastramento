@@ -1,5 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Barber } from "./Barber";
+import { Service } from "./Service";
+import { Appointment } from "./Appointment";
 
 @Entity("users")
 export class User {
@@ -16,8 +18,15 @@ export class User {
     @Column({ nullable: false })
     password!: string;
 
-    @OneToMany(() => Barber, barber => barber.users)
+    @OneToMany(() => Barber, barber => barber.user)
     barbers!: Barber[]
+
+    @OneToMany(()=> Service, service => service.user)
+    services!:Service[]
+
+    @OneToMany(()=> Appointment, appointment => appointment.user)
+    appointments!:Appointment[]
+
 
 
     constructor(name?:string, email?:string, password?:string){

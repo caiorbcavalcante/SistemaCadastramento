@@ -1,5 +1,7 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./User";
+import { Service } from "./Service";
+import { Appointment } from "./Appointment";
 
 @Entity ("barbers")
 
@@ -17,8 +19,13 @@ export class Barber {
     password!: string;
     
     @ManyToOne(() => User, user=>user.barbers)
-    users!:User
+    user!:User
 
+    @OneToMany(()=> Service, service=>service.barber)
+    services!:Service[]
+
+    @OneToMany(()=> Appointment, appointment=>appointment.barber)
+    appointments!:Appointment[]
 
     constructor(name?: string, email?: string, password?: string){
         if(name) this.name = name
