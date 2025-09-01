@@ -26,8 +26,8 @@ export class Service {
     appointments!: Appointment[];
 
 
-    constructor(id_service:number, price:number){
-        if(id_service) this.id_service = id_service
+    constructor(description:string, price:number){
+        if(description) this.description = description
         if(price) this.price = price
     }
 }

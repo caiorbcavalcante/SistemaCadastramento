@@ -1,5 +1,5 @@
 import { AppDataSource } from "../app-data-source";
-import { Service } from "../entities/service";
+import { Service } from "../entities/Service";
 import { ServiceRepository } from "../repositories/Services.repositories";
 
 export class ServicesServices{

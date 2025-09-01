@@ -1,4 +1,4 @@
-import { Service } from "../entities/service";
+import { Service } from "../entities/Service";
 import { AppDataSource } from "../app-data-source"
 import { Repository } from "typeorm";
 
