@@ -12,6 +12,9 @@ export class Service {
 
     @Column({nullable:false})
     price!:number
+
+    @Column({nullable: false})
+    description!: string
     
     @ManyToOne(() => User, user => user.services)
     user!:User
