@@ -3,7 +3,6 @@ import { MigrationInterface, QueryRunner, Table, TableForeignKey } from "typeorm
 export class CreateService1690000000000 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
-        // Criar tabela
         await queryRunner.createTable(new Table({
             name: "services",
             columns: [
@@ -17,6 +16,11 @@ export class CreateService1690000000000 implements MigrationInterface {
                 {
                     name: "price",
                     type: "decimal",
+                    isNullable: false
+                },
+                 {
+                    name: "description",
+                    type: "varchar",
                     isNullable: false
                 },
                 {

@@ -139,7 +139,7 @@ export class AppointmentController {
              if(!id_barber){
                 return response.status(400).json({message: "ID do barbeiro não informado"})
             }
-            const appointments = await this.appointmentService.getAppointmentsByBarber(id_barber)
+            const appointments = await this.appointmentService.getAppointmentsByBarber(Number(id_barber))
 
             if(!appointments || appointments.length === 0){
                 return response.status(404).json({message:"Nenhum agendamento encontrado para este barbeiro"})
