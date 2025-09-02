@@ -2,12 +2,15 @@ import { Router } from 'express'
 import { BarbersController } from '../controllers/Barbers.controller'
 import { BarberVerify } from '../middlewares/BarberVerify.middleware'
 
-const barbersController = new BarbersController()
 
 export const barbersRouter = Router()
 
-barbersRouter.get("/barbers", BarberVerify, barbersController.getBarber)
-barbersRouter.get("/barbers/:id", barbersController.getAllBarbers)
+
+const barbersController = new BarbersController()
+
+barbersRouter.get("/barbers/:id_barber", BarberVerify, barbersController.getBarber)
+barbersRouter.get("/barbers", barbersController.getAllBarbers)
 barbersRouter.post("/barbers", barbersController.createBarber)
-barbersRouter.patch("/barbers:id", barbersController.updateBarber)
-barbersRouter.delete("/barbers/:id", barbersController.deleteBarber)
+barbersRouter.patch("/barbers/:id_barber", barbersController.updateBarber)
+barbersRouter.delete("/barbers/:id_barber", barbersController.deleteBarber)
+barbersRouter.post("/login", barbersController.getToken)
