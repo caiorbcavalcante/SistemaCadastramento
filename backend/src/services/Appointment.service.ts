@@ -17,11 +17,11 @@ export class AppointmentService {
         return await this.appoitmentRepository.getAllAppointments()
      }
 
-     createAppointment = async(appointment: Appointment): Promise <Appointment> => {
-        return await this.appoitmentRepository.createAppointment(appointment)
+     createAppointment = async(appointmentData: Partial<Appointment>): Promise <Appointment> => {
+        return await this.appoitmentRepository.createAppointment(appointmentData)
      }
 
-     updateAppointment = async(id:string, appointment: Appointment): Promise <Appointment | null> => {
+     updateAppointment = async(id:string, appointment:Partial<Appointment>): Promise <Appointment | null> => {
         return await this.appoitmentRepository.updateAppointment(id, appointment)
      }
 

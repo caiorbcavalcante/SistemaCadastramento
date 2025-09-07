@@ -20,11 +20,15 @@ export class AppointmentRepository{
         })
     }
 
-    createAppointment = async(appointment: Appointment): Promise <Appointment> => {
-        return await this.manager.save(appointment);
-    }
+    createAppointment = async (data: Partial<Appointment>): Promise<Appointment> => {
+    const appointment = new Appointment();
+    Object.assign(appointment, data);
+    return await this.manager.save(appointment);
+};
 
-    updateAppointment = async(id: string, appointment: Appointment): Promise <Appointment | null> => {
+
+
+    updateAppointment = async(id: string, appointment: Partial<Appointment>): Promise <Appointment | null> => {
         const numericId = Number(id)
         await this.manager.update(numericId, appointment)
         return await this.getAppointment(id)
