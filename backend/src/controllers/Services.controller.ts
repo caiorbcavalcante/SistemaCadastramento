@@ -142,13 +142,13 @@ export class ServicesController{
             }
 
             const servicesMap = services.map( a => ({
-                id_appointment: a.id_appointment,
+                id_appointment: a.appointments,
                 userId: a.user.id_user,
                 userName: a.user.name,
-                date: a.date,
-                serviceId:a.service,
-                description: a.service.description,
-                price: a.service.price
+                date: a.appointments.date,
+                serviceId:a.id_service,
+                description: a.description,
+                price: a.price
             }))
 
             return response.status(200).json({servicesMap})
