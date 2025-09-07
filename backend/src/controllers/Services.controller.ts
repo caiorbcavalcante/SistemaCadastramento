@@ -105,20 +105,20 @@ export class ServicesController{
                 return response.status(400).json({ message: "ID do usuário não informado"})
             }
 
-            const services = await this.servicesServices.getServiceByUser(number(userId))
+            const services = await this.servicesServices.getServiceByUser(Number(userId))
 
             if (!services || services.length === 0) {
                 return response.status(404).json({ message: "Nenhum serviço encontrado por esta usuário"})
             }
 
             const servicesMap = services.map(a => ({
-                id_appointment: a.id_appointment,
+                id_appointment: a.appointments,
                 userId: a.user.id_user,
                 userName: a.user.name,
-                date: a.date,
-                serviceId:a.service,
-                description: a.service.description,
-                price: a.service.price
+                date: a.appointments,
+                serviceId:a.id_service,
+                description: a.description,
+                price: a.price
             }))
 
             return response.status(200).json({servicesMap})
@@ -135,7 +135,7 @@ export class ServicesController{
                 return response.status(400).json({message: "ID de barbeiro não informado"})
             }
 
-            const services = await this.servicesServices.getServiceByBarber(number(barberId))
+            const services = await this.servicesServices.getServiceByBarber(Number(barberId))
 
             if(!services || services.length === 0){
                 return response.status(404).json({message: "Nenhum serviço encontrado por este barbeiro"})
@@ -145,7 +145,7 @@ export class ServicesController{
                 id_appointment: a.appointments,
                 userId: a.user.id_user,
                 userName: a.user.name,
-                date: a.appointments.date,
+                date: a.appointments,
                 serviceId:a.id_service,
                 description: a.description,
                 price: a.price
