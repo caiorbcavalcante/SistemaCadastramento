@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.barbersRouter = void 0;
+const express_1 = require("express");
+const Barbers_controller_1 = require("../controllers/Barbers.controller");
+const BarberVerify_middleware_1 = require("../middlewares/BarberVerify.middleware");
+exports.barbersRouter = (0, express_1.Router)();
+const barbersController = new Barbers_controller_1.BarbersController();
+exports.barbersRouter.get("/barbers/:id_barber", BarberVerify_middleware_1.BarberVerify, barbersController.getBarber);
+exports.barbersRouter.get("/barbers", barbersController.getAllBarbers);
+exports.barbersRouter.post("/barbers", barbersController.createBarber);
+exports.barbersRouter.patch("/barbers/:id_barber", barbersController.updateBarber);
+exports.barbersRouter.delete("/barbers/:id_barber", barbersController.deleteBarber);
+exports.barbersRouter.post("/login", barbersController.getToken);

@@ -1,0 +1,15 @@
+
+import './styles.css'
+
+interface ButtonProps {
+    text:string
+    onClick?:() =>void
+}
+
+export const Button:React.FC <ButtonProps> = ({text,onClick}) =>{
+    return(
+        <button className="custom-button" onClick={onClick}>
+            {text}
+        </button>
+    )
+}
