@@ -151,6 +151,7 @@ export class ServicesController{
                 price: a.service.price
             }))
 
+            return response.status(200).json({servicesMap})
         } catch {
             return response.status(500).json({ message: "Erro ao buscar serviço de barbeiro"})
         }
