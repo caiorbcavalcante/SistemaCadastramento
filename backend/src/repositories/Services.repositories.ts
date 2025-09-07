@@ -1,7 +1,7 @@
 import { Service } from "../entities/Service";
 import { AppDataSource } from "../app-data-source"
 import { Repository } from "typeorm";
-
+import { User } from "../entities/User";
 export class ServiceRepository{
 
     private manager: Repository<Service>
@@ -32,5 +32,17 @@ export class ServiceRepository{
     deleteService = async(id_service:number): Promise<boolean> =>{
         const result = await this.manager.delete({ id_service })
         return result.affected !== 0
+    }
+
+    getServiceByUser = async(id_user:number): Promise<Service[] | null> => {
+        return await this.manager.find({
+            where:{user: {id_user}}
+        })
+    }
+
+    getServiceByBarber = async(id_barber:number): Promise<Service [] | null> => {
+        return await this.manager.find({
+            where:{barber: {id_barber}}
+        })
     }
 }

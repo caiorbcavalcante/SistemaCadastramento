@@ -3,7 +3,6 @@ import { Appointment } from "../entities/Appointment";
 import { AppDataSource } from "../app-data-source";
 import { User } from "../entities/User";
 
-
 export class AppointmentRepository{
     private manager:Repository<Appointment>
 

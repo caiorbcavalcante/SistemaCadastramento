@@ -96,4 +96,63 @@ export class ServicesController{
             return response.status(500).json({message: "Erro ao deletar serviço"})
         }
     }
+
+    getServiceByUser = async(request: Request, response: Response) => {
+        try {
+            const {userId} = request.params
+
+            if (!userId){
+                return response.status(400).json({ message: "ID do usuário não informado"})
+            }
+
+            const services = await this.servicesServices.getServiceByUser(number(userId))
+
+            if (!services || services.length === 0) {
+                return response.status(404).json({ message: "Nenhum serviço encontrado por esta usuário"})
+            }
+
+            const servicesMap = services.map(a => ({
+                id_appointment: a.id_appointment,
+                userId: a.user.id_user,
+                userName: a.user.name,
+                date: a.date,
+                serviceId:a.service,
+                description: a.service.description,
+                price: a.service.price
+            }))
+
+            return response.status(200).json({servicesMap})
+        } catch {
+            return response.status(500).json({ message: "Erro ao buscar serviço do usuário"})
+        }
+    }
+
+    getServiceByBarber = async(request: Request, response: Response) => {
+        try {
+            const {barberId} = request.params
+
+            if(!barberId) {
+                return response.status(400).json({message: "ID de barbeiro não informado"})
+            }
+
+            const services = await this.servicesServices.getServiceByBarber(number(barberId))
+
+            if(!services || services.length === 0){
+                return response.status(404).json({message: "Nenhum serviço encontrado por este barbeiro"})
+            }
+
+            const servicesMap = services.map( a => ({
+                id_appointment: a.id_appointment,
+                userId: a.user.id_user,
+                userName: a.user.name,
+                date: a.date,
+                serviceId:a.service,
+                description: a.service.description,
+                price: a.service.price
+            }))
+
+        } catch {
+            return response.status(500).json({ message: "Erro ao buscar serviço de barbeiro"})
+        }
+    }
 }

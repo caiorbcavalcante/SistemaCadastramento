@@ -30,5 +30,13 @@ export class ServicesServices{
         return await this.serviceRepository.deleteService(id_service);
     }
 
+    getServiceByUser = async(id_user: number): Promise<Service [] | null> => {
+        return await this.serviceRepository.getServiceByUser(id_user)
+    }
+
+    getServiceByBarber = async(id_barber: number): Promise<Service [] | null> => {
+        return await this.serviceRepository.getServiceByBarber(id_barber)
+    }
+
 
 }
