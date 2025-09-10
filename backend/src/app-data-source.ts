@@ -9,11 +9,9 @@ export const AppDataSource = new DataSource({
   host: process.env.PGHOST,
   port: process.env.PGPORT ? parseInt(process.env.PGPORT) : 5432,
   username: process.env.PGUSER,
-  password: process.env.PGPASSWORD,
+  password: process.env.PGPASSWORD as string,
   database: process.env.PGDATABASE,
-  ssl: {
-    rejectUnauthorized: false, // necessário para Neon
-  },
+  ssl: process.env.PGHOST?.includes('neon') ? { rejectUnauthorized: false } : false,
   synchronize: true, // cria as tabelas automaticamente (apenas para dev)
   logging: true,
   entities: [__dirname + '/entities/*.ts'], // suas entidades
