@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner, Table, TableForeignKey } from "typeorm";
 
-export class CreateService1690000000000 implements MigrationInterface {
+export class  CreateService1699990300000 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(new Table({
@@ -46,7 +46,7 @@ export class CreateService1690000000000 implements MigrationInterface {
         
         await queryRunner.createForeignKey("services", new TableForeignKey({
             columnNames: ["barberId"],
-            referencedColumnNames: ["id"],
+            referencedColumnNames: ["id_barber"],
             referencedTableName: "barbers",
             onDelete: "CASCADE"
         }));

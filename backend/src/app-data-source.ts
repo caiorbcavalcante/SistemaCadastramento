@@ -12,7 +12,7 @@ export const AppDataSource = new DataSource({
   password: process.env.PGPASSWORD as string,
   database: process.env.PGDATABASE,
   ssl: process.env.PGHOST?.includes('neon') ? { rejectUnauthorized: false } : false,
-  synchronize: true, // cria as tabelas automaticamente (apenas para dev)
+  synchronize: false, // cria as tabelas automaticamente (apenas para dev)
   logging: true,
   entities: [__dirname + '/entities/*.ts'], // suas entidades
   migrations: [__dirname + '/migrations/*.ts'],

@@ -1,4 +1,4 @@
-import { PrimaryGeneratedColumn, Column, Entity, OneToMany, ManyToOne } from "typeorm"
+import { PrimaryGeneratedColumn, Column, Entity, OneToMany, ManyToOne, JoinColumn } from "typeorm"
 import { User } from "./User"
 import { Appointment } from "./Appointment"
 import { Barber } from "./Barber"
@@ -16,8 +16,10 @@ export class Service {
     @Column({nullable: false})
     description!: string
     
-    @OneToMany(() => User, user => user.services)
-    user!:User
+   
+    @ManyToOne(() => User, user => user.services)
+    @JoinColumn({ name: "userId" }) // define o nome exato da coluna no banco
+    user!: User;
 
     @ManyToOne(() => Barber, barber=>barber.services)
     barber!:Barber

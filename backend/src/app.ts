@@ -11,8 +11,9 @@ const server = express()
 server.use(express.json())
 server.use(userRouter)
 server.use(barbersRouter)
-server.use(appointmentRouter)
 server.use(serviceRouter)
+server.use(appointmentRouter)
+
 
 AppDataSource.initialize()
   .then(() => {
