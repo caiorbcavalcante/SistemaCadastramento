@@ -18,7 +18,7 @@ export class Service {
     
    
     @ManyToOne(() => User, user => user.services)
-    @JoinColumn({ name: "userId" }) // define o nome exato da coluna no banco
+    @JoinColumn({ name: "userId" }) 
     user!: User;
 
     @ManyToOne(() => Barber, barber=>barber.services)
