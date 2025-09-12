@@ -3,7 +3,8 @@ import {  HomePublic } from '../pages/homePublic/HomePublic';
 import { Login } from '../pages/login/Login';
 
 
-export const AppRoutes = () => {
+export const AppRoutes:React.FC = () => {
+    return(
     <BrowserRouter>
     <Routes>
 
@@ -12,4 +13,5 @@ export const AppRoutes = () => {
 
     </Routes>  
     </BrowserRouter>
+    )
 }
