@@ -10,6 +10,8 @@ export const AppRoutes:React.FC = () => {
 
     <Route path="/" element={<HomePublic/>}/>
     <Route path="/login" element={<Login/>}/>
+    <Route path="/user" element={<UserPage/>}/>
+    
 
     </Routes>  
     </BrowserRouter>

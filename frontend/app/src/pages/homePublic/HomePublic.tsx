@@ -1,14 +1,25 @@
 import { Link } from "react-router-dom"
 import { Button } from "../../components/button/Button"
-import { Input } from "../../components/input/Input"
+import './HomePublic.css'
+
 
 
 export const HomePublic:React.FC = () => {
         return(
             <div>
-                <h1>Seja bem-vindo à Barbearia!</h1>
+                <h1 className='title'>
+                    Estilo e <span className='highlight'>Elegância</span>
+                     <br />
+                    em Cada Corte
+                </h1>
 
-                <div> 
+
+             <p className="subtitle">
+                Transformamos seu visual com técnicas modernas e tradicionais. 
+                   <br />
+                Uma experiência única para o homem moderno que valoriza qualidade e estilo.
+            </p>
+                <div className="auth-buttons"> 
                    <Link to='/login'>
                    <Button text="Fazer login"/>
                    </Link>
@@ -18,16 +29,20 @@ export const HomePublic:React.FC = () => {
                    </Link>
                 </div>
 
-                <div>
-                <h3>Receba as Novidades da nossa empresa</h3>
-                <Input 
-                placeholder="Digite seu email"
-                value=""
-                onChange={()=>{}}
-                />
-
-                </div>
-
+                <div className="stats-section">
+                    <div className="stat-item">
+                    <div className="stat-number">5000+</div>
+                    <div className="stat-label">Clientes Satisfeitos</div>
+             </div>
+          <div className="stat-item">
+            <div className="stat-number">5+</div>
+            <div className="stat-label">Anos de Experiência</div>
+          </div>
+          <div className="stat-item">
+            <div className="stat-number">15+</div>
+            <div className="stat-label">Serviços Oferecidos</div>
+          </div>
+        </div>
 
             </div>
         )
