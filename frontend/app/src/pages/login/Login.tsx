@@ -23,8 +23,8 @@ export const Login:React.FC = () => {
         try{ 
             const endpoint =
             tipo === "user"
-            ? "http://localhost:3333/user/login"
-            : "http://localhost:3333/barbers/login"
+            ? "http://localhost:3000/user/login"
+            : "http://localhost:3000/barbers/login"
 
             const response = await axios.post(endpoint, {email,password:senha})
 
@@ -43,29 +43,6 @@ export const Login:React.FC = () => {
     return(
         <div>
             <h2>Login</h2>
-
-            <div>
-                <label>
-                    <input 
-                    type="radio"
-                    value="user"
-                    checked={tipo ==="user"}
-                    onChange={()=>setTipo("user")}
-                    />
-                    Sou Cliente
-                </label>
-                
-                <label>
-                  <input
-                type="radio"
-                value="barber"
-                checked={tipo === "barber"}
-                 onChange={() => setTipo("barber")}
-                />
-                 Sou barbeiro
-              </label>
-
-            </div>
 
             <Input placeholder="email"
             value={email}
