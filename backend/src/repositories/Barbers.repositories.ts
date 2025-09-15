@@ -37,4 +37,10 @@ export class BarberRepository{
             where: {email, password}
         })
     }
+
+    findByEmail = async(email: string): Promise<Barber | null> => {
+        return this.manager.findOne({
+            where: {email}
+        })
+    }
 }

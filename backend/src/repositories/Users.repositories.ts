@@ -37,4 +37,9 @@ export class UserRepository{
             where:{email, password}}
         )
     }
+
+    findByEmail = async(email:string): Promise<User | null>  => {
+        return this.manager.findOne({where: {email}})
+    }
+    
 }

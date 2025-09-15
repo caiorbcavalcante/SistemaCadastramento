@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import { User } from "../entities/User"
 import { UserRepository } from "../repositories/Users.repositories"
+import { EmailAlreadyExistsError } from "../errors/emailAlreadyExistsError";
 
 export class UserService{
  
@@ -20,6 +21,10 @@ export class UserService{
     }
 
     createUser=async(name:string,email:string, password:string):Promise<User> =>{
+        const existingUser = await this.userRepository.findByEmail(email)
+        if (existingUser){
+            throw new EmailAlreadyExistsError();
+        }
         const user = new User(name,email,password)
         return await this.userRepository.createUser(user as User)
     }

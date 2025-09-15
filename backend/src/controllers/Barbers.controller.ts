@@ -1,5 +1,6 @@
 import { Response, Request } from 'express'
 import { BarbersService } from '../services/Barbers.service'
+import { EmailAlreadyExistsError } from '../errors/emailAlreadyExistsError'
 
 export class BarbersController{
     barbersService:BarbersService
@@ -53,7 +54,10 @@ export class BarbersController{
 
         await this.barbersService.createBarber(barber.name, barber.email, barber.password)
         return response.status(201).json({message: "Usuário de barbeiro cadastrado com sucesso! "})
-      } catch {
+      } catch (error) {
+        if (error instanceof EmailAlreadyExistsError){
+          return response.status(409).json({message: "Este email já foi cadastrado em outra conta."})
+        }
         return response.status(500).json({message: "Erro ao criar usuário de barbeiro"})
       }
     }

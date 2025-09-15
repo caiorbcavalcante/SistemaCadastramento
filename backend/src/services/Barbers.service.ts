@@ -2,6 +2,7 @@ import { AppDataSource } from "../app-data-source"
 import { Barber } from "../entities/Barber"
 import { BarberRepository } from "../repositories/Barbers.repositories"
 import jwt from "jsonwebtoken";
+import { EmailAlreadyExistsError } from "../errors/emailAlreadyExistsError";
 
 export class BarbersService{
     barberRepository:BarberRepository
@@ -20,6 +21,9 @@ export class BarbersService{
     }
 
     createBarber = async(name:string, email:string, password:string): Promise<Barber> =>{
+        const existingBarber = await this.barberRepository.findByEmail(email)
+        if (existingBarber){throw new EmailAlreadyExistsError()}
+
         const barber = new Barber(name, email, password)
         return await this.barberRepository.createBarber(barber as Barber)
     }
@@ -51,9 +55,6 @@ export class BarbersService{
 
     return token
     }
-
-
-
     
 }
 

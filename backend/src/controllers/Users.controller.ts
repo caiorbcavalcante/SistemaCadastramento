@@ -1,5 +1,6 @@
 import { Response, Request,  } from 'express'
 import { UserService } from '../services/Users.service'
+import { EmailAlreadyExistsError } from '../errors/emailAlreadyExistsError'
 //botar admin em getalluser
 export class UserController{
     userService:UserService
@@ -64,7 +65,10 @@ export class UserController{
             }
             await this.userService.createUser(user.name, user.email, user.password)
             return response.status(201).json({message:"Usuario criado com sucesso"})
-        }catch{
+        }catch (error) {
+            if (error instanceof EmailAlreadyExistsError){
+                return response.status(409).json({ message: "Este email já foi cadastrado em outra conta."})
+            }
             return response.status(500).json({message:"Nãoo foi possiviel criar um usuario"})
         }
     }
