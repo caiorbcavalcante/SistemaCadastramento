@@ -12,6 +12,8 @@ export const AppRoutes:React.FC = () => {
     <Route path="/" element={<HomePublic/>}/>
     <Route path="/login" element={<Login/>}/>
     <Route path="/register" element={<RegisterAccount/>}/>
+    <Route path="/user" element={<UserPage/>}/>
+    
 
     <Route path='*' element={<NotFound/>}/>
     </Routes>  
