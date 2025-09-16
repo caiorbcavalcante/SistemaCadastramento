@@ -9,36 +9,37 @@ const ServiceForm: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-    }
-    try {
-        // Validação básica
-        if (!name || price <= 0){
-            alert("Por favor, preencha o nome e um preço válido!")
-            return
+        
+        try {
+            // Validação básica
+            if (!name || price <= 0){
+                alert("Por favor, preencha o nome e um preço válido!")
+                return
+            }
+            // Envia os dados para o seu backend (API)
+            const response = await axios.post("http://localhost:3000/services", {
+                name,
+                price,
+                description
+            })
+    
+            alert("Serviço cadastrado com sucesso!")
+            // Limpar os campos após o sucesso
+            setName("")
+            setPrice(0)
+            setDescription("")
+        } catch (error: any) {
+            if (error.response) {
+                alert(`Erro do servidor: ${error.response.data.message}`)
+            } else if (error.request) {
+                alert("Não foi possível se conectar com o servidor. Tente novamente.")
+            } else {
+                alert("Ocorreu um erro inesperado ao criar o serviço.")
+            }
         }
-        // Envia os dados para o seu backend (API)
-        const response = await axios.post("http://localhost:3000/services", {
-            name,
-            price,
-            description
-        })
-
-        alert("Serviço cadastrado com sucesso!")
-        // Limpar os campos após o sucesso
-        setName("")
-        setPrice(0)
-        setDescription("")
-    } catch (error: any) {
-        if (error.response) {
-            alert(`Erro do servidor: ${error.response.data.message}`)
-        } else if (error.request) {
-            alert("Não foi possível se conectar com o servidor. Tente novamente.")
-        } else {
-            alert("Ocorreu um erro inesperado ao criar o serviço.")
-        }
+    
     }
-
-}
+  }
 
 return (
     <div className="form-container">
