@@ -1,8 +1,15 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Input } from "../../../components/input/Input";
+import { Button } from "../../../components/button/Button";
 
+interface User {
+  id: number;
+  name: string;
+  password: string;
+}
 export const UserProfile: React.FC = () => {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [edit, setEdit] = useState(false);
   const [form, setForm] = useState({ name: "", password: "" });
   const [error, setError] = useState<string | null>(null);
@@ -20,7 +27,7 @@ export const UserProfile: React.FC = () => {
         });
 
         setUser(res.data);
-        setForm({ name: res.data.name, password: "" }); // senha não exposta
+        setForm({ name: res.data.name, password: "" })
         setError(null);
       } catch {
         setError("Erro ao buscar usuário");
@@ -58,7 +65,37 @@ export const UserProfile: React.FC = () => {
     <div>
       <h2>Perfil</h2>
       {error && <p style={{ color: "red", marginBottom: "1rem" }}>{error}</p>}
+
+    {edit ? (
+      <div>
+        <Input 
+        placeholder="Nome"
+        value={form.name}
+        onChange={(e) => setForm({... form, name:e.target.value})}/> 
+
+        <Input 
+        placeholder="senha"
+        value={form.password}
+        onChange={(e) => setForm({... form, password:e.target.value})}/> 
+
+        <Button text="Salvar" onClick={handleSave} />
+
+        <Button text="Cancelar" onClick={() => {
+        setForm({ name: user.name, password: user.password });
+        setEdit(false);
+        setError(null);
+        }} />
+   
+      </div>
+    ):(
+      <div> 
+        <p>Nome:{user.name}</p>
+        <p>password:{user.password}</p>
+
+        <Button text="Editar Perfil" onClick={() => setEdit(true)} />
+      </div>
+    )}
     
     </div>
-  );
-};
+  )
+}
