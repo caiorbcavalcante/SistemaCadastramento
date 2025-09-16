@@ -1,5 +1,5 @@
 import './RegisterAccount.css'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from "axios"
 
@@ -31,19 +31,22 @@ const RegisterAccount: React.FC = () => {
 
       navigate('/')
     } catch (error) {
-      if(error.response) {
-        alert(error.response.data.message)
-      }
-      else if(error.request) {
+      if(axios.isAxiosError(error)) {
+        if(error.response){
+          alert(error.response.data.message)
+        }
+        else if(error.request) {
         alert("Não foi possível se conectar com o servidor")
       }
       else {
         alert("Ocorreu um erro inesperado")
       }
+      }
     }
   }
 
   return (
+    
     <div>
       <h2> Criar Conta </h2>
       <form onSubmit={handleSubmit}>
@@ -55,7 +58,6 @@ const RegisterAccount: React.FC = () => {
         <button type='submit'>Criar conta</button>
 
       </form>
-  
     </div>
   )
 }

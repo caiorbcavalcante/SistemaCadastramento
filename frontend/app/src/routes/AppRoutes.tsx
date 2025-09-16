@@ -3,6 +3,7 @@ import {  HomePublic } from '../pages/homePublic/HomePublic';
 import { Login } from '../pages/login/Login';
 import RegisterAccount from '../pages/registerAccount/RegisterAccount'
 import NotFound from '../pages/NotFound/NotFound';
+import ControlPanel from '../pages/controlPanel/controlPanel';
 
 export const AppRoutes:React.FC = () => {
     return(
@@ -13,6 +14,7 @@ export const AppRoutes:React.FC = () => {
     <Route path="/login" element={<Login/>}/>
     <Route path="/register" element={<RegisterAccount/>}/>
     <Route path="/user" element={<UserPage/>}/>
+    <Route path='/controlPanel' element={<ControlPanel/>}/>
     
 
     <Route path='*' element={<NotFound/>}/>
