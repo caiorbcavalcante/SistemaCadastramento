@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import "./ControlPanel.css"
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
+import { Route } from 'react-router-dom'
 // import axios from 'axios'
 
 interface Appointment{
@@ -122,11 +123,12 @@ const ControlPanel = () => {
         <div className='popout-container'>
           <button className='popout-button' onClick={
             () => setShowPopout(!showPopout)
-          }> Mais opções </button>
+          }> Mais opções
+           </button>
           {showPopout && <div className='popout-content'>
             <ul>
               <li>
-                <button>
+                <button onClick={() => {navigate('/barberEditProfile')}}>
                   Editar Perfil
                 </button>
               </li>

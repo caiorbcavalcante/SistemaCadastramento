@@ -21,6 +21,7 @@ const RegisterAccount: React.FC = () => {
 
       if (password.length < 6){
         alert("Senha deve conter pelo menos 6 caracteres")
+        return
       }
 
       const response = await axios.post("http://localhost:3000/user", {

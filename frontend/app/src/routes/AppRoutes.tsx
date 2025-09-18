@@ -4,6 +4,7 @@ import { Login } from '../pages/login/Login';
 import RegisterAccount from '../pages/registerAccount/RegisterAccount'
 import NotFound from '../pages/NotFound/NotFound';
 import ControlPanel from '../pages/controlPanel/controlPanel';
+import BarberEditProfile from '../pages/barberEditProfile/BarberEditProfile';
 
 export const AppRoutes:React.FC = () => {
     return(
@@ -15,6 +16,7 @@ export const AppRoutes:React.FC = () => {
     <Route path="/register" element={<RegisterAccount/>}/>
     {/* <Route path="/user" element={<UserPage/>}/> */}
     <Route path='/controlPanel' element={<ControlPanel/>}/>
+    <Route path='/barberEditProfile' element={<BarberEditProfile/>}/>
     
 
     <Route path='*' element={<NotFound/>}/>
