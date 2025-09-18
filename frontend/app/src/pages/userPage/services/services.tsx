@@ -21,7 +21,7 @@ export const Services: React.FC = () => {
         const fetchServices = async () => { 
 
             try{
-                const res = await axios.get(`http://localhost:3000/service/user/${id_user}`,{ 
+                const res = await axios.get(`http://localhost:3000/service`,{ 
                 headers:{Authorization:`Bearer ${token}`},
                 })
                 setServices(res.data)

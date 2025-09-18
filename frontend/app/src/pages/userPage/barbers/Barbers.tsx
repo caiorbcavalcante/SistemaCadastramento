@@ -5,6 +5,7 @@ import axios from "axios";
 interface IBarber {
   id_barber: string;
   name: string;
+
 }
 
 export const Barbers: React.FC = () => {

@@ -5,7 +5,7 @@ import axios from "axios"
 const ServiceForm: React.FC = () => {
     const [name, setName] = useState<string>("");
     const [price, setPrice] = useState<number>(0);
-    const [description, setDescription]
+    const [description, setDescription] = useState<string>("");
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -39,7 +39,7 @@ const ServiceForm: React.FC = () => {
         }
     
     }
-  }
+  
 
 return (
     <div className="form-container">
@@ -71,5 +71,6 @@ return (
     </div>
   )
 }
+
 
 export default ServiceForm

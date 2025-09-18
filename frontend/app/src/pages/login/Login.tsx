@@ -9,13 +9,13 @@ export const Login:React.FC = () => {
 
     const [email,setEmail] = useState("")
     const [senha,setSenha] = useState("")
-    const [tipo, setTipo] = useState<"user" | "barber">("user")
     const navigate = useNavigate()
 
     useEffect(()=> {
         const token = localStorage.getItem("token")
-        if(token){
-            navigate("/home")
+        const role = localStorage.getItem("role")
+        if(token && role){
+            navigate(role === "barber" ? "/barber" : "/user")
         }
     },[navigate])
 
@@ -33,7 +33,7 @@ export const Login:React.FC = () => {
             localStorage.setItem("token",token)
             localStorage.setItem("tipo",tipo)
 
-            navigate("/home")
+            navigate("/user")
 
         }catch{
             alert("Login falhou: verifique suas credenciais")
@@ -43,6 +43,7 @@ export const Login:React.FC = () => {
     return(
         <div>
             <h2>Login</h2>
+       
 
             <Input placeholder="email"
             value={email}
@@ -56,7 +57,7 @@ export const Login:React.FC = () => {
 
             
             <div>
-                <Button text="entrar" onClick={handleLogin} />
+                <Button text="Entrar" onClick={handleLogin} />
             </div>
         </div>
     )
