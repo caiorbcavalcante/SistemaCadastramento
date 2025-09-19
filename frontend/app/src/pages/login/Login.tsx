@@ -9,6 +9,7 @@ export const Login:React.FC = () => {
 
     const [email,setEmail] = useState("")
     const [senha,setSenha] = useState("")
+    const [error,setError] = useState<string | null>(null)
     const navigate = useNavigate()
 
     useEffect(()=> {
@@ -19,30 +20,51 @@ export const Login:React.FC = () => {
         }
     },[navigate])
 
-    const handleLogin =async () => {
+    const handleLogin = async () => {   
+
+        if(!email || !senha) {
+            setError("Preencha os campos")
+            return
+        }
+
         try{ 
-            const endpoint =
-            tipo === "user"
-            ? "http://localhost:3000/user/login"
-            : "http://localhost:3000/barbers/login"
+          const res = await axios.post("http://localhost:3000/user/login", {
+            email, 
+            password:senha
+          })
 
-            const response = await axios.post(endpoint, {email,password:senha})
+          localStorage.setItem("token",res.data.token)
+          localStorage.setItem("id_user", res.data.id_user)
+          localStorage.setItem("role","user")
 
-            const token= response.data.token
-
-            localStorage.setItem("token",token)
-            localStorage.setItem("tipo",tipo)
-
-            navigate("/user")
+          navigate("/user")
 
         }catch{
-            alert("Login falhou: verifique suas credenciais")
+            try{
+                const res = await axios.post("http://localhost:3000/barbers/login", {
+                email, 
+                password:senha
+            })
+
+                
+            localStorage.setItem("token",res.data.token)
+            localStorage.setItem("id_barber", res.data.id_barber)
+            localStorage.setItem("role","barber")
+
+            navigate("/controlPanel")
+
+            }catch{
+                alert("Login falhou: verifique suas credenciais")
+             }
+           
         }
         
     }
     return(
         <div>
             <h2>Login</h2>
+
+            {error && <p style={{ color: "red" }}>{error}</p>}
        
 
             <Input placeholder="email"
@@ -51,6 +73,7 @@ export const Login:React.FC = () => {
             />
 
             <Input 
+            type="password"
             placeholder="senha"
             value={senha}
             onChange={(e)=>setSenha(e.target.value)}/>
