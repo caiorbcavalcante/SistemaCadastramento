@@ -5,7 +5,7 @@ import axios from "axios"
 const createBarbers: React.FC = () => {
     const [name, setName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
-    const [password, setPassword] = user<string>("");
+    const [password, setPassword] = useState<string>("");
 
     const isValidEmail = (email: string): boolean => {
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
