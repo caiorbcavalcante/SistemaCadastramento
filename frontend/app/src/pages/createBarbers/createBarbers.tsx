@@ -27,8 +27,8 @@ const createBarbers: React.FC = () => {
             });
 
             console.log("Barbeiro criado")
-        } catch (error: any) {
-            console.log("Erro ao criar barbeiro", error);
+        } catch (err: any) {
+            console.log("Erro ao criar barbeiro", err);
         }
     }
 
