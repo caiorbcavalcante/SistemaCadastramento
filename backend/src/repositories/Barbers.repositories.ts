@@ -10,7 +10,8 @@ export class BarberRepository{
 
     getBarber = async (id_barber:number) : Promise<Barber| null> => {
         return await this.manager.findOne ({
-            where: {id_barber:id_barber}
+            where: {id_barber:id_barber},
+            relations: ["services", "appointments"]
         })
     }
 
@@ -22,8 +23,8 @@ export class BarberRepository{
         return await this.manager.save(barber);
     }
 
-    updateBarber = async(id_barber: number, name: string, email: string, password: string): Promise < Barber | null > =>{
-        await this.manager.update({id_barber}, {name, email, password})
+    updateBarber = async(id_barber: number, name: string, email: string, password: string, number:number): Promise < Barber | null > =>{
+        await this.manager.update({id_barber}, {name, email, password,number})
         return this.manager.findOneBy({id_barber})
     } 
 

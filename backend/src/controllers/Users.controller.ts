@@ -1,7 +1,7 @@
 import { Response, Request,  } from 'express'
 import { UserService } from '../services/Users.service'
 import { EmailAlreadyExistsError } from '../errors/emailAlreadyExistsError'
-//botar admin em getalluser
+
 export class UserController{
     userService:UserService
 
@@ -46,7 +46,8 @@ export class UserController{
         const usersMap = users.map(user => ({
             id_user: user.id_user,
             name: user.name,
-            email: user.email
+            email: user.email,
+            number:user.number
         }))
 
         return response.status(200).json({ users: usersMap })
@@ -60,10 +61,10 @@ export class UserController{
         try{
 
             const user = request.body
-            if(!user.name || !user.email || !user.password){
+            if(!user.name || !user.email || !user.password || !user.number){
                 return response.status(400).json({message:"Nome,email e senha são obrigatorios"})
             }
-            await this.userService.createUser(user.name, user.email, user.password)
+            await this.userService.createUser(user.name, user.email, user.password, user.number)
             return response.status(201).json({message:"Usuario criado com sucesso"})
         }catch (error) {
             if (error instanceof EmailAlreadyExistsError){
@@ -78,11 +79,11 @@ export class UserController{
             const id = Number(request.params.id_user)
             const user = request.body
 
-            if (!user.name || !user.email || !user.password) {
+            if (!user.name || !user.email || !user.password || !user.number) {
             return response.status(400).json({ message: "Nome, email e senha são obrigatórios" })
         }
 
-            const updateUser = await this.userService.updateUser(id, user.name, user.email, user.password)
+            const updateUser = await this.userService.updateUser(id, user.name, user.email, user.password, user.number)
             if(!updateUser){
             return response.status(404).json({message:"Usuario inexistente"})
         }

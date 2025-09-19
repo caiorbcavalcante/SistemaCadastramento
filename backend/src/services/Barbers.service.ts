@@ -20,7 +20,7 @@ export class BarbersService{
         return await this.barberRepository.getAllBarbers()
     }
 
-    createBarber = async(name:string, email:string, password:string): Promise<Barber> =>{
+    createBarber = async(name:string, email:string, password:string, number:number): Promise<Barber> =>{
         const existingBarber = await this.barberRepository.findByEmail(email)
         if (existingBarber){throw new EmailAlreadyExistsError()}
 
@@ -28,8 +28,8 @@ export class BarbersService{
         return await this.barberRepository.createBarber(barber as Barber)
     }
 
-    updateBarber = async(id:number, name: string, email:string, password:string): Promise<Barber | null> =>{
-        return await this.barberRepository.updateBarber(id, name, email, password)
+    updateBarber = async(id:number, name: string, email:string, password:string, number:number): Promise<Barber | null> =>{
+        return await this.barberRepository.updateBarber(id, name, email, password,number)
     }
 
     deleteBarber = async(id_barber: number): Promise <boolean> =>{

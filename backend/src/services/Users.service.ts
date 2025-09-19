@@ -20,17 +20,17 @@ export class UserService{
         return await this.userRepository.getAllUser()
     }
 
-    createUser=async(name:string,email:string, password:string):Promise<User> =>{
+    createUser=async(name:string,email:string, password:string, number:number):Promise<User> =>{
         const existingUser = await this.userRepository.findByEmail(email)
         if (existingUser){
             throw new EmailAlreadyExistsError();
         }
-        const user = new User(name,email,password)
+        const user = new User(name,email,password, number)
         return await this.userRepository.createUser(user as User)
     }
 
-    updateUser= async(id:number,name:string, email:string, password:string):Promise<User | null>=>{
-        return await this.userRepository.updateUser(id,name,email,password)
+    updateUser= async(id:number,name:string, email:string, password:string, number:number):Promise<User | null>=>{
+        return await this.userRepository.updateUser(id,name,email,password,number)
     }
 
     deleteUser=async(id_user:number):Promise<boolean>=>{
@@ -49,7 +49,7 @@ export class UserService{
     }
 
     const token = jwt.sign(
-        {id_user:user.id_user, email:user.email},
+        {id_user:user.id_user, email:user.email, role:"user"},
         process.env.JWT_SECRET as string,
         {expiresIn:"1h"}
     )

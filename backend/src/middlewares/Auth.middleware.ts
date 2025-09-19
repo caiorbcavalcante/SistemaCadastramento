@@ -10,7 +10,7 @@ export function AuthenticationVerify(request: Request, response: Response, next:
         const [, token] = authToken.split(" ")
 
                 try{
-                        const payload = verify(token, process.env.JWT_SECRET as string) as {id_user:number}
+                        const payload = verify(token, process.env.JWT_SECRET as string) as {id_user:number, role:"string"}
                         
                         return next()
 

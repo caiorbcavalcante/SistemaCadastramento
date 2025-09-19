@@ -142,16 +142,15 @@ export class ServicesController{
             }
 
             const servicesMap = services.map( a => ({
-                id_appointment: a.appointments,
-                userId: a.user.id_user,
-                userName: a.user.name,
-                date: a.appointments,
+                barberId: a.barber.id_barber,
+                barberName: a.barber.name,
+                barberNumber:a.barber.number,
                 serviceId:a.id_service,
                 description: a.description,
                 price: a.price
             }))
 
-            return response.status(200).json({servicesMap})
+            return response.status(200).json(servicesMap)
         } catch {
             return response.status(500).json({ message: "Erro ao buscar serviço de barbeiro"})
         }

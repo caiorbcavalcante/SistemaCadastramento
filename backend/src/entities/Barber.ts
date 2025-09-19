@@ -17,6 +17,9 @@ export class Barber {
 
     @Column({nullable: false})
     password!: string;
+
+    @Column({nullable: false})
+    number!: number;
     
     @ManyToOne(() => User, user=>user.barbers)
     user!:User
@@ -27,9 +30,10 @@ export class Barber {
     @OneToMany(()=> Appointment, appointment=>appointment.barber)
     appointments!:Appointment[]
 
-    constructor(name?: string, email?: string, password?: string){
+    constructor(name?: string, email?: string, password?: string, number?: number){
         if(name) this.name = name
         if(email) this.email = email
         if(password) this.password = password
+        if(number) this.number = number
     }
 }

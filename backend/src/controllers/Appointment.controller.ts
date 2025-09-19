@@ -122,6 +122,7 @@ export class AppointmentController {
             id_appoitment: a.id_appointment,
             barberId:a.barber.id_barber,
             barberName: a.barber.name,
+            barberNumber: a.barber.number,
             date: a.date,
             id_service: a.service.id_service,
             description: a.service.description,
@@ -148,13 +149,14 @@ export class AppointmentController {
                 id_appointment: a.id_appointment,
                 userId: a.user.id_user,
                 userName: a.user.name,
+                userNumber:a.user.number,
                 date: a.date,
                 serviceId:a.service,
                 description: a.service.description,
                 price: a.service.price
                 
             }))
-            return response.status(200).json({appointmentsMap})
+            return response.status(200).json(appointmentsMap)
         }catch{
             return response.status(500).json({message: "Error ao buscar agendamento do barbeiro"})
         }

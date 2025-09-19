@@ -23,8 +23,8 @@ export class UserRepository{
     createUser =async(user:User): Promise<User> =>{
         return await this.manager.save(user)
     }
-    updateUser= async(id_user:number, name:string, email:string, password:string):Promise<User | null>=>{
-         await this.manager.update({id_user}, {name, email, password})
+    updateUser= async(id_user:number, name:string, email:string, password:string, number:number):Promise<User | null>=>{
+         await this.manager.update({id_user}, {name, email, password, number})
          return this.manager.findOneBy({id_user})
     }
 

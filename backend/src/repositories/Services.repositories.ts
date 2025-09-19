@@ -36,13 +36,15 @@ export class ServiceRepository{
 
     getServiceByUser = async(id_user:number): Promise<Service[] | null> => {
         return await this.manager.find({
-            where:{user: {id_user}}
+            where:{user: {id_user}},
+            relations: ["user", "barber"]
         })
     }
 
     getServiceByBarber = async(id_barber:number): Promise<Service [] | null> => {
         return await this.manager.find({
-            where:{barber: {id_barber}}
+            where:{barber: {id_barber}},
+            relations: ["user", "barber"]
         })
     }
 }

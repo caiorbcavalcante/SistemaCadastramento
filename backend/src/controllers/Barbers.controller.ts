@@ -27,7 +27,8 @@ export class BarbersController{
 
         return response.status(200).json({barber:barber?.id_barber,
             name:barber?.name,
-            email: barber?.email})
+            email: barber?.email,
+            number:barber?.number})
     }catch{
           return response.status(500).json({ message: "Erro ao buscar barbeiro"});
     }
@@ -52,7 +53,7 @@ export class BarbersController{
           return response.status(400).json({message: "Necessário nome, senha e email de usuário barbeiro"})
         }
 
-        await this.barbersService.createBarber(barber.name, barber.email, barber.password)
+        await this.barbersService.createBarber(barber.name, barber.email, barber.password, barber.number)
         return response.status(201).json({message: "Usuário de barbeiro cadastrado com sucesso! "})
       } catch (error) {
         if (error instanceof EmailAlreadyExistsError){
@@ -72,13 +73,14 @@ export class BarbersController{
           return response.status(400).json({message: "Necessário nome, senha e email de usuário barbeiro"})
         }
 
-        const updateBarber = await this.barbersService.updateBarber(id, barber.name, barber.email, barber.password)
+        const updateBarber = await this.barbersService.updateBarber(id, barber.name, barber.email, barber.password,barber.number)
 
         if (!updateBarber){
           return response.status(404).json({message: "Conta de barbeiro não encontrada"})
         } return response.status(200).json({message: "Conta de barbeiro atualizada com sucesso!",
           name:updateBarber?.name,
-          email:updateBarber?.email
+          email:updateBarber?.email,
+          number:updateBarber?.number
         })
 
 

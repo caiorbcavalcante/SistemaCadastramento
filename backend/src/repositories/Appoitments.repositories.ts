@@ -42,12 +42,14 @@ export class AppointmentRepository{
 
     getAppointmentsByUser = async(id_user:number):Promise<Appointment[] | null> =>{
         return await this.manager.find({
-            where:{user:{id_user}}
+            where:{user:{id_user}},
+            relations: ["user", "barber", "service"]
         })
     }
     getAppointmentsByBarber = async(id_barber:number):Promise<Appointment[] | null> =>{
         return await this.manager.find({
-            where:{barber:{id_barber}}
+            where:{barber:{id_barber}},
+            relations: ["user", "barber", "service"]
         })
     }
 }
