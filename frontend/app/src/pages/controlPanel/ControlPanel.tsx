@@ -3,6 +3,7 @@ import "./ControlPanel.css"
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import { Route } from 'react-router-dom'
+import BarberEditProfile from '../barberEditProfile/BarberEditProfile'
 // import axios from 'axios'
 
 interface Appointment{
@@ -20,13 +21,13 @@ interface Service {
 const mockAppointments = [
   {
     id_appointment: 1,
-    date: "19:00",
+    date: "2025-09-20T17:00:00",
     service: { description: "Corte" },
     user: { name: "Carlinhos" }
   },
   {
     id_appointment: 2,
-    date: "20:00",
+    date: "2025-09-19T19:00:00",
     service: { description: "Barba e Bigode" },
     user: { name: "Byloka" }
   }
@@ -51,10 +52,22 @@ const ControlPanel = () => {
   const [showPopout, setShowPopout] = useState(false)
   const [appointments, setAppointments] = useState<Appointment[]>([])
   const [services, setServices] = useState<Service[]>([])
+  const [day, setDay] = useState(new Date());
   const navigate = useNavigate();
 
   // const weekdays = ["Domingo", "Segunda-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"]
   const { user, loading, logout } = useAuth();
+
+  const changeDay = (value: number) =>{
+    const newDate = new Date(day)
+    newDate.setDate(day.getDate() + value)
+    setDay(newDate);
+  } 
+
+  const filteredAppointments = appointments.filter(item => {
+    const itemDate = new Date(item.date)
+    return itemDate.toLocaleDateString("pt-BR") === day.toLocaleDateString("pt-BR")
+  })
 
   const handleLogout = () => {
     logout();
@@ -97,14 +110,14 @@ const ControlPanel = () => {
 
   // useEffect(() => {
   //   if (!loading){
-  //     if(!user || user.role !== 'barber'){navigate('/login')}
+  //     if(!user || user.role !== 'barber'){navigate('/')} // MUDAR AQUI A ROTA DEPOIS PAR O MENU
   //   }
   // }, [user, loading, navigate])
 
   // if ( loading ) {
   //   return <div> <h2> Carregando Painel de Controle</h2></div>
   // }
-
+  
   // if ( !user || user.role !== 'barber'){
   //   return null;
   // }
@@ -137,6 +150,13 @@ const ControlPanel = () => {
                   Sair
                 </button>
               </li>
+              {user?.adminplus &&
+              <li>
+                <button onClick={() => {navigate('/controlPanel/admin')}}>
+                  Gerenciar barbeiros
+                </button>
+              </li>
+              }
             </ul>
           </div>}
         </div>
@@ -144,23 +164,32 @@ const ControlPanel = () => {
       
       <div className='control-panel-appointments'>
           <h2>
-            Agendamentos de hoje:
+            {/* Olá, {user.name}: */}
           </h2>
-          {
-            appointments.length > 0 ? (
-              <ul>
-            {appointments && appointments.map(item => (
-              <li key={item.id_appointment}>
-                  <span>{item.date}</span>
-                  <span>{item.service.description}</span>
-                  <span>{item.user.name}</span>
-              </li>
-            ))}
-          </ul> 
-            ):(
-              <h4> Nenhum agendamento disponível no dia de hoje</h4>
-            )
-          }
+          <button onClick={() => changeDay(-1)}>{`<`}</button>
+            {day.toLocaleDateString("pt-BR")}
+          <button onClick={() => changeDay(1)}>{`>`}</button>
+    
+          {filteredAppointments.length > 0 ? (
+            <ul>
+              {filteredAppointments.map(item => {
+                const itemDate = new Date(item.date);
+                const horaFormatada = itemDate.toLocaleTimeString("pt-BR", {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                });
+                return (
+                  <li key={item.id_appointment}>
+                    <span>{horaFormatada}</span>
+                    <span>{item.service.description}</span>
+                    <span>{item.user.name}</span>
+                  </li>
+                );
+              })}
+            </ul>
+          ) : (
+            <h4>Nenhum agendamento disponível para este dia.</h4>
+          )}
       </div>
     </div>
   )

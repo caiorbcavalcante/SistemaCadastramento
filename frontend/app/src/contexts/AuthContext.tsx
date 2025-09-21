@@ -4,8 +4,11 @@ import { jwtDecode } from 'jwt-decode'
 
 interface User{
     id: number;
+    name: string;
     email: string; 
+    number: number;
     role: 'user' | 'barber';
+    adminplus?: boolean
 }
 
 interface AuthContextType{
@@ -19,7 +22,7 @@ const AuthContext = createContext<AuthContextType | undefined> (undefined);
 
 export const AuthProvider = ({children}: { children: ReactNode}) => {
     const [user, setUser] = useState<User | null> (null);
-    const [loading, setLoading] = useState<boolean> (null)
+    const [loading, setLoading] = useState<boolean> (true)
 
     useEffect(() => {
         const checkAuthStatus  = async () =>{
@@ -30,8 +33,11 @@ export const AuthProvider = ({children}: { children: ReactNode}) => {
                     const decodedToken = jwtDecode<{
                         id_barber?: number;
                         id_user?: number;
+                        name: string;
                         email: string;
                         role: 'user' | 'barber';
+                        number: number,
+                        adminplus?: boolean
                         exp: number
                     }>(token)  
 
@@ -45,8 +51,12 @@ export const AuthProvider = ({children}: { children: ReactNode}) => {
                         }
                     setUser({
                         id: userId,
+                        name: decodedToken.name,
                         email: decodedToken.email,
-                        role: decodedToken.role
+                        role: decodedToken.role,
+                        number: decodedToken.number,
+                        adminplus: decodedToken.adminplus
+                        
                     })
                 } else {
                     localStorage.removeItem("authToken");

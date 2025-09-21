@@ -6,6 +6,7 @@ import NotFound from '../pages/NotFound/NotFound';
 import BarberEditProfile from '../pages/barberEditProfile/BarberEditProfile';
 import ControlPanel from '../pages/controlPanel/ControlPanel';
 import { UserPage } from '../pages/userPage/UserPage';
+import BarberAdminPage from '../pages/barberAdminPage/BarberAdminPage';
 
 export const AppRoutes:React.FC = () => {
     return(
@@ -18,6 +19,7 @@ export const AppRoutes:React.FC = () => {
     <Route path="/user" element={<UserPage/>}/>
     <Route path='/controlPanel' element={<ControlPanel/>}/>
     <Route path='/barberEditProfile' element={<BarberEditProfile/>}/>
+    <Route path='/controlPanel/admin' element={<BarberAdminPage/>}/>
     
 
     <Route path='*' element={<NotFound/>}/>
