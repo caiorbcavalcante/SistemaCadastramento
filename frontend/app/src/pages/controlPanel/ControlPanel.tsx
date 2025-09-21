@@ -191,6 +191,10 @@ const ControlPanel = () => {
             <h4>Nenhum agendamento disponível para este dia.</h4>
           )}
       </div>
+
+      <div className='control-panel-manage-appointments'>
+          Gerenciar agendamentos
+      </div>
     </div>
   )
 }
