@@ -4,6 +4,16 @@ import { Input } from "../../components/input/Input"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 
+    const validateLogin = (email:string, password:string): string | null => {
+         if(!email || !password) {
+            return ("Preencha os campos")         
+        }
+        if(!email.includes("@") || !email.includes(".")){return ("Email inválido.")}
+        if(password.length < 6){return("A senha deve conter no mínimo 6 digitos")}
+
+        return null
+
+    }
 
 export const Login:React.FC = () => {
 
@@ -21,11 +31,12 @@ export const Login:React.FC = () => {
     },[navigate])
 
     const handleLogin = async () => {   
+        setError(null)
+        const validadeHandle = validateLogin(email,senha)
+            if(validadeHandle){
+                setError(validadeHandle)
+            }
 
-        if(!email || !senha) {
-            setError("Preencha os campos")
-            return
-        }
 
         try{ 
           const res = await axios.post("http://localhost:3000/user/login", {
