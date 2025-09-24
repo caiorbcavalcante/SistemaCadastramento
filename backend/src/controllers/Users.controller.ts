@@ -62,7 +62,7 @@ export class UserController{
 
             const user = request.body
             if(!user.name || !user.email || !user.password || !user.number){
-                return response.status(400).json({message:"Nome,email e senha são obrigatorios"})
+                return response.status(400).json({message:"Nome,email, senha e número são obrigatorios"})
             }
             await this.userService.createUser(user.name, user.email, user.password, user.number)
             return response.status(201).json({message:"Usuario criado com sucesso"})

@@ -49,8 +49,8 @@ export class BarbersController{
       try {
         const barber = request.body
 
-        if (!barber.name || !barber.email || !barber.password){
-          return response.status(400).json({message: "Necessário nome, senha e email de usuário barbeiro"})
+        if (!barber.name || !barber.email || !barber.password || !barber.number){
+          return response.status(400).json({message: "Necessário nome, senha, email e número"})
         }
 
         await this.barbersService.createBarber(barber.name, barber.email, barber.password, barber.number)
