@@ -73,7 +73,7 @@ const BarberAdminPage = () => {
 
     const deleteBarber = async (id: number) => {
         try {
-            await axios.delete(`https://localhost:3000/barbers/${id}`,{
+            await axios.delete(`http://localhost:3000/barbers/${id}`,{
                 headers: {Authorization: `Bearer ${token}`}
             });
 
