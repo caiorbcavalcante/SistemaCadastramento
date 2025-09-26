@@ -1,8 +1,5 @@
 import { PrimaryGeneratedColumn, Column, Entity, OneToMany, ManyToOne, JoinColumn } from "typeorm"
-import { User } from "./User"
 import { Appointment } from "./Appointment"
-import { Barber } from "./Barber"
-
 
 @Entity("services")
 export class Service {
@@ -17,12 +14,6 @@ export class Service {
     description!: string
     
    
-    @ManyToOne(() => User, user => user.services)
-    @JoinColumn({ name: "userId" }) 
-    user!: User;
-
-    @ManyToOne(() => Barber, barber=>barber.services)
-    barber!:Barber
 
     @OneToMany(() => Appointment, appointment => appointment.service)
     appointments!: Appointment[];

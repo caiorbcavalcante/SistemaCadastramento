@@ -15,5 +15,5 @@ export const AppDataSource = new DataSource({
   synchronize: false, // cria as tabelas automaticamente (apenas para dev)
   logging: true,
   entities: [__dirname + '/entities/*.ts'], // suas entidades
-  migrations: [__dirname + '/migrations/*.ts'],
+  migrations: [__dirname + '/migrations/*.ts'], 
 })
