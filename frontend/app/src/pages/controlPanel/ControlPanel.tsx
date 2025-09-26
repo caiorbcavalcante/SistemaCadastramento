@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import { Route } from 'react-router-dom'
 import BarberEditProfile from '../barberEditProfile/BarberEditProfile'
-// import axios from 'axios'
+import axios, { isAxiosError } from 'axios'
 
 interface Appointment{
   id_appointment: number,
@@ -21,38 +21,27 @@ interface Service {
 const mockAppointments = [
   {
     id_appointment: 1,
-    date: "2025-09-20T17:00:00",
+    date: "2025-09-26T17:00:00",
     service: { description: "Corte" },
     user: { name: "Carlinhos" }
   },
   {
     id_appointment: 2,
-    date: "2025-09-19T19:00:00",
+    date: "2025-09-27T19:00:00",
     service: { description: "Barba e Bigode" },
     user: { name: "Byloka" }
   }
 ];
 
-const mockServices = [
-  {
-    id_service: 101,
-    description: "Corte",
-    price: 45.00
-  },
-  {
-    id_service: 102,
-    description: "Barba e Bigode",
-    price: 30.00
-  }
-];
 // PARA TESTE 
 
 
 const ControlPanel = () => {
   const [showPopout, setShowPopout] = useState(false)
   const [appointments, setAppointments] = useState<Appointment[]>([])
-  const [services, setServices] = useState<Service[]>([])
   const [day, setDay] = useState(new Date());
+  const [selectedAppointment, setSelectedAppointment] = useState<Appointment>()
+  const [showPopoutManageAppointment, setShowPopoutManageAppointment] = useState(false);
   const navigate = useNavigate();
 
   // const weekdays = ["Domingo", "Segunda-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"]
@@ -74,6 +63,21 @@ const ControlPanel = () => {
     navigate('/login')
   }
 
+  const handleRemoveAppointment = async (app) =>{
+    try {
+      const removeAppointmentResponse = await axios.delete(`http://localhost:3000/appointments/${app.id_appointment}`)
+
+      setAppointments(prevApps => prevApps.filter(a => a.id_appointment!== app.id_appointment))
+      setShowPopoutManageAppointment(false);
+      setSelectedAppointment(null);
+
+    } catch (error) {
+      if (axios.isAxiosError(error)){
+        alert(error.response?.data?.message || "Erro ao remover agendamento")
+      }
+    }    
+  }
+
   // useEffect(() =>{
   //   const fetchBarberData = async () =>{
   //     if (user && user.role === 'barber') {
@@ -86,10 +90,6 @@ const ControlPanel = () => {
   //         })
   //         setAppointment(appointmentResponse.data)
 
-  //         const serviceResponse = await axios.get(`http://localhost:3000/service/id_barber/${barberId}`, {
-  //           headers: { Authorization: `Bearer ${token}`}
-  //         })
-  //         setServices(serviceResponse.data)
   //       } catch (error) {
   //         if (axios.isAxiosError(error)){
   //           if (error.response){
@@ -124,7 +124,6 @@ const ControlPanel = () => {
 
   useEffect(() => {
   setAppointments(mockAppointments);
-  setServices(mockServices)
   }, [])
 
   return (
@@ -162,6 +161,16 @@ const ControlPanel = () => {
         </div>
       </header>
       
+      {showPopoutManageAppointment && selectedAppointment && (
+        <div className='control-panel-manage-appointments-popout'>
+          <span>
+            <h2> Tem certeza que deseja remover este agendamento? </h2>
+            <button onClick={() => {handleRemoveAppointment(selectedAppointment); }}>Sim</button>
+            <button onClick={() => {setSelectedAppointment(null); setShowPopoutManageAppointment(false)}}>Cancelar</button>
+          </span>
+        </div>
+      )}
+      
       <div className='control-panel-appointments'>
           <h2>
             {/* Olá, {user.name}: */}
@@ -183,6 +192,9 @@ const ControlPanel = () => {
                     <span>{horaFormatada}</span>
                     <span>{item.service.description}</span>
                     <span>{item.user.name}</span>
+                    <span>
+                      <button onClick={() => {setShowPopoutManageAppointment(true); setSelectedAppointment(item);}}> remv</button>
+                    </span>
                   </li>
                 );
               })}
@@ -192,9 +204,6 @@ const ControlPanel = () => {
           )}
       </div>
 
-      <div className='control-panel-manage-appointments'>
-          Gerenciar agendamentos
-      </div>
     </div>
   )
 }

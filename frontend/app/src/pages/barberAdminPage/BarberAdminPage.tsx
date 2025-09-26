@@ -32,7 +32,7 @@ const BarberAdminPage = () => {
 
         } catch (error) {
             if(axios.isAxiosError(error) ) {
-                alert(error.response?.data?.message || "Erro ao conceder autorizAÇÃO")
+                alert(error.response?.data?.message || "Erro ao conceder autorização")
             }
         }
         
