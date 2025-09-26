@@ -54,6 +54,40 @@ const BarberAdminPage = () => {
         }
     }
 
+    const addBarber = async (newBarberData: {name: string, email: string, password: string, number: string}) => {
+        try {
+            const response = await axios.post("http://localhost:3000/barbers", newBarberData, {
+                headers: {Authorization: `Bearer ${token}`}
+            });
+
+            // adiciona o novo barbeiro a lista
+            setBarberList(prevList => [...prevList, response.data]);
+            alert(`Barbeiro ${response.data.name} adicionado com sucesso`);
+
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                alert(error.response?.data?.message || "Erro ao adicionar barbeiro");
+            }
+        }
+    }
+
+    const deleteBarber = async (id: number) => {
+        try {
+            await axios.delete(`https://localhost:3000/barbers/${id}`,{
+                headers: {Authorization: `Bearer ${token}`}
+            });
+
+            // Remove do estado local
+            setBarberList(prevList => prevList.filter(b => b.id_barber !== id)); // coloca apenas os barbeiros com id diferente do id escolihdo para a remoção
+            alert("Barbeiro removido com sucesso!")
+
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                alert(error.response?.data?.message || "Erro ao remover barbeiro");
+            }
+        }
+    }
+
     const handleBackClick = () => {
         navigate('/controlPanel')
     }
