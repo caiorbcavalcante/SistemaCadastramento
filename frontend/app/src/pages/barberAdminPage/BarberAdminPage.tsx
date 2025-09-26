@@ -32,39 +32,89 @@ const BarberAdminPage = () => {
 
         } catch (error) {
             if(axios.isAxiosError(error) ) {
-                alert(error.response?.data?.message || "Erro ao conceder autorização")
+                alert(error.response?.data?.message || "Erro ao conceder autorizAÇÃO")
             }
         }
         
+    }
+
+    const removeAuth = async (barber) => {
+        try {
+            await axios.patch(`http://localhost:3000/barbers/${barber.id_barber}`, {
+                adminplus: false
+            }, {headers: {Authorization: `Bearer ${token}`}})
+
+            setBarberList(prevList => prevList.map(b => b.id_barber === barber.id_barber ? {...b, adminplus: false}: b))
+            alert(`Remoção do barbeiro ${barber.name} realizada com sucesso`);
+
+        } catch(error){
+            if (axios.isAxiosError(error)) {
+                alert((error.response?.data?.message || "Erro ao remover autorização"))
+            }
+        }
+    }
+
+    const addBarber = async (newBarberData: {name: string, email: string, password: string, number: string}) => {
+        try {
+            const response = await axios.post("http://localhost:3000/barbers", newBarberData, {
+                headers: {Authorization: `Bearer ${token}`}
+            });
+
+            // adiciona o novo barbeiro a lista
+            setBarberList(prevList => [...prevList, response.data]);
+            alert(`Barbeiro ${response.data.name} adicionado com sucesso`);
+
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                alert(error.response?.data?.message || "Erro ao adicionar barbeiro");
+            }
+        }
+    }
+
+    const deleteBarber = async (id: number) => {
+        try {
+            await axios.delete(`http://localhost:3000/barbers/${id}`,{
+                headers: {Authorization: `Bearer ${token}`}
+            });
+
+            // Remove do estado local
+            setBarberList(prevList => prevList.filter(b => b.id_barber !== id)); // coloca apenas os barbeiros com id diferente do id escolihdo para a remoção
+            alert("Barbeiro removido com sucesso!")
+
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                alert(error.response?.data?.message || "Erro ao remover barbeiro");
+            }
+        }
     }
 
     const handleBackClick = () => {
         navigate('/controlPanel')
     }
 
-    useEffect(() =>{
-        const fetchBarberList = async () => {
-            if (user && user.role === 'barber' && user.adminplus) {
-                const barberId = user.id
+    // useEffect(() =>{
+    //     const fetchBarberList = async () => {
+    //         if (user && user.role === 'barber' && user.adminplus) {
+    //             const barberId = user.id
 
-                try {
-                    const response = await axios.get('http://localhost:3000/barbers', {headers: {Authorization: `Bearer ${token}`}})
-                    setBarberList(response.data);
-                } catch (error) {
-                    if(axios.isAxiosError(error)){
-                        if(error.response){
-                            alert(error.response.data.message)
-                        } else if(error.request){
-                            alert("Não foi possível se conectar com o servidor")
-                        } else {
-                            alert("Ocorreu um erro inesperado")
-                        }}}
-                    } else if(!loading && (!user || user.role !== 'barber' || !user.adminplus)){
-                        navigate('/controlPanel')
-                    }
-                    }
-        fetchBarberList();
-    }, [user, loading, navigate, token])
+    //             try {
+    //                 const response = await axios.get('http://localhost:3000/barbers', {headers: {Authorization: `Bearer ${token}`}})
+    //                 setBarberList(response.data);
+    //             } catch (error) {
+    //                 if(axios.isAxiosError(error)){
+    //                     if(error.response){
+    //                         alert(error.response.data.message)
+    //                     } else if(error.request){
+    //                         alert("Não foi possível se conectar com o servidor")
+    //                     } else {
+    //                         alert("Ocorreu um erro inesperado")
+    //                     }}}
+    //                 } else if(!loading && (!user || user.role !== 'barber' || !user.adminplus)){
+    //                     navigate('/controlPanel')
+    //                 }
+    //                 }
+    //     fetchBarberList();
+    // }, [user, loading, navigate, token])
 
     // useEffect(() =>{
     //     if (!loading){

@@ -5,6 +5,7 @@ import { Barbers } from "./barbers/Barbers"
 import { Services } from "./services/services"
 import { AvailableTime } from "./availableTime/AvailableTime"
 import { NewAppointment } from "./newAppointment/NewAppointment"
+import { DeleteUser } from "./delete/DeleteUser"
 
 
 
@@ -17,6 +18,7 @@ export const UserPage:React.FC = () => {
             <AvailableTime/>
             <NewAppointment/>
             <UserAppointments/>
+            <DeleteUser/>
 
         </div>
     )

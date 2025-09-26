@@ -5,6 +5,7 @@ import axios from "axios";
 interface IBarber {
   id_barber: string;
   name: string;
+  number:number
 
 }
 
@@ -41,7 +42,7 @@ export const Barbers: React.FC = () => {
             {barbers.map((b) => (
                 <li key={b.id_barber}>
                     {b.name}
-                    {/* colocar o numero*/}
+                    {b.number}
     
                 </li>
             ))}

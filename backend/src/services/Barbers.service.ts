@@ -24,7 +24,7 @@ export class BarbersService{
         const existingBarber = await this.barberRepository.findByEmail(email)
         if (existingBarber){throw new EmailAlreadyExistsError()}
 
-        const barber = new Barber(name, email, password)
+        const barber = new Barber(name, email, password,number)
         return await this.barberRepository.createBarber(barber as Barber)
     }
 

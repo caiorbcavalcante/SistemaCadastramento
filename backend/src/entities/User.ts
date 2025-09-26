@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Barber } from "./Barber";
 import { Service } from "./Service";
 import { Appointment } from "./Appointment";
@@ -21,8 +21,10 @@ export class User {
     @Column({ nullable: false})
     number!: number;
 
-    @OneToMany(() => Barber, barber => barber.user)
-    barbers!: Barber[]
+
+    @ManyToOne(() => Barber, barber => barber.users)
+    barber!: Barber;
+
 
     @OneToMany(()=> Service, service => service.user)
     services!:Service[]

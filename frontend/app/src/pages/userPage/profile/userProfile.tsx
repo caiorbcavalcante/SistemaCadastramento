@@ -4,7 +4,7 @@ import { Input } from "../../../components/input/Input";
 import { Button } from "../../../components/button/Button";
 
 
-const validadeForm = (name: string, password: string, email:string, number : number): string | null => {
+const validadeForm = (name: string, password: string, email:string, number : string): string | null => {
      if (!name || !password ||!email ||!number) {
      return "Preencha todos os campos."
     }

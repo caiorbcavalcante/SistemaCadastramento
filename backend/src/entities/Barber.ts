@@ -21,8 +21,11 @@ export class Barber {
     @Column({nullable: false})
     number!: number;
     
-    @ManyToOne(() => User, user=>user.barbers)
-    user!:User
+    
+    @OneToMany(() => User, user => user.barber)
+    users!: User[];
+
+
 
     @OneToMany(()=> Service, service=>service.barber)
     services!:Service[]
