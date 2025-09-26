@@ -193,7 +193,8 @@ const ControlPanel = () => {
       </div>
 
       <div className='control-panel-manage-appointments'>
-          Gerenciar agendamentos
+         Gerenciar agendamentos
+          
       </div>
     </div>
   )

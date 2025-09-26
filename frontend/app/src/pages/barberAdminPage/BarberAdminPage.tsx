@@ -38,33 +38,49 @@ const BarberAdminPage = () => {
         
     }
 
+    const removeAuth = async (barber) => {
+        try {
+            await axios.patch(`http://localhost:3000/barbers/${barber.id_barber}`, {
+                adminplus: false
+            }, {headers: {Authorization: `Bearer ${token}`}})
+
+            setBarberList(prevList => prevList.map(b => b.id_barber === barber.id_barber ? {...b, adminplus: false}: b))
+            alert(`Remoção do barbeiro ${barber.name} realizada com sucesso`);
+
+        } catch(error){
+            if (axios.isAxiosError(error)) {
+                alert((error.response?.data?.message || "Erro ao remover autorização"))
+            }
+        }
+    }
+
     const handleBackClick = () => {
         navigate('/controlPanel')
     }
 
-    useEffect(() =>{
-        const fetchBarberList = async () => {
-            if (user && user.role === 'barber' && user.adminplus) {
-                const barberId = user.id
+    // useEffect(() =>{
+    //     const fetchBarberList = async () => {
+    //         if (user && user.role === 'barber' && user.adminplus) {
+    //             const barberId = user.id
 
-                try {
-                    const response = await axios.get('http://localhost:3000/barbers', {headers: {Authorization: `Bearer ${token}`}})
-                    setBarberList(response.data);
-                } catch (error) {
-                    if(axios.isAxiosError(error)){
-                        if(error.response){
-                            alert(error.response.data.message)
-                        } else if(error.request){
-                            alert("Não foi possível se conectar com o servidor")
-                        } else {
-                            alert("Ocorreu um erro inesperado")
-                        }}}
-                    } else if(!loading && (!user || user.role !== 'barber' || !user.adminplus)){
-                        navigate('/controlPanel')
-                    }
-                    }
-        fetchBarberList();
-    }, [user, loading, navigate, token])
+    //             try {
+    //                 const response = await axios.get('http://localhost:3000/barbers', {headers: {Authorization: `Bearer ${token}`}})
+    //                 setBarberList(response.data);
+    //             } catch (error) {
+    //                 if(axios.isAxiosError(error)){
+    //                     if(error.response){
+    //                         alert(error.response.data.message)
+    //                     } else if(error.request){
+    //                         alert("Não foi possível se conectar com o servidor")
+    //                     } else {
+    //                         alert("Ocorreu um erro inesperado")
+    //                     }}}
+    //                 } else if(!loading && (!user || user.role !== 'barber' || !user.adminplus)){
+    //                     navigate('/controlPanel')
+    //                 }
+    //                 }
+    //     fetchBarberList();
+    // }, [user, loading, navigate, token])
 
     // useEffect(() =>{
     //     if (!loading){
