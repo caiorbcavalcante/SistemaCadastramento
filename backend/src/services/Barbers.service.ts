@@ -28,8 +28,8 @@ export class BarbersService{
         return await this.barberRepository.createBarber(barber as Barber)
     }
 
-    updateBarber = async(id:number, name: string, email:string, password:string, number:number): Promise<Barber | null> =>{
-        return await this.barberRepository.updateBarber(id, name, email, password,number)
+    updateBarber = async(id:number, name: string, email:string, password:string, number:number, adminplus:boolean): Promise<Barber | null> =>{
+        return await this.barberRepository.updateBarber(id, name, email, password, number, adminplus)
     }
 
     deleteBarber = async(id_barber: number): Promise <boolean> =>{

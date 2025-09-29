@@ -23,8 +23,8 @@ export class BarberRepository{
         return await this.manager.save(barber);
     }
 
-    updateBarber = async(id_barber: number, name: string, email: string, password: string, number:number): Promise < Barber | null > =>{
-        await this.manager.update({id_barber}, {name, email, password,number})
+    updateBarber = async(id_barber: number, name: string, email: string, password: string, number:number, adminplus:boolean): Promise < Barber | null > =>{
+        await this.manager.update({id_barber}, {name, email, password,number, adminplus})
         return this.manager.findOneBy({id_barber})
     } 
 

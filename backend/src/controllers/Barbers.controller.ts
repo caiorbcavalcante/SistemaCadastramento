@@ -73,14 +73,15 @@ export class BarbersController{
           return response.status(400).json({message: "Necessário nome, senha e email de usuário barbeiro"})
         }
 
-        const updateBarber = await this.barbersService.updateBarber(id, barber.name, barber.email, barber.password,barber.number)
+        const updateBarber = await this.barbersService.updateBarber(id, barber.name, barber.email, barber.password,barber.number, barber.adminplus)
 
         if (!updateBarber){
           return response.status(404).json({message: "Conta de barbeiro não encontrada"})
         } return response.status(200).json({message: "Conta de barbeiro atualizada com sucesso!",
           name:updateBarber?.name,
           email:updateBarber?.email,
-          number:updateBarber?.number
+          number:updateBarber?.number,
+          adminplus:updateBarber?.adminplus
         })
 
 
