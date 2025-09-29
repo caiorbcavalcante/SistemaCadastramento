@@ -19,7 +19,7 @@ export class Barber {
     @Column({nullable: false})
     number!: number;
 
-    @Column({nullable: false})
+    @Column({nullable: false, default: false})
     adminplus!: boolean;
     
 
@@ -32,6 +32,6 @@ export class Barber {
         if(email) this.email = email
         if(password) this.password = password
         if(number) this.number = number
-        if(adminplus) this.adminplus = this.adminplus
+        if(adminplus) this.adminplus = adminplus
     }
 }
