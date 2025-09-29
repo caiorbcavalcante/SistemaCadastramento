@@ -15,7 +15,7 @@ appointmentRouter.get("/appointments", appointmentController.getAllAppointments)
 appointmentRouter.get("/appointments/:id_appointment", appointmentController.getAppointment)
 
 // Atualizar agendamento
-appointmentRouter.put("/appointments/:id_appointment", appointmentController.updateAppointment)
+appointmentRouter.patch("/appointments/:id_appointment", appointmentController.updateAppointment)
 
 // Deletar agendamento
 appointmentRouter.delete("/appointments/:id_appointment", appointmentController.deleteAppointment)

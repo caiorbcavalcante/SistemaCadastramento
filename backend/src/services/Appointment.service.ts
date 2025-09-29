@@ -9,7 +9,7 @@ export class AppointmentService {
         this.appoitmentRepository = appoitmentRepository
      }
 
-     getAppointment = async(id_appointment:string):Promise<Appointment | null> => {
+     getAppointment = async(id_appointment:number):Promise<Appointment | null> => {
         return await this.appoitmentRepository.getAppointment(id_appointment) 
      }
 
@@ -21,7 +21,7 @@ export class AppointmentService {
         return await this.appoitmentRepository.createAppointment(appointmentData)
      }
 
-     updateAppointment = async(id:string, appointment:Partial<Appointment>): Promise <Appointment | null> => {
+     updateAppointment = async(id:number, appointment:Partial<Appointment>): Promise <Appointment | null> => {
         return await this.appoitmentRepository.updateAppointment(id, appointment)
      }
 

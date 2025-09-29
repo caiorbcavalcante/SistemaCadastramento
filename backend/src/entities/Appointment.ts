@@ -24,17 +24,6 @@ export class Appointment {
     @JoinColumn({ name: 'serviceId' })
     service!: Service;
 
-    //seria assim   @ManyToOne(() => User)
- // @JoinColumn({ name: 'userId' })  // aqui forçamos o nome da coluna
-  //user: User;
-
-  //@ManyToOne(() => Barber)
-  //@JoinColumn({ name: 'barberId' })
-  //barber: Barber;
-
-  //@ManyToOne(() => Service)
-  //@JoinColumn({ name: 'serviceId' })
-  //service: Service;
     constructor(date?: Date) {
         if (date) this.date = date;
        

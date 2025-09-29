@@ -21,28 +21,45 @@ export class AppointmentController {
             return response.status(404).json({ message: "Nenhum agendamento encontrado" });
         }
 
-        return response.status(200).json({ appointments });
+          const formattedAppointments = appointments.map(app => ({
+            user: app.user.name,          // nome do usuário
+            barber: app.barber.name,      // nome do barbeiro
+            service: app.service.description, // descrição do serviço
+            price: app.service.price,         // preço do serviço
+            date: new Date(app.date).toLocaleString("pt-BR", {
+                timeZone: "America/Sao_Paulo",
+                dateStyle: "short",
+                timeStyle: "short"
+            })
+        }));
+        return response.status(200).json({ appointments: formattedAppointments });
+        
     } catch (error) {
         console.error("Erro ao listar agendamentos:", error);
         return response.status(500).json({ message: "Erro ao listar agendamentos" });
     }
-    }
-
+}
 
   
     getAppointment = async (request: Request, response: Response) => {
         try {
-            const { id } = request.params
-            if (!id) {
-                return response.status(400).json({ message: "ID do agendamento é obrigatório" })
-            }
-
-            const appointment = await this.appointmentService.getAppointment(id)
+            const { id_appointment } = request.params
+           
+            const idNumber = Number(id_appointment)
+            const appointment = await this.appointmentService.getAppointment(idNumber)
             if (!appointment) {
                 return response.status(404).json({ message: "Agendamento não encontrado" })
             }
+            const formattedDate = new Date(appointment.date).toLocaleString("pt-BR", {
+             timeZone: "America/Sao_Paulo",
+             dateStyle: "short",
+             timeStyle: "short"
+        });
 
-            return response.status(200).json({ appointment })
+        return response.status(200).json({
+        ...appointment,
+        date: formattedDate
+        });
         } catch (err){
             console.error("Falha ao buscar agendamento:", err)
             return response.status(500).json({ message: "Erro ao buscar agendamento" })
@@ -93,10 +110,12 @@ export class AppointmentController {
     
     updateAppointment = async (request: Request, response: Response) => {
         try {
-            const { id } = request.params
+            const { id_appointment } = request.params
             const { user, barber, date, service } = request.body
 
-            const success = await this.appointmentService.updateAppointment(id, { user, barber, date, service })
+            const idNumber = Number(id_appointment)
+
+            const success = await this.appointmentService.updateAppointment(idNumber, { user, barber, date, service })
             if (!success) {
                 return response.status(404).json({ message: "Agendamento não encontrado" })
             }
@@ -111,9 +130,9 @@ export class AppointmentController {
     
     deleteAppointment = async (request: Request, response: Response) => {
         try {
-            const { id } = request.params
+            const { id_appointment } = request.params
 
-            const success = await this.appointmentService.deleteAppointment(id)
+            const success = await this.appointmentService.deleteAppointment(id_appointment)
             if (!success) {
                 return response.status(404).json({ message: "Agendamento não encontrado" })
             }

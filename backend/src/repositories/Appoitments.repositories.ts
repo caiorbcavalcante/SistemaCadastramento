@@ -1,7 +1,9 @@
 import { Repository } from "typeorm";
 import { Appointment } from "../entities/Appointment";
 import { AppDataSource } from "../app-data-source";
-import { User } from "../entities/User";
+
+
+const appointmentRepository = AppDataSource.getRepository(Appointment);
 
 export class AppointmentRepository{
     private manager:Repository<Appointment>
@@ -10,15 +12,19 @@ export class AppointmentRepository{
         this.manager = AppDataSource.getRepository(Appointment)
     }
 
-    getAllAppointments = async(): Promise<Appointment[] | null> => {
-        return await this.manager.find();
-    }
+    getAllAppointments = async (): Promise<Appointment[] | null> => {
+    return await appointmentRepository.find({
+        relations: ["user", "barber", "service"]
+    });
+}
 
-    getAppointment = async(id: string): Promise <Appointment | null> => {
-        return await this.manager.findOne({
-            where: {id_appointment: Number(id)}
-        })
-    }
+    getAppointment = async(id: number): Promise<Appointment | null> => {
+    return await this.manager.findOne({
+        where: { id_appointment: id },
+        relations: ["user", "barber", "service"]
+    });
+};
+
 
     createAppointment = async (data: Partial<Appointment>): Promise<Appointment> => {
     const appointment = new Appointment();
@@ -27,10 +33,8 @@ export class AppointmentRepository{
 };
 
 
-
-    updateAppointment = async(id: string, appointment: Partial<Appointment>): Promise <Appointment | null> => {
-        const numericId = Number(id)
-        await this.manager.update(numericId, appointment)
+    updateAppointment = async(id: number, appointment: Partial<Appointment>): Promise <Appointment | null> => {  
+        await this.manager.update(id, appointment)
         return await this.getAppointment(id)
     }
 
