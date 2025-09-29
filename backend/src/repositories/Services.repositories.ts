@@ -34,6 +34,7 @@ export class ServiceRepository{
         return result.affected !== 0
     }
 
+    /*
     getServiceByUser = async(id_user:number): Promise<Service[] | null> => {
         return await this.manager.find({
             where:{user: {id_user}},
@@ -47,4 +48,5 @@ export class ServiceRepository{
             relations: ["user", "barber"]
         })
     }
+    */
 }

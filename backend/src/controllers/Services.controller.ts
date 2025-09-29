@@ -96,7 +96,7 @@ export class ServicesController{
             return response.status(500).json({message: "Erro ao deletar serviço"})
         }
     }
-
+    /*
     getServiceByUser = async(request: Request, response: Response) => {
         try {
             const {userId} = request.params
@@ -155,4 +155,5 @@ export class ServicesController{
             return response.status(500).json({ message: "Erro ao buscar serviço de barbeiro"})
         }
     }
+    */
 }

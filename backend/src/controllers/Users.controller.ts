@@ -89,7 +89,8 @@ export class UserController{
         }
             return response.status(200).json({message:"Usuario atualizado com sucesso", 
                 name:updateUser?.name, 
-                email:updateUser?.email})
+                email:updateUser?.email,
+                number:updateUser?.number})
 
         }catch{
             return response.status(500).json({message:"Não foi possiviel atualizar um usuario"})

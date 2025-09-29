@@ -1,5 +1,9 @@
 import { Request, Response } from 'express'
 import { AppointmentService } from '../services/Appointment.service'
+import { parse } from "date-fns";
+import { ptBR } from "date-fns/locale";
+
+
 
 export class AppointmentController {
     appointmentService: AppointmentService
@@ -54,14 +58,31 @@ export class AppointmentController {
             return response.status(400).json({ message: "Todos os campos são obrigatórios" });
         }
 
+        const parsedDate = parse(date, "dd/MM/yyyy HH:mm", new Date());
+
         const appointment = await this.appointmentService.createAppointment({
             user,
             barber,
             service,
-            date: new Date(date)
+            date: parsedDate
         });
 
-        return response.status(201).json({ appointment });
+        const formattedDate = new Date(appointment.date).toLocaleString("pt-BR", {
+            timeZone: "America/Sao_Paulo",
+            dateStyle: "short",
+            timeStyle: "short"
+        });
+
+        // monta o retorno sem o id_appointment
+        const responseData = {
+            user: appointment.user,
+            barber: appointment.barber,
+            service: appointment.service,
+            date: formattedDate
+        };
+      
+        
+        return response.status(201).json({ responseData });
     } catch (err) {
         console.error("Erro ao criar agendamento:", err);
         return response.status(500).json({ message: "Erro ao criar agendamento" });
