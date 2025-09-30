@@ -1,5 +1,6 @@
-import React, { useState, createContext, useEffect, useContext } from "react";
+import React, { useState, createContext, useEffect, useContext, ReactNode} from "react";
 import { jwtDecode } from 'jwt-decode'
+import axios from "axios";
 
 
 interface User{
@@ -14,7 +15,7 @@ interface User{
 interface AuthContextType{
     user: User | null;
     loading: boolean;
-    login: (token: string, userData: User) => void;
+    login: (token: string) => Promise<void>;
     logout: () => void;
 }
 
@@ -33,30 +34,31 @@ export const AuthProvider = ({children}: { children: ReactNode}) => {
                     const decodedToken = jwtDecode<{
                         id_barber?: number;
                         id_user?: number;
-                        name: string;
                         email: string;
                         role: 'user' | 'barber';
-                        number: number,
-                        adminplus?: boolean
                         exp: number
                     }>(token)  
 
                     if (decodedToken.exp * 1000 > Date.now()){
-                        if (decodedToken.id_barber){
-                            userId = decodedToken.id_barber
-                        } else if(decodedToken.id_user) {
-                            userId = decodedToken.id_user
-                        } else {
-                            throw new Error ("id do usuário não encontrado no token")
-                        }
+
+                        const id = decodedToken.id_barber ?? decodedToken.id_user;
+                        // if (decodedToken.id_barber){
+                        //     setUserId(decodedToken.id_barber)
+                        // } else if(decodedToken.id_user) {
+                        //     setUserId(decodedToken.id_user)
+                        const endpoint = decodedToken.id_barber ? "barbers" : "user";
+
+                    const res = await axios.get(`http://localhost:3000/${endpoint}/${id}`, {
+                        headers: {Authorization: `Bearer ${token}`}
+                    })
+
                     setUser({
-                        id: userId,
-                        name: decodedToken.name,
+                        id,
+                        name: res.data.name,
                         email: decodedToken.email,
                         role: decodedToken.role,
-                        number: decodedToken.number,
-                        adminplus: decodedToken.adminplus
-                        
+                        number: res.data.number,
+                        adminplus: res.data.adminplus,
                     })
                 } else {
                     localStorage.removeItem("authToken");
@@ -72,9 +74,40 @@ export const AuthProvider = ({children}: { children: ReactNode}) => {
         checkAuthStatus();
     }, [])
 
-    const login = (token: string, userData: User) => {
+    const login = async (token: string) => {
         localStorage.setItem('authToken', token);
-        setUser(userData);
+        setLoading(true);
+
+        try {
+            const decodedToken = jwtDecode<{
+                id_user?: number;
+                id_barber?: number;
+                email: string;
+                role: 'user' | 'barber';
+            }>(token);
+
+            const id = decodedToken.id_barber ?? decodedToken.id_user;
+            const endpoint = decodedToken.id_barber? 'barbers' : 'user';
+
+            const res = await axios.get(`http://localhost:3000/${endpoint}/${id}`, {
+                headers: {Authorization: `Bearer ${token}`}
+            })
+
+            setUser ({
+                id, 
+                name: res.data.name,
+                email: decodedToken.email,
+                role: decodedToken.role,
+                number: res.data.number,
+                adminplus: res.data.adminplus
+            })
+
+        } catch (error) {
+            console.log(error);
+            localStorage.removeItem('authToken')
+        } finally {
+            setLoading(false);
+        }
     }
 
     const logout = () => {
