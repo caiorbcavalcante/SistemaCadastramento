@@ -1,4 +1,5 @@
 import express from 'express'
+import cors from 'cors';
 import { userRouter } from './routes/Users.routes'
 import { barbersRouter } from './routes/Barbers.routes'
 import { AppDataSource } from './app-data-source'
@@ -9,6 +10,7 @@ const server = express()
 
 
 server.use(express.json())
+server.use(cors());
 server.use(userRouter)
 server.use(barbersRouter)
 server.use(serviceRouter)
