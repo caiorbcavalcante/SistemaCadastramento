@@ -132,7 +132,7 @@ export class AppointmentController {
         try {
             const { id_appointment } = request.params
 
-            const success = await this.appointmentService.deleteAppointment(id_appointment)
+            const success = await this.appointmentService.deleteAppointment(Number(id_appointment))
             if (!success) {
                 return response.status(404).json({ message: "Agendamento não encontrado" })
             }
@@ -146,13 +146,13 @@ export class AppointmentController {
 
     getAppointmentsByUser = async(request: Request, response: Response) => {
         try {
-            const {userId} =request.params
+            const {id_user} =request.params
 
-            if(!userId){
+            if(!id_user){
                 return response.status(400).json({message: "ID do usuário não informado"})
             }
 
-            const appointments = await this.appointmentService.getAppointmentsByUser(Number(userId))
+            const appointments = await this.appointmentService.getAppointmentsByUser(Number(id_user))
 
             
             if (!appointments || appointments.length === 0) {
@@ -191,7 +191,6 @@ export class AppointmentController {
                 userName: a.user.name,
                 userNumber:a.user.number,
                 date: a.date,
-                serviceId:a.service,
                 description: a.service.description,
                 price: a.service.price
                 

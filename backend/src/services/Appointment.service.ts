@@ -25,12 +25,12 @@ export class AppointmentService {
         return await this.appoitmentRepository.updateAppointment(id, appointment)
      }
 
-     deleteAppointment = async(id_appointment:string): Promise <boolean> => {
+     deleteAppointment = async(id_appointment:number): Promise <boolean> => {
         return await this.appoitmentRepository.deleteAppointment(id_appointment)
      }
 
      getAppointmentsByUser = async (id_user:number):Promise<Appointment[] | null> => {
-        return await this.appoitmentRepository. getAppointmentsByUser(id_user)
+        return await this.appoitmentRepository.getAppointmentsByUser(id_user)
     }
 
     getAppointmentsByBarber = async (id_barber:number):Promise<Appointment[] | null> => {
