@@ -20,6 +20,9 @@ export class User {
     @Column({ nullable: false})
     number!: string;
 
+    @Column({nullable: false, default: 'user'})
+    role!: string;
+
 
 
     @OneToMany(()=> Appointment, appointment => appointment.user)

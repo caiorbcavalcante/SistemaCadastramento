@@ -18,6 +18,9 @@ export class Barber {
 
     @Column({nullable: false})
     number!: string;
+    
+    @Column({nullable: false, default: 'barber'})
+    role!: string;
 
     @Column({nullable: false, default: false})
     adminplus!: boolean;
