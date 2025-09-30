@@ -92,8 +92,8 @@ export class ServicesController{
             }
 
             return response.status(200).json({message: "Serviço deletado com sucesso!"})
-        } catch{
-            return response.status(500).json({message: "Erro ao deletar serviço"})
+        } catch (error){
+            return response.status(500).json({message: "Erro ao deletar serviço", error})
         }
     }
     /*

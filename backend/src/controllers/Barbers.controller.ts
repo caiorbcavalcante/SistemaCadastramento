@@ -28,7 +28,8 @@ export class BarbersController{
         return response.status(200).json({barber:barber?.id_barber,
             name:barber?.name,
             email: barber?.email,
-            number:barber?.number})
+            number:barber?.number
+          })
     }catch{
           return response.status(500).json({ message: "Erro ao buscar barbeiro"});
     }

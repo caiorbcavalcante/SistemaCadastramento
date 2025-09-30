@@ -22,16 +22,14 @@ export class Barber {
     @Column({nullable: false, default: false})
     adminplus!: boolean;
     
-
-
     @OneToMany(()=> Appointment, appointment=>appointment.barber)
     appointments!:Appointment[]
 
-    constructor(name?: string, email?: string, password?: string, number?: number, adminplus?:boolean){
+    constructor(name?: string, email?: string, password?: string, number?: number, adminplus:boolean = false){
         if(name) this.name = name
         if(email) this.email = email
         if(password) this.password = password
-        if(number) this.number = number
-        if(adminplus) this.adminplus = adminplus
+        if(number !== undefined) this.number = number
+        this.adminplus = adminplus
     }
 }

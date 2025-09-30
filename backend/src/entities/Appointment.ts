@@ -12,15 +12,21 @@ export class Appointment {
     @Column({nullable:false})
     date!: Date;
 
-    @ManyToOne(()=>User,user=>user.appointments)
+    @ManyToOne(()=>User,user=>user.appointments, {
+        onDelete: "CASCADE",
+    })
     @JoinColumn({ name: 'userId' })
     user!:User
 
-    @ManyToOne(()=>Barber,barber=>barber.appointments)
+    @ManyToOne(()=>Barber,barber=>barber.appointments, {
+        onDelete: "CASCADE"
+    })
     @JoinColumn({ name: 'barberId' })
     barber!:Barber
 
-    @ManyToOne(() => Service, service => service.appointments)
+    @ManyToOne(() => Service, service => service.appointments, {
+        onDelete: "CASCADE", // SE DER MAIS UM BO DOS GRANDES REMOVER ISSO 
+    }) 
     @JoinColumn({ name: 'serviceId' })
     service!: Service;
 
