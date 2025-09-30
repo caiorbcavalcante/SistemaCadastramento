@@ -20,7 +20,7 @@ export class UserService{
         return await this.userRepository.getAllUser()
     }
 
-    createUser=async(name:string,email:string, password:string, number:number):Promise<User> =>{
+    createUser=async(name:string,email:string, password:string, number:string):Promise<User> =>{
         const existingUser = await this.userRepository.findByEmail(email)
         if (existingUser){
             throw new EmailAlreadyExistsError();
@@ -29,7 +29,7 @@ export class UserService{
         return await this.userRepository.createUser(user as User)
     }
 
-    updateUser= async(id:number,name:string, email:string, password:string, number:number):Promise<User | null>=>{
+    updateUser= async(id:number,name:string, email:string, password:string, number:string):Promise<User | null>=>{
         return await this.userRepository.updateUser(id,name,email,password,number)
     }
 
