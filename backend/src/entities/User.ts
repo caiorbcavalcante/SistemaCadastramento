@@ -18,7 +18,7 @@ export class User {
     password!: string;
 
     @Column({ nullable: false})
-    number!: number;
+    number!: string;
 
 
 
@@ -27,7 +27,7 @@ export class User {
 
 
 
-    constructor(name?:string, email?:string, password?:string, number?:number){
+    constructor(name?:string, email?:string, password?:string, number?:string){
        if(name) this.name = name
         if(email) this.email=email
         if(password)this.password=password
