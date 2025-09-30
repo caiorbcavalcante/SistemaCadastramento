@@ -10,8 +10,7 @@ export class BarberRepository{
 
     getBarber = async (id_barber:number) : Promise<Barber| null> => {
         return await this.manager.findOne ({
-            where: {id_barber:id_barber},
-            relations: ["services", "appointments"]
+            where: {id_barber:id_barber}
         })
     }
 
