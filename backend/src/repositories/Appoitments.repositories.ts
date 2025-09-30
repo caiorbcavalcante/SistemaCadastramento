@@ -38,9 +38,8 @@ export class AppointmentRepository{
         return await this.getAppointment(id)
     }
 
-    deleteAppointment = async(id_appointment:string): Promise <boolean> => {
-        const numericId = Number(id_appointment)
-        const result = await this.manager.delete(numericId)
+    deleteAppointment = async(id_appointment:number): Promise <boolean> => {
+        const result = await this.manager.delete(id_appointment)
         return result.affected !== 0
     }
 
