@@ -17,7 +17,7 @@ export class Barber {
     password!: string;
 
     @Column({nullable: false})
-    number!: number;
+    number!: string;
 
     @Column({nullable: false, default: false})
     adminplus!: boolean;
@@ -27,7 +27,7 @@ export class Barber {
     @OneToMany(()=> Appointment, appointment=>appointment.barber)
     appointments!:Appointment[]
 
-    constructor(name?: string, email?: string, password?: string, number?: number, adminplus?:boolean){
+    constructor(name?: string, email?: string, password?: string, number?: string, adminplus?:boolean){
         if(name) this.name = name
         if(email) this.email = email
         if(password) this.password = password
