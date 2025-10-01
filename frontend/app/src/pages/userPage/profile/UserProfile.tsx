@@ -162,11 +162,6 @@ export const UserProfile: React.FC = () => {
         <div>
             <p style={{ color: "red" }}>Usuário não encontrado.</p>
             {error && <p style={{ color: "red" }}>Detalhes: {error}</p>}
-            <p>Token encontrado: {token ? "SIM" : "NÃO"}</p>
-            <Button 
-                text="Fazer Login" 
-                onClick={() => window.location.href = "/login"} 
-            />
         </div>
     );
 

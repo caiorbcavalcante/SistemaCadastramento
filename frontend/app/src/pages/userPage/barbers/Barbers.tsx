@@ -22,8 +22,13 @@ export const Barbers: React.FC = () => {
             const res = await axios.get(("http://localhost:3000/barbers"), {
                 headers: { Authorization: `Bearer ${token}`,
           },})
-          setBarbers(res.data)
+            if (res.data && Array.isArray(res.data.barbers)) {
+          setBarbers(res.data.barbers)
           setError(null)
+        } else {
+          setError("Formato de dados inválido")
+          setBarbers([])
+        }
         } catch{
             setError("Erro ao carregar os barbeiros. Tente novamente.")
         }
@@ -41,8 +46,7 @@ export const Barbers: React.FC = () => {
         <ul>
             {barbers.map((b) => (
                 <li key={b.id_barber}>
-                    {b.name}
-                    {b.number}
+                  <strong>👤 {b.name}</strong> - 📞 {b.number}
     
                 </li>
             ))}

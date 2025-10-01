@@ -1,6 +1,6 @@
 import axios from "axios"
+import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react"
-import { useAuth } from "../../../contexts/AuthContext";
 
 interface IAppointment {
   id_appointment: number;
@@ -10,32 +10,44 @@ interface IAppointment {
 }
 
 export const UserAppointments:React.FC = () => {
-    const [appointments,setAppointments] = useState([])
+    const [appointments,setAppointments] = useState<IAppointment[]>([])
     const [error, setError] = useState<string | null>(null)
-    const { user } = useAuth();
 
     const token = localStorage.getItem("token")
-    const userId =  user ? user.id : null
 
     useEffect(() => {
         const fetchAppointments = async () => {
-        if (!token || !userId) return
+        if (!token) return
 
        try{
+            const decodedToken :any = jwtDecode(token)
+             const userId = decodedToken.id_user
+             
         const res = await axios.get(`http://localhost:3000/appointments/user/${userId}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
 
-        setAppointments(res.data)
+        // 🔹 CORREÇÃO: Verifica diferentes formatos possíveis
+                if (Array.isArray(res.data)) {
+                    setAppointments(res.data)
+                } else if (res.data && Array.isArray(res.data.appointments)) {
+                    setAppointments(res.data.appointments)
+                } else if (res.data && Array.isArray(res.data.data)) {
+                    setAppointments(res.data.data)
+                } else {
+                    setError("Formato de agendamentos inválido")
+                    setAppointments([])
+                }
         setError(null)
 
        } catch {
         setError("Erro ao carregar agendamentos.")
+          setAppointments([])
        }
 
     }
     fetchAppointments()
-    },[token,userId])
+    },[token])
 
     return(
         <div>
