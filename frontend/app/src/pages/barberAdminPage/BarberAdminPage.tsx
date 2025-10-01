@@ -12,13 +12,14 @@ interface barber{
     role: string,
     adminplus: boolean
 }
+
 const BarberAdminPage = () => {
     const {user, loading, logout} = useAuth();
     const navigate = useNavigate();
     const [barberList, setBarberList] = useState<barber[]>([])
     const [showPopout, setShowPopout] = useState(false);
     const [selectedBarber, setSelectedBarber] = useState<barber | null>(null);
-    const token = localStorage.getItem('authToken')
+    const token = localStorage.getItem('token')
 
     const giveAuth = async (barber) => {
         try {

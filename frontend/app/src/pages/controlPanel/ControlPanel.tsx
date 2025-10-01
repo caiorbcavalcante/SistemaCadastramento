@@ -78,49 +78,49 @@ const ControlPanel = () => {
     }    
   }
 
-  // useEffect(() =>{
-  //   const fetchBarberData = async () =>{
-  //     if (user && user.role === 'barber') {
-  //       const token = localStorage.getItem('authToken');
-  //       const barberId = user.id;
+  useEffect(() =>{
+    const fetchBarberData = async () =>{
+      if (user && user.role === 'barber') {
+        const token = localStorage.getItem('token');
+        const barberId = user.id;
 
-  //       try {
-  //         const appointmentResponse = await axios.get(`http://localhost:3000/appointments/barber/${barberId}`, {
-  //           headers: { Authorization: `Bearer ${token}`}
-  //         })
-  //         setAppointment(appointmentResponse.data)
+        try {
+          const appointmentResponse = await axios.get(`http://localhost:3000/appointments/barber/${barberId}`, {
+            headers: { Authorization: `Bearer ${token}`}
+          })
+          setAppointment(appointmentResponse.data)
 
-  //       } catch (error) {
-  //         if (axios.isAxiosError(error)){
-  //           if (error.response){
-  //             alert(error.response.data.message)
-  //           } else if (error.request){
-  //             alert("Não foi possível se conectar com o servidor")
-  //           } else{
-  //             alert("Ocorreu um erro inesperado")
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }
-  //   if (!loading && user){
-  //     fetchBarberData();
-  //   }
-  //   }, [user, loading])
+        } catch (error) {
+          if (axios.isAxiosError(error)){
+            if (error.response){
+              alert(error.response.data.message)
+            } else if (error.request){
+              alert("Não foi possível se conectar com o servidor")
+            } else{
+              alert("Ocorreu um erro inesperado")
+            }
+          }
+        }
+      }
+    }
+    if (!loading && user){
+      fetchBarberData();
+    }
+    }, [user, loading])
 
-  // useEffect(() => {
-  //   if (!loading){
-  //     if(!user || user.role !== 'barber'){navigate('/')} // MUDAR AQUI A ROTA DEPOIS PAR O MENU
-  //   }
-  // }, [user, loading, navigate])
+  useEffect(() => {
+    if (!loading){
+      if(!user || user.role !== 'barber'){navigate('/')} // MUDAR AQUI A ROTA DEPOIS PAR O MENU
+    }
+  }, [user, loading, navigate])
 
-  // if ( loading ) {
-  //   return <div> <h2> Carregando Painel de Controle</h2></div>
-  // }
+  if ( loading ) {
+    return <div> <h2> Carregando Painel de Controle</h2></div>
+  }
   
-  // if ( !user || user.role !== 'barber'){
-  //   return null;
-  // }
+  if ( !user || user.role !== 'barber'){
+    return null;
+  }
 
   useEffect(() => {
   setAppointments(mockAppointments);

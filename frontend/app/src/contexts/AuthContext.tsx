@@ -27,7 +27,7 @@ export const AuthProvider = ({children}: { children: ReactNode}) => {
 
     useEffect(() => {
         const checkAuthStatus  = async () =>{
-            const token = localStorage.getItem('authToken')
+            const token = localStorage.getItem('token')
 
             if (token) {
                 try {
@@ -61,11 +61,11 @@ export const AuthProvider = ({children}: { children: ReactNode}) => {
                         adminplus: res.data.adminplus,
                     })
                 } else {
-                    localStorage.removeItem("authToken");
+                    localStorage.removeItem("token");
                 }
                 } catch (error) {
                     console.error("Token inválido ou expirado: ", error)
-                    localStorage.removeItem('authToken')
+                    localStorage.removeItem('token')
                 }
             }
             setLoading(false)
@@ -75,7 +75,7 @@ export const AuthProvider = ({children}: { children: ReactNode}) => {
     }, [])
 
     const login = async (token: string) => {
-        localStorage.setItem('authToken', token);
+        localStorage.setItem('token', token);
         setLoading(true);
 
         try {
@@ -104,14 +104,14 @@ export const AuthProvider = ({children}: { children: ReactNode}) => {
 
         } catch (error) {
             console.log(error);
-            localStorage.removeItem('authToken')
+            localStorage.removeItem('token')
         } finally {
             setLoading(false);
         }
     }
 
     const logout = () => {
-        localStorage.removeItem('authToken');
+        localStorage.removeItem('token');
         setUser(null)
     }
 
