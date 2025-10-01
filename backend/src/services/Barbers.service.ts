@@ -2,7 +2,7 @@ import { AppDataSource } from "../app-data-source"
 import { Barber } from "../entities/Barber"
 import { BarberRepository } from "../repositories/Barbers.repositories"
 import jwt from "jsonwebtoken";
-import bcrypt from 'bcrypt';
+const bcrypt = require('bcrypt');
 import { EmailAlreadyExistsError } from "../errors/emailAlreadyExistsError";
 
 export class BarbersService{

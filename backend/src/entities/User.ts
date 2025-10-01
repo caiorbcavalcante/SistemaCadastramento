@@ -34,7 +34,7 @@ export class User {
        if(name) this.name = name
         if(email) this.email=email
         if(password)this.password=password
-        if(number) this.number = number
+        if(number!== undefined) this.number = number
     }
 }
  

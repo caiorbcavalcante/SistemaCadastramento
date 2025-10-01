@@ -23,7 +23,7 @@ export class UserRepository{
     createUser =async(user:User): Promise<User> =>{
         return await this.manager.save(user)
     }
-    updateUser= async(id_user:number, name:string, email:string, password:string, number:string):Promise<User | null>=>{
+    updateUser= async(id_user:number, name:string, email:string, password?: string, number:string):Promise<User | null>=>{
          await this.manager.update({id_user}, {name, email, password, number})
          return this.manager.findOneBy({id_user})
     }
@@ -32,9 +32,9 @@ export class UserRepository{
         const result = await this.manager.delete({ id_user })
         return result.affected !== 0;
     }
-    getAutenticationByEmailPassword = async(email:string, password:string):Promise<User | null>=>{
+    getAutenticationByEmailPassword = async(email:string):Promise<User | null>=>{
         return await this.manager.findOne({
-            where:{email, password}}
+            where:{email}}
         )
     }
 

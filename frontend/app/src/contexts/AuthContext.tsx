@@ -7,7 +7,7 @@ interface User{
     id: number;
     name: string;
     email: string; 
-    number: number;
+    number: string;
     role: 'user' | 'barber';
     adminplus?: boolean
 }

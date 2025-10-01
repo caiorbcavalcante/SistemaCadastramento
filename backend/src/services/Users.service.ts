@@ -2,6 +2,8 @@ import jwt from "jsonwebtoken";
 import { User } from "../entities/User"
 import { UserRepository } from "../repositories/Users.repositories"
 import { EmailAlreadyExistsError } from "../errors/emailAlreadyExistsError";
+const bcrypt = require('bcrypt');
+import { barbersRouter } from "../routes/Barbers.routes";
 
 export class UserService{
  
@@ -25,28 +27,39 @@ export class UserService{
         if (existingUser){
             throw new EmailAlreadyExistsError();
         }
-        const user = new User(name,email,password, number)
+
+        const salt = await bcrypt.genSalt(12);
+        const passwordHash = await bcrypt.hash(password, salt);
+
+        const user = new User(name,email,passwordHash, number)
         return await this.userRepository.createUser(user as User)
     }
 
     updateUser= async(id:number,name:string, email:string, password:string, number:string):Promise<User | null>=>{
-        return await this.userRepository.updateUser(id,name,email,password,number)
+        let passwordHash: string | undefined;
+        if (password) {
+            const salt = await bcrypt.genSalt(12);
+            passwordHash = await bcrypt.hash(password, salt);
+        }
+        return await this.userRepository.updateUser(id,name,email,passwordHash,number)
     }
 
     deleteUser=async(id_user:number):Promise<boolean>=>{
         return await this.userRepository.deleteUser(id_user)
     }
 
-    getAutenticationByEmailPassword = async(email:string, password:string):Promise<User | null>=>{
-        return await this.userRepository.getAutenticationByEmailPassword(email,password)
+    getAutenticationByEmailPassword = async(email:string):Promise<User | null>=>{
+        return await this.userRepository.getAutenticationByEmailPassword(email)
     }
 
     getToken = async(email:string, password:string):Promise<string>=>{
-        const user = await this.getAutenticationByEmailPassword(email, password)
+        const user = await this.getAutenticationByEmailPassword(email)
 
         if(!user){
             throw new Error ("Usuario ou senha invalidos")
     }
+
+    const checkPassowrd = bcrypt.compare(password, user.password)
 
     const token = jwt.sign(
         {id_user:user.id_user, email:user.email, role:"user"},
