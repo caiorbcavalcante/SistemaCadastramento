@@ -3,6 +3,7 @@ import { Button } from "../../components/button/Button"
 import { Input } from "../../components/input/Input"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../../contexts/AuthContext"
+import { validarEmail, validarSenha } from "../../utils/utils"
 import axios from "axios"
 import type { ReactFormEvent } from "react-dom/client"
 
@@ -21,10 +22,17 @@ export const Login:React.FC = () => {
             return ("Preencha os campos")         
         }
 
-        if(!email.includes("@") || !email.includes(".")){return ("Email inválido.")}
+        const emailError = validarEmail(email);
+        if (emailError){
+            return emailError;
+        }
 
-        if(password.length < 6){return("A senha deve conter no mínimo 6 digitos")}
-        return null
+        const senhaError = validarSenha(password);
+        if (senhaError) {
+            return senhaError;
+        }
+
+        return null;
     }
 
     const handleLogin = async (e: ReactFormEvent) => {
