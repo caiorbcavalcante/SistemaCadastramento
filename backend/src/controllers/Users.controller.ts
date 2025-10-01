@@ -59,7 +59,6 @@ export class UserController{
 
     createUser= async (request: Request, response: Response) => {
         try{
-
             const user = request.body
             if(!user.name || !user.email || !user.password || !user.number){
                 return response.status(400).json({message:"Nome,email, senha e número são obrigatorios"})
@@ -67,6 +66,7 @@ export class UserController{
             await this.userService.createUser(user.name, user.email, user.password, user.number)
             return response.status(201).json({message:"Usuario criado com sucesso"})
         }catch (error) {
+            console.log("ERROR:", error)
             if (error instanceof EmailAlreadyExistsError){
                 return response.status(409).json({ message: "Este email já foi cadastrado em outra conta."})
             }

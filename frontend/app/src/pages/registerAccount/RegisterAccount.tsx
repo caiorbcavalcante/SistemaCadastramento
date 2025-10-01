@@ -8,6 +8,7 @@ const RegisterAccount: React.FC = () => {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [number, setNumber] = useState<string> ("")
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -24,10 +25,13 @@ const RegisterAccount: React.FC = () => {
         return
       }
 
+      // FAZER UMA VERIFICAçÃO DO NUMERO
+
       const response = await axios.post("http://localhost:3000/user", {
         name,
         email,
-        password
+        password,
+        number
       })
 
       navigate('/user')
@@ -55,6 +59,8 @@ const RegisterAccount: React.FC = () => {
         <input placeholder='Nome' onChange={(e) => setName(e.target.value)} />
         <input placeholder='exemplo@email.com' onChange={(e) => setEmail(e.target.value)}/>
         <input placeholder='Senha' onChange={(e) => setPassword(e.target.value)}/>
+        <input placeholder='Número' onChange={(e) => setNumber(e.target.value)}/>
+
 
         <button type='submit'>Criar conta</button>
 
