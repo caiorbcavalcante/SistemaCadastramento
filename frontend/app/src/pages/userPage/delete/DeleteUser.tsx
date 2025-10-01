@@ -1,18 +1,21 @@
 import axios from "axios"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { useAuth } from "../../../contexts/AuthContext"
 
 
 export const DeleteUser: React.FC = () => {
     const [error,setError] = useState<string | null>(null)
     const [success,setSuccess] = useState<string | null>(null)
+    const { user } = useAuth()
     const navigate = useNavigate()
 
     const token = localStorage.getItem("token")
-    const id_user = localStorage.getItem("id_user")
+    const userId =  user ? user.id : null
+   
 
     const handleDelete = async () => {
-            if (!id_user || !token) {
+            if (!userId || !token) {
             setError("Usuário não autenticado.");
          return;
     }
@@ -23,15 +26,14 @@ export const DeleteUser: React.FC = () => {
 
      
         try{
-             await axios.delete("http://localhost:3000/user/${id_user}", {
+             await axios.delete("http://localhost:3000/user/${userId}", {
                    headers: { Authorization: `Bearer ${token}` },
         })
             setError(null)
             setSuccess("Usuario deletado com sucesso")
 
             localStorage.removeItem("token");
-            localStorage.removeItem("id_user");
-            localStorage.removeItem("role");
+           
             setTimeout(()=>{
                 navigate("/")
             },2000)

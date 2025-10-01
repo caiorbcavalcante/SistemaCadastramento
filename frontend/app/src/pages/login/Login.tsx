@@ -38,7 +38,7 @@ export const Login:React.FC = () => {
             })
             const token = res.data.token;
             await login(token);
-            navigate('/') // bota aqui a rota de usuario eu n sei ql e
+            navigate('/user') // bota aqui a rota de usuario eu n sei ql e
             return
         } catch {}
 

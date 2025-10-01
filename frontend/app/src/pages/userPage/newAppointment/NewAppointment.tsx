@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useAuth } from "../../../contexts/AuthContext";
 
 
 interface IBarber {
@@ -21,9 +22,11 @@ export const NewAppointment: React.FC = () => {
   const [success,setSuccess] = useState<string | null>(null)
   const [barbers, setBarbers] = useState<IBarber[]>([]);
   const [services, setServices] = useState<IService[]>([]);
+  const { user } = useAuth()
 
   const token = localStorage.getItem("token");
-  const id_user = localStorage.getItem("id_user");
+  const userId =  user ? user.id : null
+  
 
   useEffect(()=>{
 
@@ -64,11 +67,11 @@ export const NewAppointment: React.FC = () => {
       }
 
       try{
-         if (!token || !id_user) throw new Error("Usuário não autenticado.")
+         if (!token || !userId) throw new Error("Usuário não autenticado.")
 
            await axios.post("http://localhost:3000/appointments",
             {
-              user:id_user,
+              user:userId,
               barber:barber,
               service:service,
               date

@@ -41,7 +41,7 @@ export const AuthProvider = ({children}: { children: ReactNode}) => {
 
                     if (decodedToken.exp * 1000 > Date.now()){
 
-                        const id = decodedToken.id_barber ?? decodedToken.id_user;
+                        const id = decodedToken.id_barber ?? decodedToken.id_user!;
                         // if (decodedToken.id_barber){
                         //     setUserId(decodedToken.id_barber)
                         // } else if(decodedToken.id_user) {
@@ -86,7 +86,7 @@ export const AuthProvider = ({children}: { children: ReactNode}) => {
                 role: 'user' | 'barber';
             }>(token);
 
-            const id = decodedToken.id_barber ?? decodedToken.id_user;
+            const id = decodedToken.id_barber ?? decodedToken.id_user!;
             const endpoint = decodedToken.id_barber? 'barbers' : 'user';
 
             const res = await axios.get(`http://localhost:3000/${endpoint}/${id}`, {

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useAuth } from "../../../contexts/AuthContext";
 
 interface IService {
   id_service: number;
@@ -11,13 +12,14 @@ interface IService {
 export const Services: React.FC = () => { 
     const [services,setServices] = useState<IService[]>([])
     const [error, setError] = useState<string | null>(null);
+    const { user} = useAuth()
 
     const token = localStorage.getItem("token")
-    const id_user = localStorage.getItem("id_user")
+     const userId =  user?  user.id : null
 
 
     useEffect(() => {
-        if(!token || !id_user) return
+        if(!token || !userId) return
         const fetchServices = async () => { 
 
             try{
@@ -31,7 +33,7 @@ export const Services: React.FC = () => {
             }
         }
         fetchServices()
-    },[token,id_user])
+    },[token,userId])
 
     return (
         <div>

@@ -1,5 +1,6 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
+import { useAuth } from "../../../contexts/AuthContext";
 
 interface IAppointment {
   id_appointment: number;
@@ -11,16 +12,17 @@ interface IAppointment {
 export const UserAppointments:React.FC = () => {
     const [appointments,setAppointments] = useState([])
     const [error, setError] = useState<string | null>(null)
+    const { user } = useAuth();
 
     const token = localStorage.getItem("token")
-    const id_user = localStorage.getItem("id_user")
+    const userId =  user ? user.id : null
 
     useEffect(() => {
         const fetchAppointments = async () => {
-        if (!token || !id_user) return
+        if (!token || !userId) return
 
        try{
-        const res = await axios.get(`http://localhost:3000/appointments/user/${id_user}`, {
+        const res = await axios.get(`http://localhost:3000/appointments/user/${userId}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
 
@@ -33,7 +35,7 @@ export const UserAppointments:React.FC = () => {
 
     }
     fetchAppointments()
-    },[token,id_user])
+    },[token,userId])
 
     return(
         <div>
