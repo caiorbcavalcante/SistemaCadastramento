@@ -8,7 +8,8 @@ interface barber{
     id_barber: number,
     name: string,
     email: string,
-    number: number,
+    number: string,
+    role: string,
     adminplus: boolean
 }
 const BarberAdminPage = () => {
@@ -19,10 +20,11 @@ const BarberAdminPage = () => {
     const [selectedBarber, setSelectedBarber] = useState<barber | null>(null);
     const token = localStorage.getItem('authToken')
 
-
     const giveAuth = async (barber) => {
         try {
             await axios.patch(`http://localhost:3000/barbers/${barber.id_barber}`, {
+            name: barber.name,
+            email: barber.email,
             adminplus: true 
         }, {headers: {Authorization: `Bearer ${token}`}})
 
@@ -41,6 +43,8 @@ const BarberAdminPage = () => {
     const removeAuth = async (barber) => {
         try {
             await axios.patch(`http://localhost:3000/barbers/${barber.id_barber}`, {
+                name: barber.name,
+                email: barber.email,
                 adminplus: false
             }, {headers: {Authorization: `Bearer ${token}`}})
 
@@ -99,7 +103,7 @@ const BarberAdminPage = () => {
 
                 try {
                     const response = await axios.get('http://localhost:3000/barbers')
-                    setBarberList(response.data);
+                    setBarberList(response.data.barbers);
                 } catch (error) {
                     if(axios.isAxiosError(error)){
                         if(error.response){

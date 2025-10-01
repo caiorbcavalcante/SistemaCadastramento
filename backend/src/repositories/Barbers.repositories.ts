@@ -15,14 +15,16 @@ export class BarberRepository{
     }
 
     getAllBarbers = async (): Promise<Barber[] | null > =>{
-        return await this.manager.find();
+        return await this.manager.find({
+            select: ["id_barber", "name", "email", "number", "role", "adminplus"]
+        });
     }
 
     createBarber = async(barber:Barber) : Promise <Barber> =>{
         return await this.manager.save(barber);
     }
 
-    updateBarber = async(id_barber: number, name: string, email: string, password: string, number:string, adminplus:boolean): Promise < Barber | null > =>{
+    updateBarber = async(id_barber: number, name: string, email: string, password?: string, number:string, adminplus:boolean): Promise < Barber | null > =>{
         await this.manager.update({id_barber}, {name, email, password,number, adminplus})
         return this.manager.findOneBy({id_barber})
     } 
@@ -32,9 +34,9 @@ export class BarberRepository{
         return result.affected !== 0
     }
 
-    getAutenticationByEmailPassword = async(email:string, password:string): Promise < Barber | null > =>{
+    getAutenticationByEmailPassword = async(email:string): Promise < Barber | null > =>{
         return await this.manager.findOne({
-            where: {email, password}
+            where: {email}
         })
     }
 

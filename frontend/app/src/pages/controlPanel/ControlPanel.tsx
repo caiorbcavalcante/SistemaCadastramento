@@ -144,11 +144,6 @@ const ControlPanel = () => {
                   Editar Perfil
                 </button>
               </li>
-              <li>
-                <button onClick={handleLogout}>
-                  Sair
-                </button>
-              </li>
               {user?.adminplus &&
               <li>
                 <button onClick={() => {navigate('/controlPanel/admin')}}>
@@ -156,6 +151,11 @@ const ControlPanel = () => {
                 </button>
               </li>
               }
+              <li>
+                <button onClick={handleLogout}>
+                  Sair
+                </button>
+              </li>
             </ul>
           </div>}
         </div>

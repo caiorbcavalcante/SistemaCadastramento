@@ -71,8 +71,8 @@ export class BarbersController{
         const id = Number(request.params.id_barber)
         const barber = request.body
 
-        if (!barber.name || !barber.email || !barber.password){
-          return response.status(400).json({message: "Necessário nome, senha e email de usuário barbeiro"})
+        if (!barber || Object.keys(barber).length === 0){
+          return response.status(400).json({message: "Nenhuma mudança feita"})
         }
 
         const updateBarber = await this.barbersService.updateBarber(id, barber.name, barber.email, barber.password,barber.number, barber.adminplus)
