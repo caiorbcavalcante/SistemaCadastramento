@@ -31,6 +31,7 @@ const RegisterAccount: React.FC = () => {
       const resultadoTelefone = validarTelefone(number)
       if (!resultadoTelefone.valido){
         alert(`Erro: ${resultadoTelefone.erro}\nDetalhes: ${resultadoTelefone.detalhes?.join(', ')}`)
+        return
       }
       }
 
