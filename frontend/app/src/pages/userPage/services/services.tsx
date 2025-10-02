@@ -12,26 +12,38 @@ export const Services: React.FC = () => {
     const [services,setServices] = useState<IService[]>([])
     const [error, setError] = useState<string | null>(null);
 
-    const token = localStorage.getItem("token")
-    const id_user = localStorage.getItem("id_user")
-
+   const token = localStorage.getItem("token")
 
     useEffect(() => {
-        if(!token || !id_user) return
+        if(!token) return
         const fetchServices = async () => { 
 
             try{
                 const res = await axios.get(`http://localhost:3000/service`,{ 
                 headers:{Authorization:`Bearer ${token}`},
                 })
-                setServices(res.data)
+                 
+                console.log("Resposta da API Services:", res.data); // 🔹 DEBUG
+                
+                // 🔹 CORREÇÃO: Verifica diferentes formatos possíveis
+                if (Array.isArray(res.data)) {
+                    setServices(res.data)
+                } else if (res.data && Array.isArray(res.data.services)) {
+                    setServices(res.data.services)
+                } else if (res.data && Array.isArray(res.data.data)) {
+                    setServices(res.data.data)
+                } else {
+                    setError("Formato de serviços inválido")
+                    setServices([])
+                }
                 setError(null)
             } catch {
                 setError("Erro ao carregar os serviços. Tente novamente.")
+                setServices([])
             }
         }
         fetchServices()
-    },[token,id_user])
+    },[token])
 
     return (
         <div>

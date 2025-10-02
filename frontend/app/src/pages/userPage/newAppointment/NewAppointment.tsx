@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 
 interface IBarber {
@@ -22,8 +23,9 @@ export const NewAppointment: React.FC = () => {
   const [barbers, setBarbers] = useState<IBarber[]>([]);
   const [services, setServices] = useState<IService[]>([]);
 
+
   const token = localStorage.getItem("token");
-  const id_user = localStorage.getItem("id_user");
+  
 
   useEffect(()=>{
 
@@ -41,8 +43,21 @@ export const NewAppointment: React.FC = () => {
 
             ])
 
-            setBarbers(barbersRes.data)
-            setServices(servicesRes.data);
+           if (barbersRes.data && Array.isArray(barbersRes.data.barbers)) {
+          setBarbers(barbersRes.data.barbers);
+        } else if (Array.isArray(barbersRes.data)) {
+          setBarbers(barbersRes.data);
+        } else {
+          setBarbers([]);
+        }
+
+        if (servicesRes.data && Array.isArray(servicesRes.data.services)) {
+          setServices(servicesRes.data.services);
+        } else if (Array.isArray(servicesRes.data)) {
+          setServices(servicesRes.data);
+        } else {
+          setServices([]);
+        }
             setError(null);
 
     } catch {
@@ -64,11 +79,14 @@ export const NewAppointment: React.FC = () => {
       }
 
       try{
-         if (!token || !id_user) throw new Error("Usuário não autenticado.")
+         if (!token) throw new Error("Usuário não autenticado.")
+
+          const decodedToken: any = jwtDecode(token);
+          const userId = decodedToken.id_user
 
            await axios.post("http://localhost:3000/appointments",
             {
-              user:id_user,
+              user:userId,
               barber:barber,
               service:service,
               date
