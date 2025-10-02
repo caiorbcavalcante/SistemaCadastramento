@@ -102,7 +102,7 @@ function validarSenhaDetalhada(senha: string): ResultadoValidacaoSenha {
   return { valido: true };
 }
 
-export { validarEmail, validarSenhaDetalhada};
+export { validarEmail, validarSenhaDetalhada, validarTelefone};
 
 interface ResultadoValidacao {
   valido: boolean;
