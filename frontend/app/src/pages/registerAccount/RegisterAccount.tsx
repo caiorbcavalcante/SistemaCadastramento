@@ -1,6 +1,7 @@
 import './RegisterAccount.css'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { validarEmail, validarSenhaDetalhada, validarTelefone } from '../../utils/utils'
 import axios from "axios"
 
 
@@ -15,17 +16,23 @@ const RegisterAccount: React.FC = () => {
     e.preventDefault()
 
     try {
-      if (!email.includes("@")){
-        alert("Insira um email válido!")
+      const resultadoEmail = validarEmail(email)
+      if (resultadoEmail){
+        alert(`Erro: ${resultadoEmail}`)
         return
       }
 
-      if (password.length < 6){
-        alert("Senha deve conter pelo menos 6 caracteres")
+      const resultadoSenha = validarSenhaDetalhada(password)
+      if (!resultadoSenha.valido){
+        alert(`Erro: ${resultadoSenha.erro}`)
         return
       }
 
-      // FAZER UMA VERIFICAçÃO DO NUMERO
+      const resultadoTelefone = validarTelefone(number)
+      if (!resultadoTelefone.valido){
+        alert(`Erro: ${resultadoTelefone.erro}\nDetalhes: ${resultadoTelefone.detalhes?.join(', ')}`)
+      }
+      }
 
       const response = await axios.post("http://localhost:3000/user", {
         name,
