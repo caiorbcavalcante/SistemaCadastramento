@@ -22,12 +22,8 @@ export const Login:React.FC = () => {
         const emailError = validarEmail(email);
         if (emailError) return emailError;
 
-        // const senhaError = validarSenhaDetalhada(password);
-        // if (senhaError) return senhaError;
-
-        const senhaResultado = validarSenhaDetalhada(password)
-        if (!senhaResultado.valido){
-            return senhaResultado.detalhes?.join(", ") || senhaResultado.erro || "Senha inválida"
+        if (password.length < 6) {
+            return "A senha deve ter pelo menos 6 caracteres";
         }
 
         return null;

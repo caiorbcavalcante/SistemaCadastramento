@@ -142,9 +142,19 @@ export const UserProfile: React.FC = () => {
                 return;
             }
 
+            const decodedToken = jwtDecode<{ 
+                    id_user?: number,         
+                    id?: number,
+                    userId?: number,  
+                    email: string, 
+                    role: string, 
+                    exp: number 
+                }>(token);         
+              const userId = decodedToken.id_user 
+
             const res = await axios.patch(
-                `http://localhost:3000/user/${user.id}`,
-                { name: form.name, password: form.password, number: form.number.replace(/\D/g, "") },
+                `http://localhost:3000/user/${userId}`,
+                { name: form.name, email: form.email, password: form.password, number: form.number.replace(/\D/g, "") },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
             setUser(res.data);

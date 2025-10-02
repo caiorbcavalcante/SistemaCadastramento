@@ -33,7 +33,6 @@ const RegisterAccount: React.FC = () => {
         alert(`Erro: ${resultadoTelefone.erro}\nDetalhes: ${resultadoTelefone.detalhes?.join(', ')}`)
         return
       }
-      }
 
       const response = await axios.post("http://localhost:3000/user", {
         name,
