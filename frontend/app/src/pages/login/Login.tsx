@@ -10,7 +10,7 @@ import type { ReactFormEvent } from "react-dom/client"
 
 export const Login:React.FC = () => {
     const [email, setEmail] = useState<string>("")
-    const [senha, setSenha] = useState<string>("")
+    const [password, setPassword] = useState<string>("")
     const [error, setError] = useState<string | null> (null)
     const navigate = useNavigate();
     const {login} = useAuth();
@@ -34,18 +34,18 @@ export const Login:React.FC = () => {
         try {
             const res = await axios.post("http://localhost:3000/user/login", {
                 email,
-                password: senha
+                password
             })
             const token = res.data.token;
             await login(token);
-            navigate('/') // bota aqui a rota de usuario eu n sei ql e
+            navigate('/user') 
             return
         } catch {}
 
         try {
             const res = await axios.post("http://localhost:3000/barbers/login", {
                 email,
-                password: senha
+                password
             })
             const token = res.data.token;
             await login(token)
@@ -127,8 +127,8 @@ export const Login:React.FC = () => {
             <Input 
             type="password"
             placeholder="senha"
-            value={senha}
-            onChange={(e)=>setSenha(e.target.value)}/>
+            value={password}
+            onChange={(e)=>setPassword(e.target.value)}/>
 
             
             <div>

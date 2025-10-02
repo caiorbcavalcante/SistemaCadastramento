@@ -6,11 +6,8 @@ export class UserRepository{
 
     private manager:Repository<User>
 
-
     constructor()    
     {this.manager =  AppDataSource.getRepository(User)}
-
-
 
     getUser = async (id_user:number):Promise<User | null> =>  {
       return  await this.manager.findOne({

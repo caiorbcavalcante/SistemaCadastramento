@@ -48,19 +48,23 @@ export class UserService{
         return await this.userRepository.deleteUser(id_user)
     }
 
-    getAutenticationByEmailPassword = async(email:string):Promise<User | null>=>{
-        return await this.userRepository.getAutenticationByEmailPassword(email)
+    getAutenticationByEmailPassword = async(email:string, password:string):Promise<User | null>=>{
+        const user = await this.userRepository.getAutenticationByEmailPassword(email)
+
+        if (!user) return null;
+
+        const checkPassword = await bcrypt.compare(password, user.password);
+        if (!checkPassword) return null;
+
+        return user
     }
 
     getToken = async(email:string, password:string):Promise<string>=>{
-        const user = await this.getAutenticationByEmailPassword(email)
+        const user = await this.getAutenticationByEmailPassword(email, password)
 
         if(!user){
             throw new Error ("Usuario ou senha invalidos")
     }
-
-    const checkPassowrd = bcrypt.compare(password, user.password)
-
     const token = jwt.sign(
         {id_user:user.id_user, email:user.email, role:"user"},
         process.env.JWT_SECRET as string,

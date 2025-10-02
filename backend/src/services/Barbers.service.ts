@@ -48,18 +48,23 @@ export class BarbersService{
         return await this.barberRepository.deleteBarber(id_barber);
     }
 
-    getAutenticationByEmailPassword = async(email:string):Promise<Barber | null>=>{
-            return await this.barberRepository.getAutenticationByEmailPassword(email)
+    getAutenticationByEmailPassword = async(email:string, password: string):Promise<Barber | null>=>{
+            const barber = await this.barberRepository.getAutenticationByEmailPassword(email)
+
+            if (!barber) return null;
+
+            const checkPassword = await bcrypt.compare(password, barber.password);
+            if (!checkPassword) return null
+
+            return barber
         }
 
     getToken = async(email: string, password: string): Promise<string> => {
 
-        const barber = await this.getAutenticationByEmailPassword(email)
+        const barber = await this.getAutenticationByEmailPassword(email, password)
         if (!barber) {
             throw new Error ("Usuário ou senha inválida")
         }
-
-        const checkPassword = await bcrypt.compare(password, barber.password)
 
         const token = jwt.sign(
         {id_barber:barber.id_barber, email:barber.email, role:"barber"},
