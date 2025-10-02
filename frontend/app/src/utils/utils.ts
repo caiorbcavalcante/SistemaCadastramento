@@ -102,4 +102,39 @@ function validarSenhaDetalhada(senha: string): ResultadoValidacaoSenha {
   return { valido: true };
 }
 
-export { validarEmail, validarSenhaDetalhada};
+export { validarEmail, validarSenhaDetalhada, validarTelefone};
+
+interface ResultadoValidacao {
+  valido: boolean;
+  erro?: string;
+  detalhes?: string[];
+}
+
+function validarTelefone(telefone: string): ResultadoValidacao {
+  const erros: string[] = [];
+
+  if (typeof telefone !== 'string' || !telefone.trim()) {
+    return { valido: false, erro: "telefone inválido", detalhes: ["Telefone não pode estar vazio"] };
+  }
+
+  const telLimpo = telefone.trim();
+
+  // Remove espaços, traços, parênteses, etc.
+  const telNumeros = telLimpo.replace(/\D/g, '');
+
+  // Verifica comprimento mínimo e máximo
+  if (telNumeros.length < 10 || telNumeros.length > 11) {
+    erros.push("Telefone deve ter 10 ou 11 dígitos (DDD + número)");
+  }
+
+  // Valida apenas números
+  if (!/^\d+$/.test(telNumeros)) {
+    erros.push("Telefone deve conter apenas números");
+  }
+
+  if (erros.length > 0) {
+    return { valido: false, erro: "telefone inválido", detalhes: erros };
+  }
+
+  return { valido: true };
+}
