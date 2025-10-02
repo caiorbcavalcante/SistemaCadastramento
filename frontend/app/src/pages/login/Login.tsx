@@ -22,8 +22,13 @@ export const Login:React.FC = () => {
         const emailError = validarEmail(email);
         if (emailError) return emailError;
 
-        const senhaError = validarSenhaDetalhada(password);
-        if (senhaError) return senhaError;
+        // const senhaError = validarSenhaDetalhada(password);
+        // if (senhaError) return senhaError;
+
+        const senhaResultado = validarSenhaDetalhada(password)
+        if (!senhaResultado.valido){
+            return senhaResultado.detalhes?.join(", ") || senhaResultado.erro || "Senha inválida"
+        }
 
         return null;
     };
