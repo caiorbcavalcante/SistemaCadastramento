@@ -18,14 +18,13 @@ export class AppointmentController {
         const appointments = await this.appointmentService.getAllAppointments();
 
         if (!appointments || appointments.length === 0) {
-            return response.status(404).json({ message: "Nenhum agendamento encontrado" });
+            return response.status(200).json([]);
         }
-
           const formattedAppointments = appointments.map(app => ({
-            user: app.user.name,          // nome do usuário
-            barber: app.barber.name,      // nome do barbeiro
-            service: app.service.description, // descrição do serviço
-            price: app.service.price,         // preço do serviço
+            user: app.user.name,          
+            barber: app.barber.name, 
+            service: app.service.description, 
+            price: app.service.price,         
             date: new Date(app.date).toLocaleString("pt-BR", {
                 timeZone: "America/Sao_Paulo",
                 dateStyle: "short",
@@ -156,10 +155,10 @@ export class AppointmentController {
 
             
             if (!appointments || appointments.length === 0) {
-                return response.status(404).json({ message: "Nenhum agendamento encontrado para este usuário" });
+                return response.status(200).json([]);
         }
-        const appoitmentsMap = appointments.map(a=>({
-            id_appoitment: a.id_appointment,
+        const appointmentMap = appointments.map(a=>({
+            id_appointment: a.id_appointment,
             barberId:a.barber.id_barber,
             barberName: a.barber.name,
             barberNumber: a.barber.number,
@@ -169,7 +168,7 @@ export class AppointmentController {
             price: a.service.price
 
         }))
-            return response.status(200).json({appoitmentsMap})
+            return response.status(200).json(appointmentMap)
         }catch{
              return response.status(500).json({message: "Error ao buscar agendamento do usuario"})
         }
@@ -178,12 +177,12 @@ export class AppointmentController {
         try{
             const {id_barber} = request.params
              if(!id_barber){
-                return response.status(400).json({message: "ID do barbeiro não informado"})
+                return response.status(200).json([])
             }
             const appointments = await this.appointmentService.getAppointmentsByBarber(Number(id_barber))
 
             if(!appointments || appointments.length === 0){
-                return response.status(404).json({message:"Nenhum agendamento encontrado para este barbeiro"})
+                return response.status(200).json([])
             }
             const appointmentsMap = appointments.map(a => ({
                 id_appointment: a.id_appointment,

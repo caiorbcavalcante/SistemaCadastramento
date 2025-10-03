@@ -1,12 +1,15 @@
 import axios from "axios"
 import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react"
-
 interface IAppointment {
-  id_appointment: number;
-  date: Date;
-  description: string;
-  barberName: string;
+  id_appointment: number,
+  barberId: number,
+  barberName: string,
+  barberNumber: string,
+  date: Date | string,
+  id_service: number,
+  description: string,
+  price: number
 }
 
 export const UserAppointments:React.FC = () => {
@@ -27,21 +30,7 @@ export const UserAppointments:React.FC = () => {
         headers: { Authorization: `Bearer ${token}` },
       })
 
-      let appointmentsData: IAppointment[] = [];
-
-        // 🔹 CORREÇÃO: Verifica diferentes formatos possíveis
-                if (Array.isArray(res.data)) {
-                    setAppointments(res.data)
-                } else if (res.data && Array.isArray(res.data.appointments)) {
-                    setAppointments(res.data.appointments)
-                } else if (res.data && Array.isArray(res.data.data)) {
-                    setAppointments(res.data.data)
-                } else {
-                    setError("Formato de agendamentos inválido")
-                    setAppointments([])
-                }
-        setError(null)
-        setAppointments(appointmentsData)
+        setAppointments(res.data)
 
        } catch (err: any) {
           if (err.response?.status === 404) {
@@ -76,7 +65,7 @@ export const UserAppointments:React.FC = () => {
             ): (
                 <ul>
                     {appointments.map((appt:IAppointment)=> (
-                        <li key={appt.id_appointment}>
+                        <li key={appt.id_appoitment}>
                              {new Date(appt.date).toLocaleString("pt-BR")} - {appt.description} com {appt.barberName}
                         </li>
                     ))}

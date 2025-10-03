@@ -14,28 +14,6 @@ interface Appointment{
   description: string,
   price: number
 }
-// PARA TESTE
-const mockAppointments = [
-  {
-    id_appointment: 1,
-    userId: 1,
-    userName: "Carlinhos",
-    date: "2025-10-03T17:00:00",
-    description: "Haircut",
-    price: 24
-  },
-  {
-    id_appointment: 2,
-    userId: 2,
-    userName: "CAIODEV",
-    date: "2025-10-03T19:00:00",
-    description: "Nevar o hair",
-    price: 87
-  }
-];
-
-// PARA TESTE 
-
 
 const ControlPanel = () => {
   const [showPopout, setShowPopout] = useState(false)
@@ -90,11 +68,9 @@ const ControlPanel = () => {
 
         } catch (error) {
           if (axios.isAxiosError(error)){
-            if (error.request){
+            if (error){
               alert("Não foi possível se conectar com o servidor")
-            } else if (error){
-              alert("Não foi possível se conectar com o servidor")
-            } else{
+            } else {
               alert("Ocorreu um erro inesperado")
             }
           }
@@ -119,10 +95,6 @@ const ControlPanel = () => {
   if ( !user || user.role !== 'barber'){
     return null;
   }
-
-  useEffect(() => {
-  setAppointments(mockAppointments);
-  }, [])
 
   return (
 
