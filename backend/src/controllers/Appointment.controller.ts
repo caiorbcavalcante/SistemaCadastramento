@@ -50,15 +50,15 @@ export class AppointmentController {
             if (!appointment) {
                 return response.status(404).json({ message: "Agendamento não encontrado" })
             }
-            const formattedDate = new Date(appointment.date).toLocaleString("pt-BR", {
-             timeZone: "America/Sao_Paulo",
-             dateStyle: "short",
-             timeStyle: "short"
-        });
 
         return response.status(200).json({
-        ...appointment,
-        date: formattedDate
+            id_appointment: appointment.id_appointment,
+            userId: appointment.user.id_user,
+            userName: appointment.user.name,
+            date: appointment.date,
+            description: appointment.service.description,
+            price: appointment.service.price
+
         });
         } catch (err){
             console.error("Falha ao buscar agendamento:", err)

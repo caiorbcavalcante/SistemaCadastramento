@@ -8,12 +8,9 @@ import axios, { isAxiosError } from 'axios'
 
 interface Appointment{
   id_appointment: number,
-  date: string,
-  service: {description: string},
-  user: {name: string}
-}
-interface Service {
-  id_service: number,
+  userId: number,
+  userName: string,
+  date: Date | string,
   description: string,
   price: number
 }
@@ -21,15 +18,19 @@ interface Service {
 const mockAppointments = [
   {
     id_appointment: 1,
-    date: "2025-09-26T17:00:00",
-    service: { description: "Corte" },
-    user: { name: "Carlinhos" }
+    userId: 1,
+    userName: "Carlinhos",
+    date: "2025-10-03T17:00:00",
+    description: "Haircut",
+    price: 24
   },
   {
     id_appointment: 2,
-    date: "2025-09-27T19:00:00",
-    service: { description: "Barba e Bigode" },
-    user: { name: "Byloka" }
+    userId: 2,
+    userName: "CAIODEV",
+    date: "2025-10-03T19:00:00",
+    description: "Nevar o hair",
+    price: 87
   }
 ];
 
@@ -40,7 +41,7 @@ const ControlPanel = () => {
   const [showPopout, setShowPopout] = useState(false)
   const [appointments, setAppointments] = useState<Appointment[]>([])
   const [day, setDay] = useState(new Date());
-  const [selectedAppointment, setSelectedAppointment] = useState<Appointment>()
+  const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>()
   const [showPopoutManageAppointment, setShowPopoutManageAppointment] = useState(false);
   const navigate = useNavigate();
 
@@ -65,7 +66,7 @@ const ControlPanel = () => {
 
   const handleRemoveAppointment = async (app) =>{
     try {
-      const removeAppointmentResponse = await axios.delete(`http://localhost:3000/appointments/${app.id_appointment}`)
+      await axios.delete(`http://localhost:3000/appointments/${app.id_appointment}`)
 
       setAppointments(prevApps => prevApps.filter(a => a.id_appointment!== app.id_appointment))
       setShowPopoutManageAppointment(false);
@@ -81,20 +82,17 @@ const ControlPanel = () => {
   useEffect(() =>{
     const fetchBarberData = async () =>{
       if (user && user.role === 'barber') {
-        const token = localStorage.getItem('token');
         const barberId = user.id;
 
         try {
-          const appointmentResponse = await axios.get(`http://localhost:3000/appointments/barber/${barberId}`, {
-            headers: { Authorization: `Bearer ${token}`}
-          })
-          setAppointment(appointmentResponse.data)
+          const appointmentResponse = await axios.get(`http://localhost:3000/appointments/barber/${barberId}`)
+          setAppointments(appointmentResponse.data)
 
         } catch (error) {
           if (axios.isAxiosError(error)){
-            if (error.response){
-              alert(error.response.data.message)
-            } else if (error.request){
+            if (error.request){
+              alert("Não foi possível se conectar com o servidor")
+            } else if (error){
               alert("Não foi possível se conectar com o servidor")
             } else{
               alert("Ocorreu um erro inesperado")
@@ -173,7 +171,7 @@ const ControlPanel = () => {
       
       <div className='control-panel-appointments'>
           <h2>
-            {/* Olá, {user.name}: */}
+            Bem-vindo, {user.name}!
           </h2>
           <button onClick={() => changeDay(-1)}>{`<`}</button>
             {day.toLocaleDateString("pt-BR")}
@@ -190,8 +188,8 @@ const ControlPanel = () => {
                 return (
                   <li key={item.id_appointment}>
                     <span>{horaFormatada}</span>
-                    <span>{item.service.description}</span>
-                    <span>{item.user.name}</span>
+                    <span>{item.description}</span>
+                    <span>{item.userName}</span>
                     <span>
                       <button onClick={() => {setShowPopoutManageAppointment(true); setSelectedAppointment(item);}}> remv</button>
                     </span>
