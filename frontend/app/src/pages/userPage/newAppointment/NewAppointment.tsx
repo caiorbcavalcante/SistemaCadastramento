@@ -45,12 +45,16 @@ export const NewAppointment: React.FC = () => {
     return times;
   };
 
-  // 🔹 Verifica se um horário está marcado
+  // 🔹 CORREÇÃO SIMPLES: Remove vírgulas para comparação
   const isTimeBooked = (date: string, time: string): boolean => {
-    const fullDateTime = `${date}, ${time}`;
-    return bookedAppointments.some(appt => 
-      appt.date === fullDateTime && appt.barber === barber
-    );
+    if (!barber || !date || !time) return false;
+
+    const targetDateTime = `${date} ${time}`.replace(/,/g, '');
+    
+    return bookedAppointments.some(appt => {
+      const apptDateTime = appt.date.replace(/,/g, '');
+      return apptDateTime === targetDateTime && appt.barber === barber;
+    });
   };
 
   useEffect(() => {
@@ -74,28 +78,31 @@ export const NewAppointment: React.FC = () => {
           })
         ]);
 
-        // 🔹 Processa barbeiros
+        // Processa barbeiros
         if (barbersRes.data && Array.isArray(barbersRes.data.barbers)) {
           setBarbers(barbersRes.data.barbers);
         } else if (Array.isArray(barbersRes.data)) {
           setBarbers(barbersRes.data);
         }
 
-        // 🔹 Processa serviços
+        // Processa serviços
         if (servicesRes.data && Array.isArray(servicesRes.data.services)) {
           setServices(servicesRes.data.services);
         } else if (Array.isArray(servicesRes.data)) {
           setServices(servicesRes.data);
         }
 
-        // 🔹 Processa agendamentos
+        // Processa agendamentos
         if (appointmentsRes.data && Array.isArray(appointmentsRes.data.appointments)) {
           setBookedAppointments(appointmentsRes.data.appointments);
+        } else if (Array.isArray(appointmentsRes.data)) {
+          setBookedAppointments(appointmentsRes.data);
         }
 
         setError(null);
 
-      } catch {
+      } catch (error) {
+        console.error("Erro ao carregar dados:", error);
         setError("Erro ao carregar dados.");
       } finally {
         setLoading(false);
@@ -122,13 +129,13 @@ export const NewAppointment: React.FC = () => {
 
       const fullDate = `${selectedDate} ${selectedTime}`;
 
-      // 🔹 Verifica se o horário ainda está disponível
+      // Verifica se o horário está ocupado
       if (isTimeBooked(selectedDate, selectedTime)) {
-        setError("Este horário já foi reservado. Escolha outro.");
+        setError("Este horário já foi reservado para este barbeiro. Escolha outro.");
         return;
       }
 
-     const response = await axios.post("http://localhost:3000/appointments",
+      await axios.post("http://localhost:3000/appointments",
         {
           user: userId,
           barber: barber,
@@ -136,29 +143,35 @@ export const NewAppointment: React.FC = () => {
           date: fullDate
         }, {
         headers: { Authorization: `Bearer ${token}` },
-      }
-      )
+      });
       
-    console.log("🔹 Agendamento criado com sucesso:", response.data);
-      setSuccess("Agendamento realizado com sucesso!")
+      setSuccess("Agendamento realizado com sucesso!");
+
+      // Recarrega os agendamentos
+      const appointmentsRes = await axios.get("http://localhost:3000/appointments", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (appointmentsRes.data && Array.isArray(appointmentsRes.data.appointments)) {
+        setBookedAppointments(appointmentsRes.data.appointments);
+      } else if (Array.isArray(appointmentsRes.data)) {
+        setBookedAppointments(appointmentsRes.data);
+      }
+
+      // Limpa os campos
       setBarber("")
       setService("")
       setSelectedDate("")
       setSelectedTime("")
 
-    } catch (err:any){
-       console.error("🔹 Erro completo:", err);
-    console.error("🔹 Resposta do erro:", err.response?.data);
-    
-    // 🔹 Mensagem mais específica
-    if (err.response?.data?.message) {
-      setError(`Erro do servidor: ${err.response.data.message}`);
-    } else if (err.response?.status === 500) {
-      setError("Erro interno do servidor. Verifique se os IDs são válidos.");
-    } else {
-      setError("Erro ao criar agendamento. Tente novamente.");
-    }
+    } catch (err: any){
+      console.error("Erro:", err);
       
+      if (err.response?.data?.message) {
+        setError(`Erro: ${err.response.data.message}`);
+      } else {
+        setError("Erro ao criar agendamento. Tente novamente.");
+      }
     }
   }
 
@@ -196,7 +209,13 @@ export const NewAppointment: React.FC = () => {
 
       <div style={{ marginBottom: "1rem" }}>
         <label>Barbeiro:</label>
-        <select onChange={(e) => setBarber(e.target.value)} value={barber}>
+        <select 
+          onChange={(e) => {
+            setBarber(e.target.value);
+            setSelectedTime("");
+          }} 
+          value={barber}
+        >
           <option value="">Selecione o Barbeiro</option>
           {barbers.map((b) => (
             <option key={b.id_barber} value={b.id_barber}>
@@ -223,7 +242,7 @@ export const NewAppointment: React.FC = () => {
         <select 
           onChange={(e) => {
             setSelectedDate(e.target.value);
-            setSelectedTime(""); // Reseta o horário quando muda a data
+            setSelectedTime("");
           }} 
           value={selectedDate}
         >
@@ -236,7 +255,7 @@ export const NewAppointment: React.FC = () => {
         </select>
       </div>
 
-      {selectedDate && (
+      {selectedDate && barber && (
         <div style={{ marginBottom: "1rem" }}>
           <label>Horário (09:00 - 17:30):</label>
           <div style={{ 
@@ -257,28 +276,35 @@ export const NewAppointment: React.FC = () => {
                   style={{
                     padding: "0.5rem",
                     border: isSelected ? "2px solid #1976d2" : "1px solid #ccc",
-                    backgroundColor: isBooked ? "#ffebee" : isSelected ? "#e3f2fd" : "#f5f5f5",
-                    color: isBooked ? "#d32f2f" : "#000",
+                    backgroundColor: isBooked ? "#ff4444" : isSelected ? "#e3f2fd" : "#f5f5f5",
+                    color: isBooked ? "white" : "#000",
                     borderRadius: "4px",
                     cursor: isBooked ? "not-allowed" : "pointer",
-                    opacity: isBooked ? 0.6 : 1,
-                    fontSize: "0.9rem"
+                    fontSize: "0.9rem",
+                    fontWeight: "bold"
                   }}
                   disabled={isBooked}
                   title={isBooked ? "Horário já reservado" : `Selecionar ${time}`}
                 >
                   {time}
-                  {isBooked && " ❌"}
+                  {isBooked && " ✖"}
                 </button>
               );
             })}
           </div>
-          {selectedTime && (
+          
+          {selectedTime && !isTimeBooked(selectedDate, selectedTime) && (
             <p style={{ marginTop: "0.5rem", color: "#2e7d32" }}>
               ✅ Horário selecionado: <strong>{selectedTime}</strong>
             </p>
           )}
         </div>
+      )}
+
+      {selectedDate && !barber && (
+        <p style={{ color: "#666", fontStyle: "italic" }}>
+          Selecione um barbeiro para ver os horários disponíveis
+        </p>
       )}
 
       <div style={{ marginTop: "1rem" }}>
@@ -289,12 +315,9 @@ export const NewAppointment: React.FC = () => {
         >
           Agendar
         </button>
-
         <button onClick={handleClear}>Cancelar</button>
       </div>
     </div>
   );
 };
-
-
 
