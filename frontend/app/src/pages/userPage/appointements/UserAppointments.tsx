@@ -27,6 +27,8 @@ export const UserAppointments:React.FC = () => {
         headers: { Authorization: `Bearer ${token}` },
       })
 
+      let appointmentsData: IAppointment[] = [];
+
         // 🔹 CORREÇÃO: Verifica diferentes formatos possíveis
                 if (Array.isArray(res.data)) {
                     setAppointments(res.data)
@@ -39,10 +41,23 @@ export const UserAppointments:React.FC = () => {
                     setAppointments([])
                 }
         setError(null)
+        setAppointments(appointmentsData)
 
-       } catch {
-        setError("Erro ao carregar agendamentos.")
-          setAppointments([])
+       } catch (err: any) {
+          if (err.response?.status === 404) {
+        console.log("🔹 Usuário não tem agendamentos (isso é normal)");
+        setAppointments([]) // 🔹 Array vazio é normal
+        setError(null) // 🔹 NÃO MOSTRA ERRO ←←← ESSA É A MUDANÇA PRINCIPAL
+    } else if (err.response?.status === 401) {
+        setError("Token inválido ou expirado");
+        setAppointments([])
+    } else if (err.response?.status === 500) {
+        setError("Erro interno do servidor");
+        setAppointments([])
+    } else {
+        setError("Erro ao carregar agendamentos.");
+        setAppointments([])
+    }
        }
 
     }
