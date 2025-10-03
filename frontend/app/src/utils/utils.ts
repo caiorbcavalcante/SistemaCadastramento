@@ -71,22 +71,8 @@ function validarSenhaDetalhada(senha: string): ResultadoValidacaoSenha {
     erros.push("Máximo 128 caracteres");
   }
 
-  if (!/[A-Z]/.test(senhaLimpa)) {
-    erros.push("Pelo menos uma letra maiúscula");
-  }
 
-  if (!/[a-z]/.test(senhaLimpa)) {
-    erros.push("Pelo menos uma letra minúscula");
-  }
-
-  if (!/\d/.test(senhaLimpa)) {
-    erros.push("Pelo menos um número");
-  }
-
-  if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(senhaLimpa)) {
-    erros.push("Pelo menos um caractere especial");
-  }
-
+ 
   if (/\s/.test(senhaLimpa)) {
     erros.push("Não pode conter espaços");
   }

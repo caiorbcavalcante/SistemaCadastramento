@@ -41,7 +41,7 @@ const RegisterAccount: React.FC = () => {
         number
       })
 
-      navigate('/user')
+      navigate('/')
     } catch (error) {
       if(axios.isAxiosError(error)) {
         if(error.response){
