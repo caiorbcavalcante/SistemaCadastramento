@@ -54,6 +54,7 @@ export class AppointmentController {
             id_appointment: appointment.id_appointment,
             userId: appointment.user.id_user,
             userName: appointment.user.name,
+            userNumber: appointment.user.number,
             date: appointment.date,
             description: appointment.service.description,
             price: appointment.service.price
