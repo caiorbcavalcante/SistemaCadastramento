@@ -65,7 +65,7 @@ export const UserAppointments:React.FC = () => {
             ): (
                 <ul>
                     {appointments.map((appt:IAppointment)=> (
-                        <li key={appt.id_appoitment}>
+                        <li key={appt.id_appointment}>
                              {new Date(appt.date).toLocaleString("pt-BR")} - {appt.description} com {appt.barberName}
                         </li>
                     ))}
