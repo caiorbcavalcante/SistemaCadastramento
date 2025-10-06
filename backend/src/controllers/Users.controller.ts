@@ -27,7 +27,8 @@ export class UserController{
 
         return response.status(200).json({user:user?.id_user,
             name:user?.name,
-            email: user?.email})
+            email: user?.email,
+            number:user?.number})
     }catch{
           return response.status(500).json({ message: "Erro ao buscar usuário"})
     }
