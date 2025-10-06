@@ -7,6 +7,7 @@ import BarberEditProfile from '../pages/barberEditProfile/BarberEditProfile';
 import ControlPanel from '../pages/controlPanel/ControlPanel';
 import { UserPage } from '../pages/userPage/UserPage';
 import BarberAdminPage from '../pages/barberAdminPage/BarberAdminPage';
+import { UserProfile } from '../pages/userPage/profile/UserProfile';
 
 export const AppRoutes:React.FC = () => {
     return(
@@ -17,6 +18,7 @@ export const AppRoutes:React.FC = () => {
     <Route path="/login" element={<Login/>}/>
     <Route path="/register" element={<RegisterAccount/>}/>
     <Route path="/user" element={<UserPage/>}/>
+    <Route path="/userProfile" element={<UserProfile/>}/>
     <Route path='/controlPanel' element={<ControlPanel/>}/>
     <Route path='/barberEditProfile' element={<BarberEditProfile/>}/>
     <Route path='/controlPanel/admin' element={<BarberAdminPage/>}/>

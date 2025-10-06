@@ -26,9 +26,10 @@ export const DeleteUser: React.FC = () => {
 
      
         try{
-             await axios.delete("http://localhost:3000/user/${userId}", {
-                   headers: { Authorization: `Bearer ${token}` },
-        })
+            await axios.delete(`http://localhost:3000/user/${userId}`, {
+  headers: { Authorization: `Bearer ${token}` },
+})
+
             setError(null)
             setSuccess("Usuario deletado com sucesso")
 

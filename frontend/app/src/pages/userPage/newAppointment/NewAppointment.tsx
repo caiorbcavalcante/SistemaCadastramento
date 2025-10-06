@@ -45,15 +45,24 @@ export const NewAppointment: React.FC = () => {
     return times;
   };
 
-  // 🔹 CORREÇÃO SIMPLES: Remove vírgulas para comparação
+  // 🔹 CORREÇÃO: Função melhorada para verificar horários ocupados
   const isTimeBooked = (date: string, time: string): boolean => {
     if (!barber || !date || !time) return false;
 
-    const targetDateTime = `${date} ${time}`.replace(/,/g, '');
+    // Formata a data para o padrão dd/mm/aaaa
+    const formatDate = (dateStr: string) => {
+      const [day, month, year] = dateStr.split('/');
+      return `${day.padStart(2, '0')}/${month.padStart(2, '0')}/${year}`;
+    };
+
+    const targetDateTime = `${formatDate(date)} ${time}`;
     
     return bookedAppointments.some(appt => {
-      const apptDateTime = appt.date.replace(/,/g, '');
-      return apptDateTime === targetDateTime && appt.barber === barber;
+      // Remove qualquer caractere especial e espaços extras
+      const apptDateTime = appt.date.replace(/,/g, '').trim();
+      const cleanTargetDateTime = targetDateTime.replace(/,/g, '').trim();
+      
+      return apptDateTime === cleanTargetDateTime && appt.barber === barber;
     });
   };
 
@@ -99,6 +108,7 @@ export const NewAppointment: React.FC = () => {
           setBookedAppointments(appointmentsRes.data);
         }
 
+        console.log("🔹 Agendamentos carregados:", appointmentsRes.data); // Debug
         setError(null);
 
       } catch (error) {
@@ -121,6 +131,12 @@ export const NewAppointment: React.FC = () => {
       return
     }
 
+    // 🔹 VERIFICAÇÃO DUPLA no frontend
+    if (isTimeBooked(selectedDate, selectedTime)) {
+      setError("Este horário já foi reservado para este barbeiro. Escolha outro.");
+      return;
+    }
+
     try {
       if (!token) throw new Error("Usuário não autenticado.");
 
@@ -128,12 +144,6 @@ export const NewAppointment: React.FC = () => {
       const userId = decodedToken.id_user;
 
       const fullDate = `${selectedDate} ${selectedTime}`;
-
-      // Verifica se o horário está ocupado
-      if (isTimeBooked(selectedDate, selectedTime)) {
-        setError("Este horário já foi reservado para este barbeiro. Escolha outro.");
-        return;
-      }
 
       await axios.post("http://localhost:3000/appointments",
         {
@@ -147,7 +157,7 @@ export const NewAppointment: React.FC = () => {
       
       setSuccess("Agendamento realizado com sucesso!");
 
-      // Recarrega os agendamentos
+      // Recarrega os agendamentos para atualizar a lista
       const appointmentsRes = await axios.get("http://localhost:3000/appointments", {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -184,10 +194,12 @@ export const NewAppointment: React.FC = () => {
     setSuccess(null)
   }
 
-  // 🔹 Gera datas dos próximos 7 dias
+  // 🔹 Gera datas dos próximos 30 dias
   const getNextDays = (): string[] => {
     const days: string[] = [];
-    for (let i = 0; i < 7; i++) {
+    const numberOfDays = 30;
+    
+    for (let i = 0; i < numberOfDays; i++) {
       const date = new Date();
       date.setDate(date.getDate() + i);
       days.push(date.toLocaleDateString("pt-BR"));

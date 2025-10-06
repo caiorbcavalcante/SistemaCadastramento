@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { Input } from "../../../components/input/Input";
 import { Button } from "../../../components/button/Button";
 import {jwtDecode} from "jwt-decode";
+import { useNavigate } from "react-router-dom";
+
 
 const validateForm = (name: string, password: string, email:string, number : string): string | null => {
     if (!name || !password || !email || !number) {
@@ -37,6 +39,8 @@ export const UserProfile: React.FC = () => {
     const [form, setForm] = useState({ name: "", password: "", email:"", number:"" });
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
+
 
     // 🔹 CORREÇÃO: Tenta ambas as chaves possíveis
     const getToken = () => {
@@ -166,6 +170,7 @@ export const UserProfile: React.FC = () => {
         }
     };
 
+
     if (loading) return <p>Carregando perfil...</p>;
 
     if (!user) return (
@@ -221,7 +226,8 @@ export const UserProfile: React.FC = () => {
                     <p>Email: {user.email}</p>
                     <p>Número: {user.number}</p>
 
-                    <Button text="Editar Perfil" onClick={() => setEdit(true)} />
+                    <Button text="Editar" onClick={() => setEdit(true)} />
+                    <Button text="Voltar" onClick={() => navigate("/user")} />
                 </div>
             )}
         </div>
