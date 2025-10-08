@@ -55,8 +55,11 @@ export class BarbersController{
           return response.status(400).json({message: "Necessário nome, senha, email e número"})
         }
 
-        await this.barbersService.createBarber(barber.name, barber.email, barber.password, barber.number)
-        return response.status(201).json({message: "Usuário de barbeiro cadastrado com sucesso! "})
+        const newBarber = await this.barbersService.createBarber(barber.name, barber.email, barber.password, barber.number)
+
+        const {password, ...barberWithoutPassword} = newBarber;
+
+        return response.status(201).json({message: "Usuário de barbeiro cadastrado com sucesso! ", barberWithoutPassword})
       } catch (error) {
         if (error instanceof EmailAlreadyExistsError){
           return response.status(409).json({message: "Este email já foi cadastrado em outra conta."})

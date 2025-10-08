@@ -43,7 +43,7 @@ const ControlPanel = () => {
 
   const handleLogout = () => {
     logout();
-    navigate('/login')
+    navigate('/')
   }
 
   const handleRemoveAppointment = async (app: Appointment | null) => {
