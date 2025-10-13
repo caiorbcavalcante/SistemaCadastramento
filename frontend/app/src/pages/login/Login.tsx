@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom"
 import { useAuth } from "../../contexts/AuthContext"
 import axios from "axios"
 import type { ReactFormEvent } from "react-dom/client"
+import './Login.css';
 
 export const Login:React.FC = () => {
     const [email, setEmail] = useState<string>("")
@@ -44,26 +45,27 @@ export const Login:React.FC = () => {
     }
 
     return(
-        <div>
-            <h2>Login</h2>
+        <div className="login-page">
+            <div className="login-container">
+                <h2 className="login-title">Bem-vindo de volta</h2>
+                <h2 className="login-subtitle">Faça login para continuar</h2>
 
-            {error && <p style={{ color: "red" }}>{error}</p>}
-       
+                {error && <p className='login-error' style={{ color: "red" }}>{error}</p>}
+        
+                <form className="login-form" onSubmit={handleLogin}>
+                    <Input placeholder="email"
+                    value={email}
+                    onChange={(e)=>setEmail(e.target.value)}
+                    />
 
-            <Input placeholder="email"
-            value={email}
-            onChange={(e)=>setEmail(e.target.value)}
-            />
+                    <Input 
+                    type="password"
+                    placeholder="senha"
+                    value={senha}
+                    onChange={(e)=>setSenha(e.target.value)}/>
 
-            <Input 
-            type="password"
-            placeholder="senha"
-            value={senha}
-            onChange={(e)=>setSenha(e.target.value)}/>
-
-            
-            <div>
-                <Button text="Entrar" onClick={handleLogin} />
+                    <Button text="Entrar" onClick={handleLogin} />
+                </form>
             </div>
         </div>
     )

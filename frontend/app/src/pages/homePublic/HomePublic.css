@@ -1,66 +1,181 @@
+/* ===== FONTE E BASE ===== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
 
-
-.highlight {
-  color: #201902;
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background: radial-gradient(circle at top, #111 0%, #000 100%);
+  color: #fff;
+  overflow-x: hidden;
 }
 
-.auth-buttons {
+/* ===== CONTAINER PRINCIPAL ===== */
+div {
+  text-align: center;
+  padding: 5rem 2rem;
+  box-sizing: border-box;
+}
+
+/* ===== TÍTULO ===== */
+.title {
+  font-size: 3.2rem;
+  font-weight: 800;
+  line-height: 1.2;
+  color: #fdfdfd;
+  margin-bottom: 1rem;
   position: relative;
-  z-index: 1;
+  display: inline-block;
+}
+
+.highlight {
+  color: #d4af37;
+  background: linear-gradient(90deg, #d4af37, #f8e38e);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Linha dourada decorativa abaixo do título */
+.title::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, #d4af37, #f1c453);
+  margin: 1rem auto 2rem;
+  border-radius: 2px;
+  animation: expandLine 1s ease forwards;
+}
+
+@keyframes expandLine {
+  from {
+    width: 0;
+    opacity: 0;
+  }
+  to {
+    width: 80px;
+    opacity: 1;
+  }
+}
+
+/* ===== SUBTÍTULO ===== */
+.subtitle {
+  font-size: 1.2rem;
+  color: #cfcfcf;
+  max-width: 720px;
+  margin: 0 auto 3.5rem auto;
+  line-height: 1.7;
+  letter-spacing: 0.3px;
+}
+
+/* ===== BOTÕES ===== */
+.auth-buttons {
   display: flex;
+  flex-direction: column;
   gap: 1rem;
-  margin-bottom: 3rem;
-  flex-wrap: wrap;
+  align-items: center;
   justify-content: center;
+  margin-bottom: 4.5rem;
+}
+
+@media (min-width: 768px) {
+  .auth-buttons {
+    flex-direction: row;
+    gap: 2rem;
+  }
 }
 
 .auth-buttons a {
   text-decoration: none;
+  width: 220px;
 }
 
-
-.subtitle {
-  position: relative;
-  z-index: 1;
-  font-size: 1.25rem;
-  color: #cccccc;
-  margin-bottom: 2rem;
-  max-width: 600px;
-  line-height: 1.6;
+.auth-buttons button {
+  width: 100%;
+  padding: 1rem 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, #d4af37, #b9941f);
+  color: #111;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 8px rgba(212, 175, 55, 0.25);
 }
 
-.title {
-  position: relative;
-  z-index: 1;
-  font-size: 4rem;
-  font-weight: bold;
-  margin-bottom: 1.5rem;
-  line-height: 1.1;
+.auth-buttons button:hover {
+  background: linear-gradient(135deg, #f1c453, #d4af37);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
 }
 
+/* ===== SEÇÃO DE ESTATÍSTICAS ===== */
 .stats-section {
-  position: relative;
-  z-index: 1;
   display: flex;
-  gap: 3rem;
-  justify-content: center;
-  flex-wrap: wrap;
-  padding-top: 2rem;
-  border-top: 1px solid #333;
+  flex-direction: column;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .stats-section {
+    flex-direction: row;
+    justify-content: center;
+    gap: 6rem;
+  }
 }
 
 .stat-item {
   text-align: center;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  backdrop-filter: blur(4px);
+  transition: all 0.3s ease;
+}
+
+.stat-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.2);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .stat-number {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #ffffff;
-  margin-bottom: 0.5rem;
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: #d4af37;
+  margin-bottom: 0.4rem;
+  text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
 }
 
 .stat-label {
-  font-size: 0.875rem;
-  color: #999999;
+  font-size: 1rem;
+  color: #e0e0e0;
+  letter-spacing: 0.6px;
+}
+
+/* ===== ANIMAÇÕES GERAIS ===== */
+.title,
+.subtitle,
+.auth-buttons,
+.stats-section {
+  opacity: 0;
+  transform: translateY(25px);
+  animation: fadeInUp 0.9s ease-out forwards;
+}
+
+.subtitle { animation-delay: 0.15s; }
+.auth-buttons { animation-delay: 0.3s; }
+.stats-section { animation-delay: 0.45s; }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

@@ -28,7 +28,6 @@ interface InterfaceAppointments{
   price: number
 }
 
-
 export const NewAppointment: React.FC = () => {
 
   const [barbers, setBarbers] = useState<InterfaceBarber[]>([]);
