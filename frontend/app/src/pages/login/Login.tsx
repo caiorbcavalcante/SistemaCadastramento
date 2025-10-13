@@ -66,6 +66,7 @@ export const Login:React.FC = () => {
 
                     <Button text="Entrar" onClick={handleLogin} />
                 </form>
+            <a href="/reset-password">Redefinir Senha</a>
             </div>
         </div>
     )
