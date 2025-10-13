@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background-color: #111; /* fundo escuro puro */
+  color: #fff;
+}
+
+/* ===== CONTAINER ===== */
+.notfound-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+/* ===== CONTEÚDO ===== */
+.notfound-content {
+  text-align: center;
+}
+
+/* ===== CÓDIGO 404 ===== */
+.notfound-code {
+  font-size: 6rem;
+  font-weight: 700;
+  color: #d4af37; /* dourado minimalista */
+  margin: 0;
+  letter-spacing: 2px;
+}
+
+/* ===== MENSAGEM ===== */
+.notfound-message {
+  font-size: 1.2rem;
+  color: #ccc;
+  margin-top: 1rem;
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 480p

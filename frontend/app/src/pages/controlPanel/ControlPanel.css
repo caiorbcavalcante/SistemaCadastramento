@@ -1,95 +1,256 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
-.control-panel-header {
-  position: fixed; 
-  top: 0;
-  left: 0;
-  width: 100%; 
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 1rem;
-  background-color: #250675;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
-  z-index: 100; 
-  padding-left: 0rem;
-  padding-right: 15rem;
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background-color: #111;
+  color: #fff;
 }
 
+/* ===== CONTAINER PRINCIPAL ===== */
+.control-panel-container {
+  min-height: 100vh;
+  padding: 8rem 2rem 2rem; /* mais espaço por causa do header fixo */
+  background: linear-gradient(180deg, #0b0b0b 0%, #1a1a1a 100%);
+}
+
+/* ===== HEADER ===== */
+.control-panel-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  background: rgba(17, 17, 17, 0.95);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  z-index: 100;
+}
+
+/* ===== POP-OUT ===== */
 .popout-container {
   position: relative;
-  display: inline-block;
+  z-index: 300;
 }
 
 .popout-button {
-  padding: 0.5rem 1rem;
+  background: linear-gradient(135deg, #d4af37, #b9941f);
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  color: #111;
+  font-weight: 600;
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.popout-button:hover {
+  background: linear-gradient(135deg, #b9941f, #d4af37);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
 }
 
 .popout-content {
   position: absolute;
-  background-color: black;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1; 
   top: 100%; 
-  right: 0; 
-  margin-top: 0.5rem; 
-  border-radius: 4px;
+  right: 0;
+  margin-top: 0.4rem;
+  background: #1a1a1a;
+  border: 1px solid #2b2b2b;
+  border-radius: 10px;
+  padding: 0.8rem;
+  min-width: 180px;
+  z-index: 200;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
 }
 
 .popout-content ul {
   list-style: none;
-  padding: 0.5rem 0;
   margin: 0;
+  padding: 0;
 }
 
-.popout-content li {
-  padding: 0.5rem 1rem;
+.popout-content ul li {
+  margin-bottom: 0.5rem;
+}
+
+.popout-content ul li button {
+  width: 100%;
+  background: none;
+  border: none;
+  color: #fff;
+  text-align: left;
+  font-weight: 500;
+  padding: 0.4rem 0.2rem;
   cursor: pointer;
+  transition: color 0.3s ease;
 }
 
-.popout-content li:hover {
-  background-color: #0a0e3d;
+.popout-content ul li button:hover {
+  color: #d4af37;
 }
-/* CSS DO POPOUT  */
 
+/* ===== POPUPS DE AGENDAMENTOS ===== */
+.control-panel-manage-appointments-popout,
+.control-panel-removeApp-popout,
+.control-panel-contactUser-popout {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #1a1a1a;
+  border: 1px solid #2b2b2b;
+  border-radius: 12px;
+  padding: 2rem;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* mais espaço entre elementos */
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease;
+}
+
+/* ===== POPUP DE CONTATO COM USUÁRIO ===== */
+.control-panel-contactUser-popout input {
+  padding: 1rem 1.2rem;
+  border-radius: 8px;
+  border: 1px solid #2b2b2b;
+  background: rgba(17, 17, 17, 0.9);
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.control-panel-contactUser-popout input:focus {
+  outline: none;
+  border-color: #d4af37;
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.5);
+}
+
+.control-panel-contactUser-popout span {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.control-panel-contactUser-popout button {
+  background: transparent;
+  border: 1px solid #2b2b2b;
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.control-panel-contactUser-popout button:hover {
+  background: linear-gradient(135deg, #b9941f, #d4af37);
+  color: #111;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+}
+
+/* ===== POPUP DE REMOÇÃO DE AGENDAMENTO ===== */
+.control-panel-removeApp-popout button {
+  background: transparent;
+  border: 1px solid #2b2b2b;
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.control-panel-removeApp-popout button:hover {
+  background: linear-gradient(135deg, #b9941f, #d4af37);
+  color: #111;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+}
+
+.control-panel-removeApp-popout span {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+/* ===== AGENDAMENTOS ===== */
 .control-panel-appointments {
-  margin-top: 4rem; /* Garante que o conteúdo fique abaixo do cabeçalho fixo */
-  padding: 1rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
 }
 
 .control-panel-appointments h2 {
-  text-align: center;
-  margin-bottom: 1.5rem;
+  font-weight: 600;
+  color: #d4af37;
+  margin-bottom: 1rem;
 }
 
-/* Estilos para a lista não ordenada */
+.control-panel-appointments button {
+  background: none;
+  border: 1px solid #2b2b2b;
+  border-radius: 8px;
+  padding: 0.4rem 0.8rem;
+  margin: 0 0.3rem;
+  cursor: pointer;
+  font-weight: 500;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.control-panel-appointments button:hover {
+  background: #2b2b2b;
+  border-color: #d4af37;
+  color: #d4af37;
+}
+
 .control-panel-appointments ul {
-  list-style: none; /* Remove os marcadores */
+  list-style: none;
   padding: 0;
-  margin: 0;
+  margin-top: 1rem;
 }
 
-.control-panel-appointments li:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 3px 6px rgba(0,0,0,0.15);
-}
-
-.control-panel-appointments li {
+.control-panel-appointments ul li {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.75rem 1rem;
-  margin-bottom: 0.5rem;
-  background-color: #000;
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  transition: transform 0.2s ease-in-out;
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid #2b2b2b;
+  transition: background 0.3s ease;
 }
 
-/* Estilos para as colunas (agora são os spans) */
-.control-panel-appointments li span {
-  flex: 1; /* Permite que cada coluna ocupe um espaço igual */
-  text-align: center;
-  font-weight: normal;
+.control-panel-appointments ul li:hover {
+  background: rgba(212, 175, 55, 0.05);
+}
+
+.control-panel-appointments ul li span {
+  font-weight: 500;
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 480px) {
+  .control-panel-appointments ul li {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .control-panel-appointments button {
+    margin: 0.3rem 0 0 0;
+  }
 }

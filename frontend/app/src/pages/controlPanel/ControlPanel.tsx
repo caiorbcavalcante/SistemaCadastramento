@@ -6,6 +6,9 @@ import { Route } from 'react-router-dom'
 import BarberEditProfile from '../barberEditProfile/BarberEditProfile'
 import axios, { isAxiosError } from 'axios'
 
+import { FiSettings } from "react-icons/fi";
+import { RiDeleteBinLine } from "react-icons/ri";
+import { FaWhatsapp } from "react-icons/fa";
 interface Appointment{
   id_appointment: number,
   userId: number,
@@ -21,7 +24,6 @@ const ControlPanel = () => {
   const [appointments, setAppointments] = useState<Appointment[]>([])
   const [day, setDay] = useState(new Date());
   const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>()
-  const [showPopoutManageAppointment, setShowPopoutManageAppointment] = useState<boolean>(false);
   const [showPopoutManageAppointmentRemove, setShowPopoutManageAppointmentRemove] = useState<boolean>(false);
   const [showPopoutContactUser, setShowPopoutContactUser] = useState<boolean> (false);
   const [contactMessage, setContactMessage] = useState<string>("")
@@ -52,7 +54,6 @@ const ControlPanel = () => {
 
       setAppointments(prevApps => prevApps.filter(a => a.id_appointment!== app?.id_appointment))
       setShowPopoutManageAppointmentRemove(false);
-      setShowPopoutManageAppointment(false);
       setSelectedAppointment(null);
 
     } catch (error) {
@@ -151,20 +152,6 @@ const ControlPanel = () => {
           </div>}
         </div>
       </header>
-      
-      {showPopoutManageAppointment && selectedAppointment && (
-        <div className='control-panel-manage-appointments-popout'>
-          <span>
-
-            <button onClick={() => {setShowPopoutManageAppointmentRemove(true); if (showPopoutContactUser) {setShowPopoutContactUser(false)}}}> remover agendamento </button>
-            <button onClick={() => {setShowPopoutContactUser(true); if (showPopoutManageAppointmentRemove) {setShowPopoutManageAppointmentRemove(false)}; setContactMessage(`Olá ${selectedAppointment.userName}, estou entrando em contato sobre nosso agendamento as ${formatedDate(selectedAppointment.date)}`)}}> contatar {selectedAppointment.userName} </button>
-            <button onClick={() => {setShowPopoutManageAppointment(false); setSelectedAppointment(null)}}> cancelar</button>
-            {/* <h2> Tem certeza que deseja remover este agendamento? </h2>
-            <button onClick={() => {handleRemoveAppointment(selectedAppointment); }}>Sim</button>
-            <button onClick={() => {setSelectedAppointment(null); setShowPopoutManageAppointment(false)}}>Cancelar</button> */}
-          </span>
-        </div>
-      )}
 
       {showPopoutManageAppointmentRemove && selectedAppointment && (
         <div className='control-panel-removeApp-popout'>
@@ -185,7 +172,7 @@ const ControlPanel = () => {
               value={contactMessage}
               onChange={(e) => setContactMessage(e.target.value)}/>
 
-            <button onClick={() => handleWhatsappMessage(selectedAppointment)}>Enviar</button>
+            <button onClick={() => {handleWhatsappMessage(selectedAppointment); setShowPopoutContactUser(false)}}>Enviar</button>
             <button onClick={() => setShowPopoutContactUser(false)}>Cancelar</button>
           </span>
         </div>
@@ -195,7 +182,7 @@ const ControlPanel = () => {
           <h2>
             Bem-vindo, {user.name}!
           </h2>
-          <button onClick={() => changeDay(-1)}>{`<`}</button>
+          <button onClick={() => {changeDay(-1) }}>{`<`}</button>
             {day.toLocaleDateString("pt-BR")}
           <button onClick={() => changeDay(1)}>{`>`}</button>
     
@@ -213,7 +200,8 @@ const ControlPanel = () => {
                     <span>{item.description}</span>
                     <span>{item.userName}</span>
                     <span>
-                      <button onClick={() => {setShowPopoutManageAppointment(!showPopoutManageAppointment); setSelectedAppointment(item);}}> opçoes</button>
+                      <button onClick={() => {setSelectedAppointment(item) ; setShowPopoutContactUser(true); if (showPopoutManageAppointmentRemove) {setShowPopoutManageAppointmentRemove(false)}; setContactMessage(`Olá ${item.userName}, estou entrando em contato sobre nosso agendamento as ${formatedDate(item.date)}`)}}> <FaWhatsapp /> </button>
+                      <button onClick={() => { setSelectedAppointment(item) ;setShowPopoutManageAppointmentRemove(true); if (showPopoutContactUser) {setShowPopoutContactUser(false)}}}> <RiDeleteBinLine /> </button>
                     </span>
                   </li>
                 );

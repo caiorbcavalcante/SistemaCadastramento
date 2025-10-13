@@ -59,9 +59,13 @@ const RegisterAccount: React.FC = () => {
 
   return (
     
-    <div>
-      <h2> Criar Conta </h2>
-      <form onSubmit={handleSubmit}>
+    <div className='register-page'>
+      <div className='register-content'>
+      <h2 className='register-title'> Criar Conta </h2>
+      <p className='register-subtitle'>Preencha os campos abaixo</p>
+
+
+      <form className='register-form' onSubmit={handleSubmit}>
 
         <input placeholder='Nome' onChange={(e) => setName(e.target.value)} />
         <input placeholder='exemplo@email.com' onChange={(e) => setEmail(e.target.value)}/>
@@ -70,8 +74,8 @@ const RegisterAccount: React.FC = () => {
 
 
         <button type='submit'>Criar conta</button>
-
       </form>
+      </div>
     </div>
   )
 }

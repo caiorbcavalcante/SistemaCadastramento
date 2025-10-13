@@ -4,10 +4,15 @@ import React from 'react'
 
 const NotFound = () => {
   return (
-    <div>
-        <h1>
+    <div className='notfound-page'>
+      <div className='notfound-content'>
+        <h1 className='notfound-code'>
             404
         </h1>
+        <p className='notfound-message'>
+          Página não encontrada
+        </p>
+      </div>
     </div>
   )
 }
