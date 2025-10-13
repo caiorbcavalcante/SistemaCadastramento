@@ -60,6 +60,9 @@ export const Login:React.FC = () => {
             placeholder="senha"
             value={senha}
             onChange={(e)=>setSenha(e.target.value)}/>
+            <br></br>
+
+            <a href="/reset-password">Redefinir Senha</a>
 
             
             <div>
