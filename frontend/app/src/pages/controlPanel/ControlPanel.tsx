@@ -106,7 +106,7 @@ const ControlPanel = () => {
 
   useEffect(() => {
     if (!loading){
-      if(!user || user.role !== 'barber'){navigate('/')} // MUDAR AQUI A ROTA DEPOIS PAR O MENU
+      if(!user || user.role !== 'barber'){navigate('/')} 
     }
   }, [user, loading, navigate])
 
@@ -133,7 +133,7 @@ const ControlPanel = () => {
             <ul>
               <li>
                 <button onClick={() => {navigate('/barberEditProfile')}}>
-                  Editar Perfil
+                  Informações de conta
                 </button>
               </li>
               {user?.adminplus &&
