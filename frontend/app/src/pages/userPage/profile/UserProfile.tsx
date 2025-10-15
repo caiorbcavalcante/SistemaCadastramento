@@ -96,7 +96,7 @@ const UserProfile = () => {
             </header>
 
             <div className='account-details'>
-                <h1>Informações de conta</h1>
+                <h1>Informações da conta</h1>
 
                 <div className='info-row'>
                     <div className='info-header'>
