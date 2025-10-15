@@ -8,6 +8,8 @@ import ControlPanel from '../pages/controlPanel/ControlPanel';
 import { UserPage } from '../pages/userPage/UserPage';
 import BarberAdminPage from '../pages/barberAdminPage/BarberAdminPage';
 import UserProfile from '../pages/userPage/profile/UserProfile';
+import { ForgotPassword } from '../pages/login/ForgotPassword';
+import { NewPassword } from '../pages/login/NewPassword';
 
 export const AppRoutes:React.FC = () => {
     return(
@@ -22,6 +24,8 @@ export const AppRoutes:React.FC = () => {
     <Route path='/controlPanel' element={<ControlPanel/>}/>
     <Route path='/barberEditProfile' element={<BarberEditProfile/>}/>
     <Route path='/controlPanel/admin' element={<BarberAdminPage/>}/>
+    <Route path='/reset-password' element={<ForgotPassword/>}/>
+    <Route path='/new-password' element={<NewPassword/>}/>
     
 
     <Route path='*' element={<NotFound/>}/>

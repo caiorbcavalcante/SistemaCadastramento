@@ -92,14 +92,31 @@
 }
 
 /* ====== RESPONSIVO ====== */
-@media (max-width: 600px) {
+@media (max-width: 900px) {
   .slots-container {
-    justify-content: center;
+    justify-content: center; /* centraliza os horários */
+    gap: 0.4rem; /* reduz o espaçamento para caber melhor */
   }
 
   .slot-card {
-    min-width: 60px;
+    flex: 1 1 70px; /* cards flexíveis, ocupam espaço proporcional */
+    min-width: 60px; /* largura mínima para não ficar muito pequeno */
+    max-width: 80px; /* largura máxima para não exagerar */
     padding: 0.6rem 0.8rem;
     font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .slots-container {
+    gap: 0.3rem;
+  }
+
+  .slot-card {
+    flex: 1 1 50px;
+    min-width: 45px;
+    max-width: 65px;
+    font-size: 0.9rem;
+    padding: 0.5rem 0.6rem;
   }
 }

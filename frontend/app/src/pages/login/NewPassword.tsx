@@ -3,6 +3,7 @@ import { useAuth } from "../../contexts/AuthContext"
 import axios from "axios"
 import { Input } from "../../components/input/Input"
 import { useNavigate } from "react-router-dom"
+import"./NewPassword.css"
 
 
 export const  NewPassword:React.FC = () => {

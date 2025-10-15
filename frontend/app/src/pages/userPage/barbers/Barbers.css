@@ -64,15 +64,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #d4af37, #b9941f);
+  background: linear-gradient(135deg, #d4af37, #b9941f); /* fundo dourado */
+  border: 2px solid #f1c453; /* contorno suave */
+  box-shadow: 0 4px 10px rgba(212, 175, 55, 0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .barber-avatar img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.3s;
 }
 
+.barber-avatar:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 15px rgba(212, 175, 55, 0.6);
+}
 /* ====== INFORMAÇÕES ====== */
 .barber-info {
   display: flex;
@@ -109,13 +117,14 @@
   }
 
   .barber-avatar {
-    width: 65px;
-    height: 65px;
+    width: 60px;
+    height: 60px;
+    border: 2px solid #f8e38e;
   }
 
-  .barber-img {
-    width: 80%;
-    height: 80%;
+  .barber-avatar img {
+    width: 90%;
+    height: 90%;
   }
 
   .barber-name {

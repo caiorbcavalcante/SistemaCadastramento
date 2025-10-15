@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./Barbers.css";
-import barberImg from "../../../assets/image.png";
+
 
 
 
@@ -51,9 +51,10 @@ export const Barbers: React.FC = () => {
           barbers.map((b) => (
             <li key={b.id_barber} className="barber-item">
             
- <div className="barber-avatar">
-  <img src={barberImg} alt="Barbeiro" className="barber-img" />
-</div>
+                    <div className="barber-avatar">
+                {/* Caminho direto do public */}
+                <img src="/image.png" alt="Barbeiro" className="barber-img" />
+              </div>
 
               <div className="barber-info">
                 <span className="barber-name">{b.name}</span>

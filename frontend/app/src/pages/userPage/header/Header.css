@@ -10,6 +10,7 @@ header {
   position: sticky;
   top: 0;
     max-height: 100px;
+    width:95%;
   z-index: 1000;
 }
 
@@ -65,3 +66,15 @@ header h1 {
   transform: translateY(-2px);
   box-shadow: 0 6px 15px rgba(0, 123, 255, 0.4);
 }
+
+@media (max-width: 600px) {
+  header {
+   
+    width: 92%; /* header ocupa 95% da tela */
+  
+  }
+
+
+}
+
+
