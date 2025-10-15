@@ -80,9 +80,13 @@ export class UserController{
             const id = Number(request.params.id_user)
             const user = request.body
 
-            if (!user.name || !user.email || !user.password || !user.number) {
-            return response.status(400).json({ message: "Nome, email e senha são obrigatórios" })
-        }
+            if (!user || Object.keys(user).length === 0){
+                return response.status(400).json({message: "Nenhuma mudança feita"})
+            }
+
+        //     if (!user.name || !user.email || !user.password || !user.number) {
+        //     return response.status(400).json({ message: "Nome, email e senha são obrigatórios" })
+        // }
 
             const updateUser = await this.userService.updateUser(id, user.name, user.email, user.password, user.number)
             if(!updateUser){

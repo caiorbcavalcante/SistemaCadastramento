@@ -7,7 +7,7 @@ import BarberEditProfile from '../pages/barberEditProfile/BarberEditProfile';
 import ControlPanel from '../pages/controlPanel/ControlPanel';
 import { UserPage } from '../pages/userPage/UserPage';
 import BarberAdminPage from '../pages/barberAdminPage/BarberAdminPage';
-import { UserProfile } from '../pages/userPage/profile/UserProfile';
+import UserProfile from '../pages/userPage/profile/UserProfile';
 
 export const AppRoutes:React.FC = () => {
     return(

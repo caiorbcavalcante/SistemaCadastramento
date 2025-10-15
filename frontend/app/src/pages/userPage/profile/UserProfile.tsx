@@ -4,232 +4,203 @@ import { Input } from "../../../components/input/Input";
 import { Button } from "../../../components/button/Button";
 import {jwtDecode} from "jwt-decode";
 import { useNavigate } from "react-router-dom";
-
-
-const validateForm = (name: string, password: string, email:string, number : string): string | null => {
-    if (!name || !password || !email || !number) {
-        return "Preencha todos os campos.";
-    }
-
-    if (!email.includes("@") || !email.includes(".")) { return "Email inválido."; }
-    if (password.length < 6) { return "A senha deve ter pelo menos 6 caracteres."; }
-    const digitsOnly = number.replace(/\D/g, "");
-    if (digitsOnly.length !== 11) return "O número deve ter 11 dígitos";
-    return null;
+import './UserProfile.css'
+import { useAuth } from "../../../contexts/AuthContext";
+interface patchInterface {
+    name?: string,
+    email?: string,
+    password?: string,
+    number?: string,
 }
 
-const formatPhoneNumber = (value: string) => {
-    const digits = value.replace(/\D/g, "");
-    if (digits.length <= 2) return digits;
-    if (digits.length <= 7) return `${digits.slice(0, 2)} ${digits.slice(2)}`;
-    return `${digits.slice(0, 2)} ${digits.slice(2, 7)}-${digits.slice(7, 11)}`;
-}
+const UserProfile = () => {
+    const { user, loading } = useAuth();
 
-interface User {
-    id: number;
-    name: string;
-    password?: string;
-    email:string;
-    number:string;
-}
+    const [newName, setNewName] = useState<string>('');
+    const [newEmail, setNewEmail] = useState<string>('');
+    const [newNumber, setNewNumber] = useState<string>('');
+    const [changeNamePopout, setChangeNamePopout] = useState<boolean>(false);
+    const [changeEmailPopout, setChangeEmailPopout] = useState<boolean>(false);
+    const [changeNumberPopout, setChangeNumberPopout] = useState<boolean>(false);
 
-export const UserProfile: React.FC = () => {
-    const [user, setUser] = useState<User | null>(null);
-    const [edit, setEdit] = useState(false);
-    const [form, setForm] = useState({ name: "", password: "", email:"", number:"" });
-    const [error, setError] = useState<string | null>(null);
-    const [loading, setLoading] = useState(true);
+    const [oldPassword, setOldPassword] = useState<string>('');
+    const [newPassword, setNewPassword] = useState<string>('');
+    const [checkNewPassword, setCheckNewPassword] = useState<string>('');
+
     const navigate = useNavigate();
 
+    const handleSubmit = async () => {
+        const patchData: patchInterface = {};
 
-    // 🔹 CORREÇÃO: Tenta ambas as chaves possíveis
-    const getToken = () => {
-        return localStorage.getItem("token") || localStorage.getItem("authToken");
-    };
-
-    const token = getToken();
-
-    useEffect(() => {
-        console.log("Token encontrado:", token); // 🔹 DEBUG
-        
-        if (!token) {
-            setError("Usuário não autenticado. Faça login novamente.");
-            setLoading(false);
-            return;
-        }
-
-        const fetchUser = async () => {
-            try {
-                const decodedToken = jwtDecode<{ 
-                    id_user?: number,         
-                    id?: number,
-                    userId?: number,  
-                    email: string, 
-                    role: string, 
-                    exp: number 
-                }>(token);              
-
-                if (decodedToken.exp * 1000 < Date.now()) {
-                    localStorage.removeItem("token");
-                    localStorage.removeItem("authToken");
-                    setError("Sessão expirada. Faça login novamente.");
-                    setLoading(false);
-                    return;
-                }
-
-                const userId = decodedToken.id_user || decodedToken.id || decodedToken.userId;
-
-                if (!userId) {
-                    setError("ID do usuário não encontrado no token");
-                    setLoading(false);
-                    return;
-                }
-
-                const res = await axios.get(`http://localhost:3000/user/${userId}`, {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
-
-                console.log("Resposta da API:", res.data); // 🔹 DEBUG
-
-                setUser({
-                    id: userId,
-                    name: res.data.name,
-                    email: res.data.email,
-                    number: res.data.number
-                });
-                setForm({ 
-                    name: res.data.name, 
-                    password: "", 
-                    email: res.data.email, 
-                    number: res.data.number 
-                });
-                setError(null);
-                
-            } catch (err: any) {
-                console.error("Erro detalhado:", err);
-                
-                if (err.response?.status === 404) {
-                    setError("Usuário não encontrado no servidor");
-                } else if (err.response?.status === 401) {
-                    setError("Token inválido ou expirado");
-                    localStorage.removeItem("token");
-                    localStorage.removeItem("authToken");
-                } else if (err.response?.status === 403) {
-                    setError("Acesso negado");
-                } else if (err.code === "NETWORK_ERROR" || err.message === "Network Error") {
-                    setError("Erro de conexão com o servidor");
-                } else {
-                    setError("Erro ao carregar perfil do usuário");
-                }
-            } finally {
-                setLoading(false);
+        if (newName) patchData.name = newName;
+        if (newEmail) {
+            if (!newEmail.includes("@")) {
+                alert("Insira um email válido!");
+                return;
             }
+            patchData.email = newEmail;
         }
-
-        fetchUser();
-    }, [token]);
-
-    const handleSave = async () => {
-        if (!user) return;
-        setError(null);
-
-        const validationError = validateForm(form.name, form.password, form.email, form.number);
-        if (validationError) {
-            setError(validationError);
-            return;
-        }
+        if (newNumber) patchData.number = newNumber;
 
         try {
-            const token = getToken();
-            if (!token) {
-                setError("Token não encontrado");
+            await axios.patch(`http://localhost:3000/user/${user?.id}`, patchData);
+            alert("Alterações salvas com sucesso!");
+        } catch {
+            alert("Erro ao salvar alterações!");
+        }
+    };
+
+    const handlePasswordChange = async () => {
+        try {
+            const res = await axios.post("http://localhost:3000/user/login", {
+                email: user?.email,
+                password: oldPassword
+            });
+
+            if (res.status !== 200) {
+                alert("Senha incorreta");
                 return;
             }
 
-            const decodedToken = jwtDecode<{ 
-                    id_user?: number,         
-                    id?: number,
-                    userId?: number,  
-                    email: string, 
-                    role: string, 
-                    exp: number 
-                }>(token);         
-              const userId = decodedToken.id_user 
+            if (newPassword !== checkNewPassword) {
+                alert("As senhas não são iguais");
+                return;
+            }
 
-            const res = await axios.patch(
-                `http://localhost:3000/user/${userId}`,
-                { name: form.name, email: form.email, password: form.password, number: form.number.replace(/\D/g, "") },
-                { headers: { Authorization: `Bearer ${token}` } }
-            );
-            setUser(res.data);
-            setEdit(false);
-            setForm({ ...form, password: "" });
-            setError(null);
+            if (newPassword.length < 6) {
+                alert("A nova senha deve conter pelo menos 6 caracteres");
+                return;
+            }
+
+            await axios.patch(`http://localhost:3000/user/${user?.id}`, { password: newPassword });
+            alert("Senha alterada com sucesso!");
+
+            setOldPassword('');
+            setNewPassword('');
+            setCheckNewPassword('');
         } catch {
-            setError("Erro ao atualizar perfil. Tente novamente.");
+            alert("Erro ao alterar senha!");
         }
     };
 
-
-    if (loading) return <p>Carregando perfil...</p>;
-
-    if (!user) return (
-        <div>
-            <p style={{ color: "red" }}>Usuário não encontrado.</p>
-            {error && <p style={{ color: "red" }}>Detalhes: {error}</p>}
-        </div>
-    );
+    useEffect(() => {
+        if (!loading && (!user || user.role !== 'user')) {
+            navigate('/');
+        }
+    }, [user, loading]);
 
     return (
-        <div>
-            <h2>Perfil</h2>
-            {error && <p style={{ color: "red", marginBottom: "1rem" }}>{error}</p>}
+        <div className='edit-profile-container'>
+            <header>
+                <button onClick={() => { navigate('/user') }}>Voltar</button>
+            </header>
 
-            {edit ? (
-                <div>
-                    <Input 
-                        placeholder="Nome"
-                        value={form.name}
-                        onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    /> 
+            <div className='account-details'>
+                <h1>Informações de conta</h1>
 
-                    <Input 
-                        placeholder="Senha"
-                        type="password"
-                        value={form.password}
-                        onChange={(e) => setForm({ ...form, password: e.target.value })}
-                    /> 
-
-                    <Input
-                        placeholder="Email"
-                        value={form.email}
-                        onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    />
-
-                    <Input
-                        placeholder="Número (DDD + telefone)"
-                        type="text"
-                        value={form.number}
-                        onChange={(e) => setForm({ ...form, number: formatPhoneNumber(e.target.value) })}
-                    />
-
-                    <Button text="Salvar" onClick={handleSave} />
-                    <Button text="Cancelar" onClick={() => {
-                        setForm({ name: user.name, password: "", email: user.email, number: user.number });
-                        setEdit(false);
-                        setError(null);
-                    }} />
+                <div className='info-row'>
+                    <div className='info-header'>
+                        <h3>Nome de usuário</h3>
+                        <h4>{user?.name}</h4>
+                    </div>
+                    {changeNamePopout ? (
+                        <div className='edit-field'>
+                            <input
+                                onChange={(e) => setNewName(e.target.value)}
+                                value={newName}
+                                placeholder="Novo nome"
+                            />
+                            <div className='buttons'>
+                                <button onClick={() => { handleSubmit(); setChangeNamePopout(false); setNewName('') }}>Salvar</button>
+                                <button onClick={() => { setChangeNamePopout(false); setNewName('') }}>Cancelar</button>
+                            </div>
+                        </div>
+                    ) : (
+                        <button onClick={() => setChangeNamePopout(true)}>Editar</button>
+                    )}
                 </div>
-            ) : (
-                <div> 
-                    <p>Nome: {user.name}</p>
-                    <p>Email: {user.email}</p>
-                    <p>Número: {user.number}</p>
 
-                    <Button text="Editar" onClick={() => setEdit(true)} />
-                    <Button text="Voltar" onClick={() => navigate("/user")} />
+                <div className='info-row'>
+                    <div className='info-header'>
+                        <h3>Email</h3>
+                        <h4>{user?.email}</h4>
+                    </div>
+                    {changeEmailPopout ? (
+                        <div className='edit-field'>
+                            <input
+                                onChange={(e) => setNewEmail(e.target.value)}
+                                value={newEmail}
+                                placeholder="Novo email"
+                            />
+                            <div className='buttons'>
+                                <button onClick={() => { handleSubmit(); setChangeEmailPopout(false); setNewEmail('') }}>Salvar</button>
+                                <button onClick={() => { setChangeEmailPopout(false); setNewEmail('') }}>Cancelar</button>
+                            </div>
+                        </div>
+                    ) : (
+                        <button onClick={() => setChangeEmailPopout(true)}>Editar</button>
+                    )}
                 </div>
-            )}
+
+                <div className='info-row'>
+                    <div className='info-header'>
+                        <h3>Número</h3>
+                        <h4>{user?.number}</h4>
+                    </div>
+                    {changeNumberPopout ? (
+                        <div className='edit-field'>
+                            <input
+                                onChange={(e) => setNewNumber(e.target.value)}
+                                value={newNumber}
+                                placeholder="Novo número"
+                            />
+                            <div className='buttons'>
+                                <button onClick={() => { handleSubmit(); setChangeNumberPopout(false); setNewNumber('') }}>Salvar</button>
+                                <button onClick={() => { setChangeNumberPopout(false); setNewNumber('') }}>Cancelar</button>
+                            </div>
+                        </div>
+                    ) : (
+                        <button onClick={() => setChangeNumberPopout(true)}>Editar</button>
+                    )}
+                </div>
+            </div>
+
+            <div className='change-password-content'>
+                <h1>Alterar senha</h1>
+
+                <form>
+                    <label>
+                        Confirme sua senha atual:
+                        <input
+                            onChange={(e) => setOldPassword(e.target.value)}
+                            value={oldPassword}
+                            type='password'
+                        />
+                    </label>
+
+                    <label>
+                        Nova senha:
+                        <input
+                            onChange={(e) => setNewPassword(e.target.value)}
+                            value={newPassword}
+                            type='password'
+                        />
+                    </label>
+
+                    <label>
+                        Confirmar nova senha:
+                        <input
+                            onChange={(e) => setCheckNewPassword(e.target.value)}
+                            value={checkNewPassword}
+                            type='password'
+                        />
+                    </label>
+                </form>
+
+                <button onClick={handlePasswordChange}>Salvar alterações</button>
+            </div>
         </div>
-    );
+    )
 }
+
+export default UserProfile
