@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState} from "react";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { useAuth } from "../../../contexts/AuthContext";
+import "./NewAppointment.css"
 
 interface InterfaceBarber {
   adminplus: boolean,
@@ -59,8 +60,6 @@ export const NewAppointment: React.FC = () => {
     {time: "16:30", available: true},
     {time: "17:00", available: true},
     {time: "17:30", available: true},
-    {time: "18:00", available: true},
-    {time: "19:00", available: true}
   ]
 
   const [availableTimes, setAvailableTimes] = useState(initialTimes)
@@ -178,7 +177,7 @@ export const NewAppointment: React.FC = () => {
   }
 
   return (
-    <div>
+    <div className="new-appointment-section">
 
       <h2>
         Agendar serviço
@@ -227,41 +226,35 @@ export const NewAppointment: React.FC = () => {
           Horarios disponíveis
         </h2>
 
-        {availableTimes.map((a) => (
-
-          a.available ? (
-            <button key={a.time} onClick={() => setSelectedTime(a.time)} style={{backgroundColor: "#4CAF50", color: "#000"}}>
-              {a.time}
-            </button>
-          ):(
-            <button key={a.time} disabled>
-              {a.time}
-            </button>
-          )
-
+         <div className="available-times">
+        {availableTimes.map(a => (
+          <button
+            key={a.time}
+            onClick={() => setSelectedTime(a.time)}
+            className={a.time === selectedTime ? 'selected' : ''}
+            disabled={!a.available}
+          >
+            {a.time}
+          </button>
         ))}
-        <>
-          <button onClick={() => {setShowCreateAppointmentPopOut(true)} } disabled={!selectedTime}>
-            Agendar serviço
-          </button>
-          <button onClick={() => {setSelectedBarberId(undefined); setSelectedDate(undefined); setSelectedServiceId(undefined); setSelectedTime(undefined); setShowCreateAppointmentPopOut(false)}}>
-            Cancelar
-          </button>
-        </>
+      </div>
 
-      </>
+      <button onClick={() => setShowCreateAppointmentPopOut(true)} disabled={!selectedTime}>
+        Agendar serviço
+      </button>
+      <button onClick={() => {setSelectedBarberId(undefined); setSelectedDate(undefined); setSelectedServiceId(undefined); setSelectedTime(undefined); setShowCreateAppointmentPopOut(false)}}>
+        Cancelar
+      </button>
+    </>
+  )}
 
-      )
-      }
-
-      {showCreateAppointmentPopOut && (
-        <>
-        <h2>Confirmar agendamento em {formatDateBR(selectedDate)} às {selectedTime} com {barberName}</h2>
-
-        <button onClick={() => {handleCreateAppointment(); setShowCreateAppointmentPopOut(false)}}>Confirmar</button>
-        <button onClick={() => {setSelectedBarberId(undefined); setSelectedDate(undefined); setSelectedServiceId(undefined); setSelectedTime(undefined); setShowCreateAppointmentPopOut(false)}}>Cancelar</button>
-        </>
-      )}
+  {showCreateAppointmentPopOut && (
+    <div className="confirm-popout">
+      <h2>Confirmar agendamento em {formatDateBR(selectedDate)} às {selectedTime} com {barberName}</h2>
+      <button onClick={() => {handleCreateAppointment(); setShowCreateAppointmentPopOut(false)}}>Confirmar</button>
+      <button onClick={() => {setSelectedBarberId(undefined); setSelectedDate(undefined); setSelectedServiceId(undefined); setSelectedTime(undefined); setShowCreateAppointmentPopOut(false)}}>Cancelar</button>
+    </div>
+  )}
       
     </div>
   );

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-
+import "./Service.css";
 interface IService {
   id_service: number;
   description: string;
@@ -46,18 +46,19 @@ export const Services: React.FC = () => {
     },[token])
 
     return (
-        <div>
-        <h2>Serviços Disponíveis</h2>
+        <section className="services-section">
+      <h2 className="services-title">Serviços Disponíveis</h2>
 
-        {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
 
-        <ul>
-            {services.map((s) => (
-                <li key={s.id_service}>
-                    {s.description} - R$ {s.price.toFixed(2)}
-                </li>
-            ))}
-        </ul>
-        </div>
+      <ul className="services-list">
+        {services.map((s) => (
+          <li key={s.id_service} className="service-item">
+            <span className="service-description">{s.description}</span>
+            <span className="service-price">R$ {s.price.toFixed(2)}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
     )
 }

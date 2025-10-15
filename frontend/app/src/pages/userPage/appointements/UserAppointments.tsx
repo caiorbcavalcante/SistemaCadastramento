@@ -1,6 +1,7 @@
 import axios from "axios"
 import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react"
+import "./UserAppointments.css"
 interface IAppointment {
   id_appointment: number,
   barberId: number,
@@ -54,25 +55,23 @@ export const UserAppointments:React.FC = () => {
     },[token])
 
     return(
-        <div>
-            <h2>Meus Agendamentos</h2>
+        <div className="user-appointments-section">
+  <h2>Meus Agendamentos</h2>
 
-            {error && <p style={{ color: "red" }}> {error}</p>}
+  {error && <p className="user-appointments-error">{error}</p>}
 
-            {appointments.length === 0 ? (
-                <p>Você não tem agendamentos ainda.</p>
+  {appointments.length === 0 ? (
+    <p className="user-appointments-empty">Você não tem agendamentos ainda.</p>
+  ) : (
+    <ul className="user-appointments-list">
+      {appointments.map((appt:IAppointment)=> (
+        <li key={appt.id_appointment}>
+          {new Date(appt.date).toLocaleString("pt-BR")} - {appt.description} com {appt.barberName}
+        </li>
+      ))}
+    </ul>
+  )}
+</div>
 
-            ): (
-                <ul>
-                    {appointments.map((appt:IAppointment)=> (
-                        <li key={appt.id_appointment}>
-                             {new Date(appt.date).toLocaleString("pt-BR")} - {appt.description} com {appt.barberName}
-                        </li>
-                    ))}
-                </ul>
-            )}
-
-
-        </div>
     )
 }

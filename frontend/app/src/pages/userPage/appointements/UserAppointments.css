@@ -1,0 +1,83 @@
+/* ====== CONTAINER PRINCIPAL ====== */
+.user-appointments-section {
+  padding: 40px 20px;
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+  background: radial-gradient(circle at top, #111 0%, #000 100%);
+  border-radius: 12px;
+  box-sizing: border-box;
+}
+
+/* ====== TÍTULO ====== */
+.user-appointments-section h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  color: #fff;
+  margin-bottom: 25px;
+  letter-spacing: 1px;
+  position: relative;
+}
+
+.user-appointments-section h2::after {
+  content: "";
+  display: block;
+  width: 90px;
+  height: 3px;
+  background: linear-gradient(90deg, #d4af37, #f1c453);
+  margin: 8px auto 0;
+  border-radius: 3px;
+}
+
+/* ====== LISTA DE AGENDAMENTOS ====== */
+.user-appointments-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.user-appointments-list li {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin-bottom: 12px;
+  transition: all 0.3s ease;
+  font-size: 1.1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-appointments-list li:hover {
+  background: rgba(212, 175, 55, 0.1);
+  transform: translateY(-2px);
+}
+
+/* ====== MENSAGEM DE AGENDAMENTOS ====== */
+.user-appointments-empty {
+  text-align: center;
+  font-size: 1rem;
+  color: #ccc;
+  margin-top: 15px;
+}
+
+/* ====== ERROS ====== */
+.user-appointments-error {
+  color: #ff4c4c;
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+/* ====== RESPONSIVO ====== */
+@media (max-width: 600px) {
+  .user-appointments-list li {
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 0.95rem;
+  }
+}

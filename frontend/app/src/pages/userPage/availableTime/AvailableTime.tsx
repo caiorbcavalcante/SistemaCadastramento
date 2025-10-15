@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import "./AvailableTime.css";
 
 interface ISlot {
   id: number;
@@ -137,47 +138,22 @@ export const AvailableTime: React.FC = () => {
   if (loading) return <p>Carregando horários disponíveis...</p>;
 
   return (
-    <div>
-      <h2>Horários Disponíveis para Hoje ({todayFormatted}) - 09h às 17:30</h2>
-
-      {error && <p style={{ color: "red" }}>{error}</p>}
+    <section className="available-section">
+      <h2 className="available-title">Horários Disponíveis para Hoje ({todayFormatted}) - 09h às 17:30</h2>
+      {error && <p className="available-error">{error}</p>}
 
       {availableSlots.length === 0 ? (
-        <p>Nenhum horário disponível para hoje.</p>
+        <p style={{ textAlign: "center" }}>Nenhum horário disponível para hoje.</p>
       ) : (
         <div>
-          {/* Mostrar por barbeiro */}
           {Object.entries(slotsByBarber).map(([barberName, slots]) => (
-            <div key={barberName} style={{ 
-              marginBottom: "1.5rem", 
-              border: "1px solid #ddd", 
-              borderRadius: "8px", 
-              padding: "1rem",
-              backgroundColor: "#f9f9f9"
-            }}>
-              <h3 style={{ color: "#1976d2", marginBottom: "1rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                💈 {barberName}
-                <span style={{ fontSize: "0.8rem", color: "#666", fontWeight: "normal" }}>
-                  ({slots.length} horários disponíveis)
-                </span>
+            <div key={barberName} className="barber-slots">
+              <h3 className="barber-name">
+                💈 {barberName} <span className="barber-slots-count">({slots.length} horários disponíveis)</span>
               </h3>
-              
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
-                {slots.map((slot) => (
-                  <div 
-                    key={slot.id} 
-                    style={{ 
-                      padding: "0.75rem 1rem", 
-                      border: "2px solid #4CAF50", 
-                      borderRadius: "8px",
-                      backgroundColor: "#e8f5e8",
-                      fontSize: "1rem",
-                      fontWeight: "600",
-                      color: "#2e7d32",
-                      minWidth: "80px",
-                      textAlign: "center"
-                    }}
-                  >
+              <div className="slots-container">
+                {slots.map(slot => (
+                  <div key={slot.id} className="slot-card">
                     ⏰ {slot.date.split(', ')[1]}
                   </div>
                 ))}
@@ -186,6 +162,6 @@ export const AvailableTime: React.FC = () => {
           ))}
         </div>
       )}
-    </div>
+    </section>
   );
 };

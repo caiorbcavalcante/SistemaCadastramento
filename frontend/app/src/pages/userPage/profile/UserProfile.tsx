@@ -4,6 +4,7 @@ import { Input } from "../../../components/input/Input";
 import { Button } from "../../../components/button/Button";
 import {jwtDecode} from "jwt-decode";
 import { useNavigate } from "react-router-dom";
+import "./UserProfile.css"
 
 
 const validateForm = (name: string, password: string, email:string, number : string): string | null => {
@@ -181,55 +182,62 @@ export const UserProfile: React.FC = () => {
     );
 
     return (
-        <div>
-            <h2>Perfil</h2>
-            {error && <p style={{ color: "red", marginBottom: "1rem" }}>{error}</p>}
+       <div className="user-profile-container">
+  <h2>Perfil</h2>
+  {error && <p className="error-msg">{error}</p>}
 
-            {edit ? (
-                <div>
-                    <Input 
-                        placeholder="Nome"
-                        value={form.name}
-                        onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    /> 
+  {edit ? (
+    <div className="edit-form">
+      <Input 
+        placeholder="Nome"
+        value={form.name}
+        onChange={(e) => setForm({ ...form, name: e.target.value })}
+      /> 
 
-                    <Input 
-                        placeholder="Senha"
-                        type="password"
-                        value={form.password}
-                        onChange={(e) => setForm({ ...form, password: e.target.value })}
-                    /> 
+      <Input 
+        placeholder="Senha"
+        type="password"
+        value={form.password}
+        onChange={(e) => setForm({ ...form, password: e.target.value })}
+      /> 
 
-                    <Input
-                        placeholder="Email"
-                        value={form.email}
-                        onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    />
+      <Input
+        placeholder="Email"
+        value={form.email}
+        onChange={(e) => setForm({ ...form, email: e.target.value })}
+      />
 
-                    <Input
-                        placeholder="Número (DDD + telefone)"
-                        type="text"
-                        value={form.number}
-                        onChange={(e) => setForm({ ...form, number: formatPhoneNumber(e.target.value) })}
-                    />
+      <Input
+        placeholder="Número (DDD + telefone)"
+        type="text"
+        value={form.number}
+        onChange={(e) => setForm({ ...form, number: formatPhoneNumber(e.target.value) })}
+      />
 
-                    <Button text="Salvar" onClick={handleSave} />
-                    <Button text="Cancelar" onClick={() => {
-                        setForm({ name: user.name, password: "", email: user.email, number: user.number });
-                        setEdit(false);
-                        setError(null);
-                    }} />
-                </div>
-            ) : (
-                <div> 
-                    <p>Nome: {user.name}</p>
-                    <p>Email: {user.email}</p>
-                    <p>Número: {user.number}</p>
+      <div className="button-group">
+        <Button text="Salvar" onClick={handleSave} />
+        <Button text="Cancelar" onClick={() => {
+            setForm({ name: user.name, password: "", email: user.email, number: user.number });
+            setEdit(false);
+            setError(null);
+        }} />
+      </div>
+    </div>
+  ) : (
+    <div className="user-info">
+      <p>Nome: {user.name}</p>
+      <p>Email: {user.email}</p>
+      <p>Número: {user.number}</p>
 
-                    <Button text="Editar" onClick={() => setEdit(true)} />
-                    <Button text="Voltar" onClick={() => navigate("/user")} />
-                </div>
-            )}
-        </div>
+      <div className="button-group">
+        <Button text="Editar" onClick={() => setEdit(true)} />
+        <Button text="Voltar" onClick={() => navigate("/user")} />
+      </div>
+    </div>
+  )}
+</div>
+
+      
+        
     );
 }

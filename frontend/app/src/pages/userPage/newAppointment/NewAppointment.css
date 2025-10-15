@@ -1,0 +1,152 @@
+/* ====== CONTAINER PRINCIPAL ====== */
+.new-appointment-section {
+  padding: 40px 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+  background: radial-gradient(circle at top, #111 0%, #000 100%);
+  border-radius: 12px;
+}
+
+
+
+/* ====== TÍTULO ====== */
+.new-appointment-section h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  color: #fff;
+  margin-bottom: 25px;
+  letter-spacing: 1px;
+  position: relative;
+}
+
+.new-appointment-section h2::after {
+  content: "";
+  display: block;
+  width: 90px;
+  height: 3px;
+  background: linear-gradient(90deg, #d4af37, #f1c453);
+  margin: 8px auto 0;
+  border-radius: 3px;
+}
+
+/* ====== LABELS E SELECT ====== */
+.new-appointment-section label {
+  display: block;
+  margin-bottom: 20px;
+  font-weight: 500;
+  font-size: 1.05rem;
+  color: #fff;
+}
+.new-appointment-section input[type="date"] {
+  width: 98%;
+  padding: 8px 10px; /* reduz um pouco o padding */
+  margin-top: 6px;
+  border-radius: 8px;
+  border: 1px solid #444;
+  background-color: #1a1a1a;
+  color: #fff;
+  font-size: 0.95rem; /* reduz o tamanho da fonte */
+  outline: none;
+  transition: border 0.2s;
+}
+
+.new-appointment-section select {
+  width: 100%;
+  padding: 10px 12px;
+  margin-top: 6px;
+  border-radius: 8px;
+  border: 1px solid #444;
+  background-color: #1a1a1a;
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.new-appointment-section select:focus,
+.new-appointment-section input[type="date"]:focus {
+  border: 1px solid #d4af37;
+}
+
+/* ====== BOTÕES ====== */
+.new-appointment-section button {
+  padding: 10px 16px;
+  margin: 6px 4px 0 0;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.new-appointment-section button:disabled {
+  background-color: #555;
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.new-appointment-section button:not(:disabled) {
+  background-color: #d4af37;
+  color: #000;
+}
+
+.new-appointment-section button:not(:disabled):hover {
+  background-color: #f1c453;
+  transform: translateY(-2px);
+}
+
+/* ====== HORÁRIOS DISPONÍVEIS ====== */
+.available-times {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 15px;
+  justify-content: center;
+}
+
+.available-times button {
+  min-width: 70px;
+  text-align: center;
+  padding: 8px 12px;
+  font-weight: 600;
+  border-radius: 8px;
+}
+
+.available-times button.selected {
+  background-color: #4CAF50 !important;
+  color: #000 !important;
+}
+
+/* ====== POPUP DE CONFIRMAÇÃO ====== */
+.confirm-popout {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 12px;
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid #d4af37;
+  text-align: center;
+}
+
+.confirm-popout h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+/* ====== RESPONSIVO ====== */
+@media (max-width: 600px) {
+  .available-times {
+    justify-content: center;
+  }
+
+  .available-times button {
+    min-width: 60px;
+    padding: 6px 8px;
+    font-size: 0.95rem;
+  }
+}

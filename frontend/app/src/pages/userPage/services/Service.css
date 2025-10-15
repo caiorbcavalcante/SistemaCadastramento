@@ -1,0 +1,114 @@
+/* ====== CONTAINER ====== */
+.services-section {
+  padding: 40px 20px;
+  max-width: 900px;
+  margin: 0 auto;
+  font-family: "Poppins", sans-serif;
+  color: #fff;
+  background: radial-gradient(circle at top, #111 0%, #000 100%);
+  border-radius: 12px;
+}
+
+/* ====== TÍTULO ====== */
+.services-title {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  color: #fff;
+  margin-bottom: 30px;
+  letter-spacing: 1px;
+  position: relative;
+}
+
+.services-title::after {
+  content: "";
+  display: block;
+  width: 90px;
+  height: 3px;
+  background: linear-gradient(90deg, #d4af37, #f1c453);
+  margin: 8px auto 0;
+  border-radius: 3px;
+}
+
+/* ====== LISTA ====== */
+.services-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ====== ITEM ====== */
+.service-item {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 12px 18px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.service-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+/* ====== DESCRIÇÃO E PREÇO ====== */
+.service-description {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.service-price {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #f1c453;
+}
+/* ====== ITEM CENTRALIZADO ====== */
+.service-item {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 12px 18px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  display: flex;
+  justify-content: center; /* centraliza horizontalmente */
+  align-items: center;
+  gap: 8px; /* espaço entre descrição e preço */
+  text-align: center;
+}
+
+/* Para que o traço fique entre descrição e preço */
+.service-item span::after {
+  content: " - ";
+  margin: 0 6px;
+  color: #f1c453; /* cor do traço */
+}
+
+.service-price {
+  color: #f1c453;
+}
+
+/* Remove o traço do último elemento */
+.service-item span:last-child::after {
+  content: "";
+}
+
+/* ====== RESPONSIVO ====== */
+@media (max-width: 600px) {
+  .service-item {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .service-item span::after {
+    content: "";
+  }
+}
+
+

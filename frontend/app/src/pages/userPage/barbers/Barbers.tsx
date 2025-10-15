@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "./Barbers.css";
+import barberImg from "../../../assets/image.png";
+
 
 
 interface IBarber {
@@ -38,21 +41,31 @@ export const Barbers: React.FC = () => {
 
   return (
 
-    <div> 
-        <h2>Barbeiros</h2>
+       <section className="barbers-section">
+      <h2 className="barbers-title">Barbeiros</h2>
 
-        {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && <p className="barbers-error">{error}</p>}
 
-        <ul>
-            {barbers.map((b) => (
-                <li key={b.id_barber}>
-                  <strong>👤 {b.name}</strong> - 📞 {b.number}
-    
-                </li>
-            ))}
-        </ul>
-    </div>
+      <ul className="barbers-list">
+        {barbers.length > 0 ? (
+          barbers.map((b) => (
+            <li key={b.id_barber} className="barber-item">
+            
+ <div className="barber-avatar">
+  <img src={barberImg} alt="Barbeiro" className="barber-img" />
+</div>
 
-  )
+              <div className="barber-info">
+                <span className="barber-name">{b.name}</span>
+                <span className="barber-phone">📞 {b.number}</span>
+              </div>
+            </li>
+          ))
+        ) : (
+          !error && <p className="barbers-empty">Carregando barbeiros...</p>
+        )}
+      </ul>
+    </section>
+  );
 
 }

@@ -1,0 +1,67 @@
+/* ===== CABEÇALHO GERAL ===== */
+header {
+  background-color: #0c0202ff;
+  border-bottom: 2px solid #d4af37;
+  padding: 12px 25px; 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 3px 10px rgba(212, 175, 55, 0.2);
+  position: sticky;
+  top: 0;
+    max-height: 100px;
+  z-index: 1000;
+}
+
+/* ===== LOGO OU NOME ===== */
+header h1 {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #d4af37, #f8e38e);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 1px;
+}
+
+/* ===== CONTAINER DE BOTÕES ===== */
+.header-buttons {
+  display: flex;
+  flex-direction: column; /* coluna para o "Editar Perfil" ficar acima */
+  align-items: flex-end;
+  gap: 8px; /* espaçamento entre os botões */
+   min-width: 150px;
+}
+
+/* ===== BOTÕES ===== */
+.logout-btn, .edit-profile-btn {
+  border: none;
+  color: white;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+
+.logout-btn {
+  background: linear-gradient(135deg, #d93030, #ff4d4d);
+  width:100%
+}
+
+.logout-btn:hover {
+  background: linear-gradient(135deg, #ff4d4d, #ff7373);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(255, 77, 77, 0.4);
+}
+
+.edit-profile-btn {
+  background: linear-gradient(135deg, #1976d2, #4dabf5);
+}
+
+.edit-profile-btn:hover {
+  background: linear-gradient(135deg, #4dabf5, #90caf9);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 123, 255, 0.4);
+}

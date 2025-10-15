@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import "./Header.css";
 
 export const Header: React.FC = () => {
   const navigate = useNavigate();
@@ -10,35 +11,16 @@ export const Header: React.FC = () => {
   };
 
   return (
-    <header style={styles.header}>
-      <h1 style={styles.logo}></h1>
-      <button onClick={handleLogout} style={styles.logoutButton}>
-        Sair Da Conta
-      </button>
+    <header>
+      <h1>Mrs. Costa</h1>
+      <div className="header-buttons">
+        <button className="edit-profile-btn" onClick={() => navigate("/userProfile")}>
+          Editar Perfil
+        </button>
+        <button onClick={handleLogout} className="logout-btn">
+          Sair
+        </button>
+      </div>
     </header>
   );
-};
-
-const styles: { [key: string]: React.CSSProperties } = {
-  header: {
-    backgroundColor: "#0c0202ff",
-    padding: "10px 20px",
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    borderBottom: "1px solid #ddd",
-  },
-  logo: {
-    margin: 0,
-    fontSize: "10px",
-  },
-  logoutButton: {
-    backgroundColor: "#ff4d4d",
-    color: "white",
-    border: "none",
-    fontSize: "15px",
-    padding: "6px 12px",
-    borderRadius: "4px",
-    cursor: "pointer",
-  },
 };

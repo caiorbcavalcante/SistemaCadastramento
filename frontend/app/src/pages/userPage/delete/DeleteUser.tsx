@@ -2,6 +2,7 @@ import axios from "axios"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../../../contexts/AuthContext"
+import "./DeleteUser.css";
 
 
 export const DeleteUser: React.FC = () => {
@@ -46,11 +47,13 @@ export const DeleteUser: React.FC = () => {
 
 
     return(
-        <div>
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        {success &&  <p style={{ color: "green" }}>{success}</p>}
+          <div className="delete-user-container">
+            {error && <p className="error-msg">{error}</p>}
+            {success && <p className="success-msg">{success}</p>}
 
-        <button onClick={handleDelete}>Deletar conta</button>
+            <button className="delete-user-btn" onClick={handleDelete}>
+                Deletar Conta
+            </button>
         </div>
     )
 }
