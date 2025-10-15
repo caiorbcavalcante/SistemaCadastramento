@@ -5,6 +5,7 @@ import { barbersRouter } from './routes/Barbers.routes'
 import { AppDataSource } from './app-data-source'
 import { appointmentRouter } from './routes/Appointments.routes'
 import { serviceRouter } from './routes/Services.routes'
+import { resetPasswordRouter } from './routes/ResetPassword.routes'
 
 const server = express()
 
@@ -15,6 +16,7 @@ server.use(userRouter)
 server.use(barbersRouter)
 server.use(serviceRouter)
 server.use(appointmentRouter)
+server.use(resetPasswordRouter)
 
 
 AppDataSource.initialize()
