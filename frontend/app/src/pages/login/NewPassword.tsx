@@ -16,7 +16,7 @@ export const  NewPassword:React.FC = () => {
          e.preventDefault()
 
         if (!user) { 
-        setMessage("Usuário não autenticado");
+        alert("Usuário não autenticado");
         return;
          }
         try{
@@ -38,7 +38,7 @@ export const  NewPassword:React.FC = () => {
       },1500)
     } catch (err) {
         console.log(err)
-      setMessage("Erro ao alterar senha. Verifique os dados.");
+      alert("Erro ao alterar senha. Verifique os dados.");
     }
     
     }
