@@ -27,7 +27,6 @@ O projeto foi desenvolvido com **TypeScript**, **React**, **Express** e **Postgr
 - **PostgreSQL** como banco de dados principal
 - **TypeORM** para integração e mapeamento objeto-relacional
 - Garantia de persistência segura dos dados, com suporte a consultas complexas e transações
-- 
 ---
 
 ## 🚀 Implementação
