@@ -23,6 +23,11 @@ O projeto foi desenvolvido com **TypeScript**, **React**, **Express** e **Postgr
 - **dotenv** para gerenciamento de variáveis de ambiente
 - **Nodemailer** para envio de notificações por e-mail
 
+### **Banco de Dados**
+- **PostgreSQL** como banco de dados principal
+- **TypeORM** para integração e mapeamento objeto-relacional
+- Garantia de persistência segura dos dados, com suporte a consultas complexas e transações
+- 
 ---
 
 ## 🚀 Implementação
