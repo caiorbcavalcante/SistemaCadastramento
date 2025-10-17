@@ -58,11 +58,11 @@ header h1 {
 }
 
 .edit-profile-btn {
-  background: linear-gradient(135deg, #1976d2, #4dabf5);
+  background: linear-gradient(135deg, #c9a227, #f5d76e);
 }
 
 .edit-profile-btn:hover {
-  background: linear-gradient(135deg, #4dabf5, #90caf9);
+   background: linear-gradient(135deg, #f7d560, #e0b94d);
   transform: translateY(-2px);
   box-shadow: 0 6px 15px rgba(0, 123, 255, 0.4);
 }

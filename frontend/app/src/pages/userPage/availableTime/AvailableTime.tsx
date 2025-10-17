@@ -154,7 +154,7 @@ export const AvailableTime: React.FC = () => {
               <div className="slots-container">
                 {slots.map(slot => (
                   <div key={slot.id} className="slot-card">
-                    ⏰ {slot.date.split(', ')[1]}
+                     {slot.date.split(', ')[1]}
                   </div>
                 ))}
               </div>
