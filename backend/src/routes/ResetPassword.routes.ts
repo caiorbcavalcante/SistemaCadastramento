@@ -23,11 +23,14 @@ router.post("/send-code", async (req, res) => {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS,
     },
+      tls: {
+    rejectUnauthorized: false, // 🔥 ignora o erro de certificado
+  },
   });
 
   try {
     await transporter.sendMail({
-      from: `"Sistema Educa On" <${process.env.EMAIL_USER}>`,
+      from: `"Sistema Barbearia" <${process.env.EMAIL_USER}>`,
       to: email,
       subject: "Código de recuperação de senha",
       text: `Seu código de verificação é: ${code}`,
