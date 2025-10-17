@@ -5,7 +5,7 @@ O projeto foi desenvolvido com **TypeScript**, **React**, **Express** e **Postgr
 
 ---
 
-## 🚀 Tecnologias Utilizadas
+## 💻 Tecnologias Utilizadas
 
 ### **Frontend**
 - **React** com **TypeScript**
