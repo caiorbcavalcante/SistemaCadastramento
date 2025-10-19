@@ -7,10 +7,11 @@ body {
   color: #fff;
 }
 
-/* ===== CONTAINER PRINCIPAL ===== */
+/* ===== CONTAINER PRINCIPAL (REVISADO) ===== */
 .control-panel-container {
   min-height: 100vh;
-  padding: 8rem 2rem 2rem; /* mais espaço por causa do header fixo */
+  /* Espaço para o header fixo */
+  padding: 8rem 2rem 2rem; 
   background: linear-gradient(180deg, #0b0b0b 0%, #1a1a1a 100%);
 }
 
@@ -20,9 +21,10 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  height: 70px;
+  height: 70px; /* Altura padrão para desktop/tablet */
   display: flex;
-  justify-content: space-between;
+  /* Mantém lado a lado e espaçados */
+  justify-content: space-between; 
   align-items: center;
   padding: 0 2rem;
   background: rgba(17, 17, 17, 0.95);
@@ -94,7 +96,7 @@ body {
   color: #d4af37;
 }
 
-/* ===== POPUPS DE AGENDAMENTOS ===== */
+/* ===== POPUPS DE AGENDAMENTOS (SEM ALTERAÇÃO) ===== */
 .control-panel-manage-appointments-popout,
 .control-panel-removeApp-popout,
 .control-panel-contactUser-popout {
@@ -109,14 +111,14 @@ body {
   z-index: 50;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem; /* mais espaço entre elementos */
+  gap: 1.5rem; 
   width: 90%;
   max-width: 400px;
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
   transition: all 0.3s ease;
 }
 
-/* ===== POPUP DE CONTATO COM USUÁRIO ===== */
+/* [ Restante dos estilos de Popups... ] */
 .control-panel-contactUser-popout input {
   padding: 1rem 1.2rem;
   border-radius: 8px;
@@ -159,7 +161,6 @@ body {
   box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
 }
 
-/* ===== POPUP DE REMOÇÃO DE AGENDAMENTO ===== */
 .control-panel-removeApp-popout button {
   background: transparent;
   border: 1px solid #2b2b2b;
@@ -183,9 +184,17 @@ body {
   gap: 1rem;
   flex-wrap: wrap;
   justify-content: flex-end;
+  align-items: center;
 }
 
-/* ===== AGENDAMENTOS ===== */
+.control-panel-removeApp-popout h2 {
+    font-size: 1.2rem;
+    flex-basis: 100%; 
+    margin-bottom: 0.5rem;
+}
+
+
+/* ===== AGENDAMENTOS (CENTRALIZADO) ===== */
 .control-panel-appointments {
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -193,6 +202,11 @@ body {
   padding: 1.5rem;
   transition: all 0.3s ease;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  
+  /* Centraliza o painel principal */
+  width: 100%; 
+  max-width: 900px; 
+  margin: 2rem auto 0 auto; 
 }
 
 .control-panel-appointments h2 {
@@ -201,12 +215,20 @@ body {
   margin-bottom: 1rem;
 }
 
+/* Estilização do seletor de data */
+.control-panel-appointments-header {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1.5rem;
+  justify-content: flex-start; 
+}
+
 .control-panel-appointments button {
   background: none;
   border: 1px solid #2b2b2b;
   border-radius: 8px;
   padding: 0.4rem 0.8rem;
-  margin: 0 0.3rem;
   cursor: pointer;
   font-weight: 500;
   color: #fff;
@@ -232,25 +254,175 @@ body {
   padding: 0.8rem 1rem;
   border-bottom: 1px solid #2b2b2b;
   transition: background 0.3s ease;
+  flex-wrap: wrap; 
 }
 
 .control-panel-appointments ul li:hover {
   background: rgba(212, 175, 55, 0.05);
 }
 
+.control-panel-appointments ul li span button {
+    background: none;
+    border: none;
+    padding: 0.6rem;
+    color: #fff; /* Cor inicial do ícone */
+    cursor: pointer;
+    /* Transição para suavizar a mudança de cor */
+    transition: color 0.2s ease;
+}
+
+.control-panel-appointments ul li span button:first-child:hover {
+    color: #25D366; /* Verde WhatsApp */
+}
+
+.control-panel-appointments ul li span button:last-child:hover {
+    color: #ff4d4d; /* Vermelho vibrante */
+}
+
 .control-panel-appointments ul li span {
   font-weight: 500;
+  flex-shrink: 0; 
+}
+
+.control-panel-appointments ul li span:last-child {
+  display: flex;
+  gap: 0.5rem;
+  margin-left: auto; 
 }
 
 /* ===== RESPONSIVIDADE ===== */
-@media (max-width: 480px) {
+@media (max-width: 768px) {
+  /* ===== HEADER (TABLET) ===== */
+  .control-panel-header {
+    height: 70px; 
+    padding: 0 1rem; /* Diminui o padding horizontal */
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+  
+  /* Ajuste do container para compensar o header fixo de 70px em 768px */
+  .control-panel-container {
+    padding-top: 7rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .control-panel-appointments {
+    margin-top: 1rem; 
+  }
+
+  /* ... restante das regras 768px ... */
+  .popout-button {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  .control-panel-appointments {
+    padding: 1rem;
+  }
+  
+  .control-panel-appointments-header {
+      justify-content: center;
+  }
+
   .control-panel-appointments ul li {
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.5rem;
+    gap: 0.6rem;
+  }
+
+  .control-panel-appointments ul li span {
+    width: 100%;
+    margin-right: 0; 
+  }
+
+  .control-panel-appointments ul li span:last-child {
+    width: 100%;
+    justify-content: flex-end; 
+    margin-top: 0.4rem; 
   }
 
   .control-panel-appointments button {
-    margin: 0.3rem 0 0 0;
+    font-size: 0.9rem;
+    margin: 0.2rem 0;
+  }
+
+  .control-panel-manage-appointments-popout,
+  .control-panel-removeApp-popout,
+  .control-panel-contactUser-popout {
+    padding: 1.5rem;
+    width: 95%;
+    max-width: 360px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* ===== HEADER (MOBILE) - CORRIGIDO PARA FICAR LADO A LADO ===== */
+  .control-panel-header {
+    /* REMOVIDO: flex-direction: column; */
+    height: 70px; /* Mantém a altura fixa */
+    padding: 0 1rem; /* Ajusta o padding horizontal */
+    justify-content: space-between; /* Garante que fiquem nos cantos */
+    flex-wrap: nowrap; /* Garante que não quebrem a linha */
+  }
+
+  /* Remove regras desnecessárias para o modo lado a lado */
+  .control-panel-header h2 {
+      margin-bottom: 0;
+      width: 100%;
+      text-align: center;
+      /* Removido: width: 100%; text-align: center; */
+  }
+  
+  .popout-container {
+      /* Remove regras que forçavam a centralização e largura total */
+      width: auto;
+      display: block; 
+      margin: 0; 
+  }
+  
+  .popout-button {
+      /* Volta para o tamanho padrão em vez de 80% */
+      width: auto; 
+      max-width: unset;
+      padding: 0.6rem 0.8rem;
+      font-size: 0.9rem;
+  }
+
+  /* Compensação do container deve ser a padrão de 70px */
+  .control-panel-container {
+    padding-top: 7rem; 
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  /* ... restante das regras 480px ... */
+
+  .popout-content {
+    right: 0; /* Volta para a direita do botão */
+    left: auto; 
+    transform: none; 
+    width: 90%;
+    min-width: 180px;
+  }
+
+  .control-panel-contactUser-popout span,
+  .control-panel-removeApp-popout span {
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .control-panel-removeApp-popout h2 {
+    margin-bottom: 1rem;
+  }
+
+  .control-panel-contactUser-popout button,
+  .control-panel-removeApp-popout button {
+    width: 100%;
+  } 
+
+  .control-panel-appointments-header {
+      gap: 0.7rem;
   }
 }

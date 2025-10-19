@@ -3,6 +3,9 @@ import { useAuth } from '../../contexts/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import "./BarberAdminPage.css"
 import axios from 'axios'
+import { FiSettings } from "react-icons/fi";
+import { FaAngleLeft } from "react-icons/fa";
+
 
 interface barber{
     id_barber: number,
@@ -161,15 +164,9 @@ const BarberAdminPage = () => {
     <div className='barber-admin-page-container'>
         <header className='barber-admin-page-header'>
             <button onClick={handleBackClick}>
-                <h4>
-                    Voltar
-                </h4>
-            </button>
-
-            <button onClick={() => handleLogout()}>
-                <h4>
-                    Sair da conta
-                </h4>
+                <h1>
+                    <FaAngleLeft />
+                </h1>
             </button>
         </header>
         
@@ -225,7 +222,8 @@ const BarberAdminPage = () => {
                         <li key={b.id_barber}>
                             <h2>{b.name}</h2>
                             <button onClick={() => {setShowPopout(true); setSelectedBarber(b)}} disabled={showPopout}>
-                                **simbolo de engrenagem**
+                                <FiSettings />
+
                             </button>
                         </li>
                     ))}
@@ -242,7 +240,7 @@ const BarberAdminPage = () => {
 
         <div className='add-new-barber-content'>
             <h2>
-                <button onClick={() => setShowAddBarberPopout(true)}>
+                <button onClick={() => {setShowAddBarberPopout(true)}} hidden={showAddBarberPopout}>
                     Adicionar novo barbeiro
                 </button>
             </h2>

@@ -64,15 +64,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #d4af37, #b9941f); /* fundo dourado */
+  background: linear-gradient(135deg, #d4af37, #b9941f); 
   border: 2px solid #f1c453; /* contorno suave */
   box-shadow: 0 4px 10px rgba(212, 175, 55, 0.4);
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .barber-avatar img {
-  width: 100%;
   height: 100%;
+  width: 100%;
   object-fit: cover;
   transition: transform 0.3s;
 }

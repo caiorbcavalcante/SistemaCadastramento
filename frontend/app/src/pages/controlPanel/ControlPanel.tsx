@@ -38,6 +38,10 @@ const ControlPanel = () => {
     setDay(newDate);
   } 
 
+  const todayDate = () => {
+    setDay(new Date)
+  }
+
   const filteredAppointments = appointments.filter(item => {
     const itemDate = new Date(item.date)
     return itemDate.toLocaleDateString("pt-BR") === day.toLocaleDateString("pt-BR")
@@ -182,9 +186,13 @@ const ControlPanel = () => {
           <h2>
             Bem-vindo, {user.name}!
           </h2>
-          <button onClick={() => {changeDay(-1) }}>{`<`}</button>
-            {day.toLocaleDateString("pt-BR")}
-          <button onClick={() => changeDay(1)}>{`>`}</button>
+          <button onClick={() => todayDate()}>Hoje</button>
+
+          <div className='control-panel-appointments-header'>
+            <button onClick={() => {changeDay(-1) }}>{`<`}</button>
+            <span>{day.toLocaleDateString("pt-BR")}</span>
+            <button onClick={() => changeDay(1)}>{`>`}</button>
+          </div>
     
           {filteredAppointments.length > 0 ? (
             <ul>
