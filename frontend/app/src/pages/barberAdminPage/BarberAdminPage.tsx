@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import { useAuth } from '../../contexts/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import "./BarberAdminPage.css"
@@ -52,7 +52,7 @@ const BarberAdminPage = () => {
         
     }
 
-    const handleLogout = () => {
+    const _handleLogout = () => {
         logout();
         navigate("/")
     }
@@ -261,9 +261,19 @@ const BarberAdminPage = () => {
                     <input value={newBarberNumber} onChange={(e) => {setNewBarberNumber(e.target.value)}}/>
                 </label>
 
-                <button onClick={() => {addBarber(newBarberName, newBarberEmail, newBarberPassword, newBarberNumber); setShowAddBarberPopout(false)}}>
+                <button
+                    onClick={() => {
+                if (newBarberName && newBarberEmail && newBarberPassword && newBarberNumber) {
+                    addBarber(newBarberName, newBarberEmail, newBarberPassword, newBarberNumber);
+                setShowAddBarberPopout(false);
+                } else {
+                alert("Por favor, preencha todos os campos do barbeiro.");
+                }
+                }}
+                    >
                     Criar Conta
                 </button>
+
 
                 <button onClick={() => {clearNewBarberInfo(); setShowAddBarberPopout(false)}}>
                     Cancelar 

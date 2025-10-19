@@ -1,12 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import "./ControlPanel.css"
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
-import { Route } from 'react-router-dom'
-import BarberEditProfile from '../barberEditProfile/BarberEditProfile'
-import axios, { isAxiosError } from 'axios'
-
-import { FiSettings } from "react-icons/fi";
+import axios from 'axios'
 import { RiDeleteBinLine } from "react-icons/ri";
 import { FaWhatsapp } from "react-icons/fa";
 interface Appointment{
@@ -69,7 +65,6 @@ const ControlPanel = () => {
 
   const handleWhatsappMessage = (app: Appointment | null) => {
 
-    const date = new Date(app?.date);
 
     const url = `https://wa.me/${app?.userNumber}?text=${encodeURIComponent(contactMessage)}`
 
