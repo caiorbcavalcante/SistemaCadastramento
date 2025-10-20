@@ -17,7 +17,7 @@ interface barber{
 }
 
 const BarberAdminPage = () => {
-    const {user, loading, logout} = useAuth();
+    const {user, loading} = useAuth();
     const navigate = useNavigate();
     const [barberList, setBarberList] = useState<barber[]>([])
     const [showPopout, setShowPopout] = useState<boolean>(false);
