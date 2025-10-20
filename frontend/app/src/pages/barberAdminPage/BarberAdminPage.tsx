@@ -5,8 +5,7 @@ import "./BarberAdminPage.css"
 import axios from 'axios'
 import { FiSettings } from "react-icons/fi";
 import { FaAngleLeft } from "react-icons/fa";
-
-
+import ManageServices from './manageServices/manageServices'
 interface barber{
     id_barber: number,
     name: string,
@@ -17,7 +16,7 @@ interface barber{
 }
 
 const BarberAdminPage = () => {
-    const {user, loading, logout} = useAuth();
+    const {user, loading} = useAuth();
     const navigate = useNavigate();
     const [barberList, setBarberList] = useState<barber[]>([])
     const [showPopout, setShowPopout] = useState<boolean>(false);
@@ -51,12 +50,6 @@ const BarberAdminPage = () => {
         }
         
     }
-
-  // const _handleLogout = () => {
-//   logout();
-//   navigate("/");
-// };
-
 
     const removeAuth = async (barber: barber) => {
         try {
@@ -170,6 +163,8 @@ const BarberAdminPage = () => {
                 </h1>
             </button>
         </header>
+
+        <ManageServices/>
         
         {showPopout && selectedBarber && (
             <div className='manage-barbers-popout'>

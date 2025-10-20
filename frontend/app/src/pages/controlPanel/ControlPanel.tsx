@@ -136,11 +136,13 @@ const ControlPanel = () => {
                 </button>
               </li>
               {user?.adminplus &&
+              <>
               <li>
                 <button onClick={() => {navigate('/controlPanel/admin')}}>
-                  Gerenciar barbeiros
+                  Administrador
                 </button>
               </li>
+              </>
               }
               <li>
                 <button onClick={handleLogout}>

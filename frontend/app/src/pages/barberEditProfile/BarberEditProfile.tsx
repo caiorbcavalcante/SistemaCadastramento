@@ -14,6 +14,10 @@ interface patchInterface {
 const BarberEditProfile = () => {
     const { user, loading } = useAuth();
 
+    const [name, setName] = useState<string | undefined> (user?.name);
+    const [email, setEmail] = useState<string | undefined> (user?.email);
+    const [number, setNumber] = useState<string | undefined> (user?.number);
+
     const [newName, setNewName] = useState<string>('');
     const [newEmail, setNewEmail] = useState<string>('');
     const [newNumber, setNewNumber] = useState<string>('');
@@ -30,15 +34,22 @@ const BarberEditProfile = () => {
     const handleSubmit = async () => {
         const patchData: patchInterface = {};
 
-        if (newName) patchData.name = newName;
+        if (newName) {
+            patchData.name = newName
+            setName(newName);
+        }
         if (newEmail) {
             if (!newEmail.includes("@")) {
                 alert("Insira um email válido!");
                 return;
             }
             patchData.email = newEmail;
+            setEmail(newEmail);
         }
-        if (newNumber) patchData.number = newNumber;
+        if (newNumber) {
+            patchData.number = newNumber
+            setNumber(newNumber);
+        }
 
         try {
             await axios.patch(`http://localhost:3000/barbers/${user?.id}`, patchData);
@@ -99,7 +110,7 @@ const BarberEditProfile = () => {
                 <div className='info-row'>
                     <div className='info-header'>
                         <h3>Nome de usuário</h3>
-                        <h4>{user?.name}</h4>
+                        <h4>{name}</h4>
                     </div>
                     {changeNamePopout ? (
                         <div className='edit-field'>

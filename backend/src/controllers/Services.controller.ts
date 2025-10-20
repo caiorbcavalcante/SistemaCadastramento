@@ -51,7 +51,7 @@ export class ServicesController{
             }
 
             await this.servicesServices.createService(service.description, service.price)
-            return response.status(201).json({message: "Serviço criado com sucesso!"})
+            return response.status(201).json({message: "Serviço criado com sucesso!", service})
         } catch {
             return response.status(500).json({message: "Erro ao criar novo serviço"})
         }
