@@ -5,7 +5,6 @@ import { useAuth } from '../../contexts/AuthContext'
 import { Route } from 'react-router-dom'
 import BarberEditProfile from '../barberEditProfile/BarberEditProfile'
 import axios, { isAxiosError } from 'axios'
-
 import { FiSettings } from "react-icons/fi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { FaWhatsapp } from "react-icons/fa";

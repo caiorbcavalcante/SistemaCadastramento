@@ -37,7 +37,6 @@ const ServiceForm: React.FC = () => {
                 alert("Ocorreu um erro inesperado ao criar o serviço.")
             }
         }
-    
     }
   
 
