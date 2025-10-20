@@ -99,6 +99,7 @@
   font-size: 1.1rem;
   color: #d0d0d0;
   letter-spacing: 0.4px;
+   margin-top:-1rem;
 }
 
 /* ====== RESPONSIVO ====== */
@@ -132,5 +133,6 @@
 
   .barber-phone {
     font-size: 0.95rem;
+   
   }
 }

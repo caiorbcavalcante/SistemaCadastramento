@@ -58,7 +58,7 @@ export const Barbers: React.FC = () => {
 
               <div className="barber-info">
                 <span className="barber-name">{b.name}</span>
-                <span className="barber-phone">📞 {b.number}</span>
+                <span className="barber-phone"> {b.number}</span>
               </div>
             </li>
           ))
