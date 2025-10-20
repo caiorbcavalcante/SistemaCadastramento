@@ -1,6 +1,5 @@
-import React, { useEffect, useRef, useState} from "react";
+import React, { useEffect, useState} from "react";
 import axios from "axios";
-import { jwtDecode } from "jwt-decode";
 import { useAuth } from "../../../contexts/AuthContext";
 import "./NewAppointment.css"
 
@@ -166,7 +165,7 @@ export const NewAppointment: React.FC = () => {
       user: user?.id,
       barber: selectedBarberId,
       service: selectedServiceId,
-      date: `${formatDateBR(selectedDate)} ${selectedTime}`
+      date: `${formatDateBR(selectedDate!)} ${selectedTime}`
     })
     setSelectedBarberId(undefined);
     setSelectedServiceId(undefined);
@@ -250,7 +249,7 @@ export const NewAppointment: React.FC = () => {
 
   {showCreateAppointmentPopOut && (
     <div className="confirm-popout">
-      <h2>Confirmar agendamento em {formatDateBR(selectedDate)} às {selectedTime} com {barberName}</h2>
+      <h2>Confirmar agendamento em {formatDateBR(selectedDate!)} às {selectedTime} com {barberName}</h2>
       <button onClick={() => {handleCreateAppointment(); setShowCreateAppointmentPopOut(false)}}>Confirmar</button>
       <button onClick={() => {setSelectedBarberId(undefined); setSelectedDate(undefined); setSelectedServiceId(undefined); setSelectedTime(undefined); setShowCreateAppointmentPopOut(false)}}>Cancelar</button>
     </div>

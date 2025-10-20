@@ -52,10 +52,11 @@ const BarberAdminPage = () => {
         
     }
 
-    const _handleLogout = () => {
-        logout();
-        navigate("/")
-    }
+  // const _handleLogout = () => {
+//   logout();
+//   navigate("/");
+// };
+
 
     const removeAuth = async (barber: barber) => {
         try {

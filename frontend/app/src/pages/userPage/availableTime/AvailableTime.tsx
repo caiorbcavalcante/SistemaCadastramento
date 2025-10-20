@@ -78,11 +78,13 @@ export const AvailableTime: React.FC = () => {
         const barbersData = barbersRes.data?.barbers || [];
 
         setBarbers(barbersData);
+        console.log(barbers)
 
         // 🔹 Gera horários apenas do DIA ATUAL com intervalo de 30min
         const todayTimeSlots = generateTodayTimeSlots();
         const todayFormatted = new Date().toLocaleDateString("pt-BR");
         
+         console.log(todayFormatted);
         console.log("🔹 Horários de hoje (30min interval):", todayTimeSlots);
         console.log("🔹 Quantidade de horários:", todayTimeSlots.length);
         console.log("🔹 Último horário:", todayTimeSlots[todayTimeSlots.length - 1]);

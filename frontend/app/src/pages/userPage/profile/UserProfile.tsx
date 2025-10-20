@@ -1,8 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { Input } from "../../../components/input/Input";
-import { Button } from "../../../components/button/Button";
-import {jwtDecode} from "jwt-decode";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './UserProfile.css'
 import { useAuth } from "../../../contexts/AuthContext";
