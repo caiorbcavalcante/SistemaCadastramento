@@ -10,5 +10,5 @@ exports.serviceRouter.get("/service", serviceController.getAllServices);
 exports.serviceRouter.post("/service", serviceController.createService);
 exports.serviceRouter.patch("/service/:id_service", serviceController.updateService);
 exports.serviceRouter.delete("/service/:id_service", serviceController.deleteService);
-exports.serviceRouter.get("/service/id_user/:id_service", serviceController.getServiceByUser);
-exports.serviceRouter.get("/service/id_user/:id_service", serviceController.getServiceByBarber);
+//serviceRouter.get("/service/user/:id_user", serviceController.getServiceByUser)
+//serviceRouter.get("/service/barber/:id_barber", serviceController.getServiceByBarber)

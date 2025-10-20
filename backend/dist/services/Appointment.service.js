@@ -10,8 +10,8 @@ class AppointmentService {
         this.getAllAppointments = async () => {
             return await this.appoitmentRepository.getAllAppointments();
         };
-        this.createAppointment = async (appointment) => {
-            return await this.appoitmentRepository.createAppointment(appointment);
+        this.createAppointment = async (appointmentData) => {
+            return await this.appoitmentRepository.createAppointment(appointmentData);
         };
         this.updateAppointment = async (id, appointment) => {
             return await this.appoitmentRepository.updateAppointment(id, appointment);

@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BarbersController = void 0;
 const Barbers_service_1 = require("../services/Barbers.service");
+const emailAlreadyExistsError_1 = require("../errors/emailAlreadyExistsError");
 class BarbersController {
     constructor(barbersService = new Barbers_service_1.BarbersService()) {
         this.getBarber = async (request, response) => {
@@ -16,7 +17,10 @@ class BarbersController {
                 }
                 return response.status(200).json({ barber: barber?.id_barber,
                     name: barber?.name,
-                    email: barber?.email });
+                    email: barber?.email,
+                    number: barber?.number,
+                    adminplus: barber?.adminplus
+                });
             }
             catch {
                 return response.status(500).json({ message: "Erro ao buscar barbeiro" });
@@ -34,13 +38,17 @@ class BarbersController {
         this.createBarber = async (request, response) => {
             try {
                 const barber = request.body;
-                if (!barber.name || !barber.email || !barber.password) {
-                    return response.status(400).json({ message: "Necessário nome, senha e email de usuário barbeiro" });
+                if (!barber.name || !barber.email || !barber.password || !barber.number) {
+                    return response.status(400).json({ message: "Necessário nome, senha, email e número" });
                 }
-                await this.barbersService.createBarber(barber.name, barber.email, barber.password);
-                return response.status(201).json({ message: "Usuário de barbeiro cadastrado com sucesso! " });
+                const newBarber = await this.barbersService.createBarber(barber.name, barber.email, barber.password, barber.number);
+                const { password, ...barberWithoutPassword } = newBarber;
+                return response.status(201).json({ message: "Usuário de barbeiro cadastrado com sucesso! ", barberWithoutPassword });
             }
-            catch {
+            catch (error) {
+                if (error instanceof emailAlreadyExistsError_1.EmailAlreadyExistsError) {
+                    return response.status(409).json({ message: "Este email já foi cadastrado em outra conta." });
+                }
                 return response.status(500).json({ message: "Erro ao criar usuário de barbeiro" });
             }
         };
@@ -48,16 +56,18 @@ class BarbersController {
             try {
                 const id = Number(request.params.id_barber);
                 const barber = request.body;
-                if (!barber.name || !barber.email || !barber.password) {
-                    return response.status(400).json({ message: "Necessário nome, senha e email de usuário barbeiro" });
+                if (!barber || Object.keys(barber).length === 0) {
+                    return response.status(400).json({ message: "Nenhuma mudança feita" });
                 }
-                const updateBarber = await this.barbersService.updateBarber(id, barber.name, barber.email, barber.password);
+                const updateBarber = await this.barbersService.updateBarber(id, barber.name, barber.email, barber.password, barber.number, barber.adminplus);
                 if (!updateBarber) {
                     return response.status(404).json({ message: "Conta de barbeiro não encontrada" });
                 }
                 return response.status(200).json({ message: "Conta de barbeiro atualizada com sucesso!",
                     name: updateBarber?.name,
-                    email: updateBarber?.email
+                    email: updateBarber?.email,
+                    number: updateBarber?.number,
+                    adminplus: updateBarber?.adminplus
                 });
             }
             catch {

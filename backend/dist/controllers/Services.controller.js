@@ -40,7 +40,7 @@ class ServicesController {
                     return response.status(400).json({ message: "Necessário descrição e preço para serviço" });
                 }
                 await this.servicesServices.createService(service.description, service.price);
-                return response.status(201).json({ message: "Serviço criado com sucesso!" });
+                return response.status(201).json({ message: "Serviço criado com sucesso!", service });
             }
             catch {
                 return response.status(500).json({ message: "Erro ao criar novo serviço" });
@@ -75,8 +75,8 @@ class ServicesController {
                 }
                 return response.status(200).json({ message: "Serviço deletado com sucesso!" });
             }
-            catch {
-                return response.status(500).json({ message: "Erro ao deletar serviço" });
+            catch (error) {
+                return response.status(500).json({ message: "Erro ao deletar serviço", error });
             }
         };
         this.servicesServices = servicesServices;

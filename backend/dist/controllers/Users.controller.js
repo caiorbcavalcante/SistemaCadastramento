@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
 const Users_service_1 = require("../services/Users.service");
-//botar admin em getalluser
+const emailAlreadyExistsError_1 = require("../errors/emailAlreadyExistsError");
 class UserController {
     constructor(userService = new Users_service_1.UserService()) {
         this.getUser = async (request, response) => {
@@ -17,7 +17,8 @@ class UserController {
                 }
                 return response.status(200).json({ user: user?.id_user,
                     name: user?.name,
-                    email: user?.email });
+                    email: user?.email,
+                    number: user?.number });
             }
             catch {
                 return response.status(500).json({ message: "Erro ao buscar usuário" });
@@ -32,7 +33,8 @@ class UserController {
                 const usersMap = users.map(user => ({
                     id_user: user.id_user,
                     name: user.name,
-                    email: user.email
+                    email: user.email,
+                    number: user.number
                 }));
                 return response.status(200).json({ users: usersMap });
             }
@@ -44,13 +46,17 @@ class UserController {
         this.createUser = async (request, response) => {
             try {
                 const user = request.body;
-                if (!user.name || !user.email || !user.password) {
-                    return response.status(400).json({ message: "Nome,email e senha são obrigatorios" });
+                if (!user.name || !user.email || !user.password || !user.number) {
+                    return response.status(400).json({ message: "Nome,email, senha e número são obrigatorios" });
                 }
-                await this.userService.createUser(user.name, user.email, user.password);
+                await this.userService.createUser(user.name, user.email, user.password, user.number);
                 return response.status(201).json({ message: "Usuario criado com sucesso" });
             }
-            catch {
+            catch (error) {
+                console.log("ERROR:", error);
+                if (error instanceof emailAlreadyExistsError_1.EmailAlreadyExistsError) {
+                    return response.status(409).json({ message: "Este email já foi cadastrado em outra conta." });
+                }
                 return response.status(500).json({ message: "Nãoo foi possiviel criar um usuario" });
             }
         };
@@ -58,16 +64,20 @@ class UserController {
             try {
                 const id = Number(request.params.id_user);
                 const user = request.body;
-                if (!user.name || !user.email || !user.password) {
-                    return response.status(400).json({ message: "Nome, email e senha são obrigatórios" });
+                if (!user || Object.keys(user).length === 0) {
+                    return response.status(400).json({ message: "Nenhuma mudança feita" });
                 }
-                const updateUser = await this.userService.updateUser(id, user.name, user.email, user.password);
+                //     if (!user.name || !user.email || !user.password || !user.number) {
+                //     return response.status(400).json({ message: "Nome, email e senha são obrigatórios" })
+                // }
+                const updateUser = await this.userService.updateUser(id, user.name, user.email, user.password, user.number);
                 if (!updateUser) {
                     return response.status(404).json({ message: "Usuario inexistente" });
                 }
                 return response.status(200).json({ message: "Usuario atualizado com sucesso",
                     name: updateUser?.name,
-                    email: updateUser?.email });
+                    email: updateUser?.email,
+                    number: updateUser?.number });
             }
             catch {
                 return response.status(500).json({ message: "Não foi possiviel atualizar um usuario" });

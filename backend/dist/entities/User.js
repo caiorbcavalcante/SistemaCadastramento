@@ -11,17 +11,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const typeorm_1 = require("typeorm");
-const Barber_1 = require("./Barber");
-const Service_1 = require("./Service");
 const Appointment_1 = require("./Appointment");
 let User = class User {
-    constructor(name, email, password) {
+    constructor(name, email, password, number) {
         if (name)
             this.name = name;
         if (email)
             this.email = email;
         if (password)
             this.password = password;
+        if (number !== undefined)
+            this.number = number;
     }
 };
 exports.User = User;
@@ -42,18 +42,18 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => Barber_1.Barber, barber => barber.user),
-    __metadata("design:type", Array)
-], User.prototype, "barbers", void 0);
+    (0, typeorm_1.Column)({ nullable: false }),
+    __metadata("design:type", String)
+], User.prototype, "number", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => Service_1.Service, service => service.user),
-    __metadata("design:type", Array)
-], User.prototype, "services", void 0);
+    (0, typeorm_1.Column)({ nullable: false, default: 'user' }),
+    __metadata("design:type", String)
+], User.prototype, "role", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => Appointment_1.Appointment, appointment => appointment.user),
     __metadata("design:type", Array)
 ], User.prototype, "appointments", void 0);
 exports.User = User = __decorate([
     (0, typeorm_1.Entity)("users"),
-    __metadata("design:paramtypes", [String, String, String])
+    __metadata("design:paramtypes", [String, String, String, String])
 ], User);

@@ -30,15 +30,24 @@ __decorate([
     __metadata("design:type", Date)
 ], Appointment.prototype, "date", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => User_1.User, user => user.appointments),
+    (0, typeorm_1.ManyToOne)(() => User_1.User, user => user.appointments, {
+        onDelete: "CASCADE",
+    }),
+    (0, typeorm_1.JoinColumn)({ name: 'userId' }),
     __metadata("design:type", User_1.User)
 ], Appointment.prototype, "user", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => Barber_1.Barber, barber => barber.appointments),
+    (0, typeorm_1.ManyToOne)(() => Barber_1.Barber, barber => barber.appointments, {
+        onDelete: "CASCADE"
+    }),
+    (0, typeorm_1.JoinColumn)({ name: 'barberId' }),
     __metadata("design:type", Barber_1.Barber)
 ], Appointment.prototype, "barber", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => Service_1.Service, service => service.appointments),
+    (0, typeorm_1.ManyToOne)(() => Service_1.Service, service => service.appointments, {
+        onDelete: "CASCADE", // SE DER MAIS UM BO DOS GRANDES REMOVER ISSO 
+    }),
+    (0, typeorm_1.JoinColumn)({ name: 'serviceId' }),
     __metadata("design:type", Service_1.Service)
 ], Appointment.prototype, "service", void 0);
 exports.Appointment = Appointment = __decorate([

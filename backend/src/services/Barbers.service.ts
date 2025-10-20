@@ -41,7 +41,7 @@ export class BarbersService{
             const salt = await bcrypt.genSalt(12);
             passwordHash = await bcrypt.hash(password, salt)
         }
-        return await this.barberRepository.updateBarber(id, name, email, passwordHash, number, adminplus)
+        return await this.barberRepository.updateBarber(id, name, email, number, adminplus, passwordHash)
     }
 
     deleteBarber = async(id_barber: number): Promise <boolean> =>{

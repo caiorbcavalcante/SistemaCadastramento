@@ -15,10 +15,8 @@ exports.AppDataSource = new typeorm_1.DataSource({
     username: process.env.PGUSER,
     password: process.env.PGPASSWORD,
     database: process.env.PGDATABASE,
-    ssl: {
-        rejectUnauthorized: false, // necessário para Neon
-    },
-    synchronize: true, // cria as tabelas automaticamente (apenas para dev)
+    ssl: process.env.PGHOST?.includes('neon') ? { rejectUnauthorized: false } : false,
+    synchronize: false, // cria as tabelas automaticamente (apenas para dev)
     logging: true,
     entities: [__dirname + '/entities/*.ts'], // suas entidades
     migrations: [__dirname + '/migrations/*.ts'],

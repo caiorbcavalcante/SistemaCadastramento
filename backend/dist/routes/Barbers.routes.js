@@ -11,4 +11,4 @@ exports.barbersRouter.get("/barbers", barbersController.getAllBarbers);
 exports.barbersRouter.post("/barbers", barbersController.createBarber);
 exports.barbersRouter.patch("/barbers/:id_barber", barbersController.updateBarber);
 exports.barbersRouter.delete("/barbers/:id_barber", barbersController.deleteBarber);
-exports.barbersRouter.post("/login", barbersController.getToken);
+exports.barbersRouter.post("/barbers/login", barbersController.getToken);

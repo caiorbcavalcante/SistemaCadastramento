@@ -24,7 +24,7 @@ export class BarberRepository{
         return await this.manager.save(barber);
     }
 
-    updateBarber = async(id_barber: number, name: string, email: string, password?: string, number:string, adminplus:boolean): Promise < Barber | null > =>{
+    updateBarber = async(id_barber: number, name: string, email: string,number:string, adminplus:boolean, password?: string): Promise < Barber | null > =>{
         await this.manager.update({id_barber}, {name, email, password,number, adminplus})
         return this.manager.findOneBy({id_barber})
     } 

@@ -11,17 +11,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Barber = void 0;
 const typeorm_1 = require("typeorm");
-const User_1 = require("./User");
-const Service_1 = require("./Service");
 const Appointment_1 = require("./Appointment");
 let Barber = class Barber {
-    constructor(name, email, password) {
+    constructor(name, email, password, number, adminplus = false) {
         if (name)
             this.name = name;
         if (email)
             this.email = email;
         if (password)
             this.password = password;
+        if (number !== undefined)
+            this.number = number;
+        this.adminplus = adminplus;
     }
 };
 exports.Barber = Barber;
@@ -42,18 +43,22 @@ __decorate([
     __metadata("design:type", String)
 ], Barber.prototype, "password", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => User_1.User, user => user.barbers),
-    __metadata("design:type", User_1.User)
-], Barber.prototype, "user", void 0);
+    (0, typeorm_1.Column)({ nullable: false }),
+    __metadata("design:type", String)
+], Barber.prototype, "number", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => Service_1.Service, service => service.barber),
-    __metadata("design:type", Array)
-], Barber.prototype, "services", void 0);
+    (0, typeorm_1.Column)({ nullable: false, default: 'barber' }),
+    __metadata("design:type", String)
+], Barber.prototype, "role", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: false, default: false }),
+    __metadata("design:type", Boolean)
+], Barber.prototype, "adminplus", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => Appointment_1.Appointment, appointment => appointment.barber),
     __metadata("design:type", Array)
 ], Barber.prototype, "appointments", void 0);
 exports.Barber = Barber = __decorate([
     (0, typeorm_1.Entity)("barbers"),
-    __metadata("design:paramtypes", [String, String, String])
+    __metadata("design:paramtypes", [String, String, String, String, Boolean])
 ], Barber);

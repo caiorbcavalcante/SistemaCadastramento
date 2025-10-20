@@ -41,7 +41,7 @@ export class UserService{
             const salt = await bcrypt.genSalt(12);
             passwordHash = await bcrypt.hash(password, salt);
         }
-        return await this.userRepository.updateUser(id,name,email,passwordHash,number)
+        return await this.userRepository.updateUser(id,name,email,number,passwordHash)
     }
 
     deleteUser=async(id_user:number):Promise<boolean>=>{
