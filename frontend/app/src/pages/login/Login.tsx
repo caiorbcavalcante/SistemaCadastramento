@@ -15,8 +15,7 @@ export const Login:React.FC = () => {
     const navigate = useNavigate();
     const {login} = useAuth();
 
-    const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const handleLogin = async () => {
         setError(null);
         
         try {
@@ -65,7 +64,7 @@ export const Login:React.FC = () => {
                     value={senha}
                     onChange={(e)=>setSenha(e.target.value)}/>
 
-                    <Button text="Entrar" />{}
+                    <Button text="Entrar" onClick={() => {handleLogin()}} />
                 </form>
             <a href="/reset-password">Redefinir Senha</a>
             </div>
