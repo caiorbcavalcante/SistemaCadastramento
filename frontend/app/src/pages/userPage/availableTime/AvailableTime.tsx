@@ -62,10 +62,10 @@ export const AvailableTime: React.FC = () => {
       try {
         // 🔹 Busca agendamentos E barbeiros em paralelo
         const [appointmentsRes, barbersRes] = await Promise.all([
-          axios.get("http://localhost:3000/appointments", {
+          axios.get(`${import.meta.env.VITE_API_URL}/appointments`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get("http://localhost:3000/barbers", {
+          axios.get(`${import.meta.env.VITE_API_URL}/barbers`, {
             headers: { Authorization: `Bearer ${token}` },
           })
         ]);

@@ -27,7 +27,7 @@ export const UserAppointments:React.FC = () => {
             const decodedToken :any = jwtDecode(token)
              const userId = decodedToken.id_user
              
-        const res = await axios.get(`http://localhost:3000/appointments/user/${userId}`, {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/appointments/user/${userId}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
 

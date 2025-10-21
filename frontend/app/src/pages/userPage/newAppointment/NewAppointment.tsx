@@ -161,7 +161,7 @@ export const NewAppointment: React.FC = () => {
 
   const handleCreateAppointment = async () => {
 
-    await axios.post("http://localhost:3000/appointments", {
+    await axios.post(`${import.meta.env.VITE_API_URL}/appointments`, {
       user: user?.id,
       barber: selectedBarberId,
       service: selectedServiceId,

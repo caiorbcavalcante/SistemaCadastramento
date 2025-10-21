@@ -19,7 +19,7 @@ export const Services: React.FC = () => {
         const fetchServices = async () => { 
 
             try{
-                const res = await axios.get(`http://localhost:3000/service`,{ 
+                const res = await axios.get(`${import.meta.env.VITE_API_URL}/service`,{ 
                 headers:{Authorization:`Bearer ${token}`},
                 })
                  

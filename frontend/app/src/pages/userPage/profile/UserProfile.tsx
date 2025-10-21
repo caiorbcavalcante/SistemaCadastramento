@@ -40,7 +40,7 @@ const UserProfile = () => {
         if (newNumber) patchData.number = newNumber;
 
         try {
-            await axios.patch(`http://localhost:3000/user/${user?.id}`, patchData);
+            await axios.patch(`${import.meta.env.VITE_API_URL}/user/${user?.id}`, patchData);
             alert("Alterações salvas com sucesso!");
         } catch {
             alert("Erro ao salvar alterações!");
@@ -49,7 +49,7 @@ const UserProfile = () => {
 
     const handlePasswordChange = async () => {
         try {
-            const res = await axios.post("http://localhost:3000/user/login", {
+            const res = await axios.post(`${import.meta.env.VITE_API_URL}/user/login`, {
                 email: user?.email,
                 password: oldPassword
             });
@@ -69,7 +69,7 @@ const UserProfile = () => {
                 return;
             }
 
-            await axios.patch(`http://localhost:3000/user/${user?.id}`, { password: newPassword });
+            await axios.patch(`${import.meta.env.VITE_API_URL}/user/${user?.id}`, { password: newPassword });
             alert("Senha alterada com sucesso!");
 
             setOldPassword('');

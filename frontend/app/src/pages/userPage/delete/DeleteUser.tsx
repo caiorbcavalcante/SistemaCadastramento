@@ -27,7 +27,7 @@ export const DeleteUser: React.FC = () => {
 
      
         try{
-            await axios.delete(`http://localhost:3000/user/${userId}`, {
+            await axios.delete(`${import.meta.env.VITE_API_URL}/user/${userId}`, {
   headers: { Authorization: `Bearer ${token}` },
 })
 

@@ -49,7 +49,7 @@ export const AuthProvider = ({children}: { children: ReactNode}) => {
                         //     setUserId(decodedToken.id_user)
                         const endpoint = decodedToken.id_barber ? "barbers" : "user";
 
-                    const res = await axios.get(`http://localhost:3000/${endpoint}/${id}`, {
+                    const res = await axios.get(`${import.meta.env.VITE_API_URL}/${endpoint}/${id}`, {
                         headers: {Authorization: `Bearer ${token}`}
                     })
 
@@ -90,7 +90,7 @@ export const AuthProvider = ({children}: { children: ReactNode}) => {
             const id = decodedToken.id_barber ?? decodedToken.id_user!;
             const endpoint = decodedToken.id_barber? 'barbers' : 'user';
 
-            const res = await axios.get(`http://localhost:3000/${endpoint}/${id}`, {
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/${endpoint}/${id}`, {
                 headers: {Authorization: `Bearer ${token}`}
             })
 
