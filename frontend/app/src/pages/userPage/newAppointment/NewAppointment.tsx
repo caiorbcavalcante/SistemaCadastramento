@@ -69,7 +69,7 @@ export const NewAppointment: React.FC = () => {
 
   useEffect(() => {
     const fetchBarbers = async () => {
-      const res = await axios.get("http://localhost:3000/barbers")
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/barbers`)
       setBarbers(res.data.barbers);
       // FAZER TRATAMENTO DE ERROS AQUI DEPOIS
     }
@@ -79,7 +79,7 @@ export const NewAppointment: React.FC = () => {
   }, [])
 
   const getAppointments = async (barber_id:number) => {
-    const res = await axios.get(`http://localhost:3000/appointments/barber/${barber_id}`)
+    const res = await axios.get(`${import.meta.env.VITE_API_URL}/appointments/barber/${barber_id}`)
     setAppointments(res.data);
   }
 
@@ -95,7 +95,7 @@ export const NewAppointment: React.FC = () => {
     if (!selectedBarberId) return;
 
     const getBarberById = async (barber_id: number) => {
-    const res = await axios.get(`http://localhost:3000/barbers/${barber_id}`, {headers: {Authorization: `Bearer ${token}`}})
+    const res = await axios.get(`${import.meta.env.VITE_API_URL}/barbers/${barber_id}`, {headers: {Authorization: `Bearer ${token}`}})
     setBarberName(res.data.name);
   }
 
