@@ -124,20 +124,18 @@ export const NewAppointment: React.FC = () => {
     appointments.forEach(appointment => {
         const appointmentDate = new Date(appointment.date);
    
-        const apptYear = appointmentDate.getFullYear();
-        const apptMonth = (appointmentDate.getMonth() + 1).toString().padStart(2, '0');
-        const apptDay = appointmentDate.getDate().toString().padStart(2, '0');
-        const apptDateString = `${apptYear}-${apptMonth}-${apptDay}`; 
+        const apptYear = appointmentDate.getUTCFullYear();
+        const apptMonth = (appointmentDate.getUTCMonth() + 1).toString().padStart(2, '0');
+        const apptDay = appointmentDate.getUTCDate().toString().padStart(2, '0');
+        const apptDateString = `${apptYear}-${apptMonth}-${apptDay}`;
+
         if (apptDateString === selectedDateString) {
-            
-            const hour = appointmentDate.getHours().toString().padStart(2, '0');
-            const minute = appointmentDate.getMinutes().toString().padStart(2, '0');
-            
-            const formattedTime = `${hour}:${minute}`; 
-            
+            const hour = appointmentDate.getUTCHours().toString().padStart(2, '0');
+            const minute = appointmentDate.getUTCMinutes().toString().padStart(2, '0');
+            const formattedTime = `${hour}:${minute}`;
             bookedTimes.add(formattedTime);
         }
-    });
+      });
 
     const updatedAvailableTimes = initialTimes.map(slot => ({
         ...slot,

@@ -66,7 +66,7 @@ export const UserAppointments:React.FC = () => {
     <ul className="user-appointments-list">
       {appointments.map((appt:IAppointment)=> (
         <li key={appt.id_appointment}>
-          {new Date(appt.date).toLocaleString("pt-BR")} - {appt.description} com {appt.barberName}
+          {new Date(appt.date).toLocaleString("pt-BR", {timeZone: "UTC"})} - {appt.description} com {appt.barberName}
         </li>
       ))}
     </ul>
