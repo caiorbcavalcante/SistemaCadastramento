@@ -25,7 +25,7 @@ const ManageServices = () => {
      useEffect(() => {
             const fetchServicesList = async () => {
                 try {
-                    const response = await axios.get('http://localhost:3000/service')
+                    const response = await axios.get(`${import.meta.env.VITE_API_URL}/service`)
                     setServicesList(response.data.services)
                 } catch (error) {
                     if(axios.isAxiosError(error)){
@@ -46,7 +46,7 @@ const ManageServices = () => {
             if (!selectedService) return;
 
             try {
-                await axios.patch(`http://localhost:3000/service/${selectedService?.id_service}`, {
+                await axios.patch(`${import.meta.env.VITE_API_URL}/service/${selectedService?.id_service}`, {
                     price: newServicePrice,
                     description: newServiceDesc
                 })
@@ -83,7 +83,7 @@ const ManageServices = () => {
 
       const handleDeleteService = async () => {
         try {
-            await axios.delete(`http://localhost:3000/service/${selectedService?.id_service}`)
+            await axios.delete(`${import.meta.env.VITE_API_URL}/service/${selectedService?.id_service}`)
             alert("Serviço deletado com sucesso!");
 
 
@@ -111,7 +111,7 @@ const ManageServices = () => {
 
         const handleAddService = async () => {
             try {
-                const res = await axios.post("http://localhost:3000/service", 
+                const res = await axios.post(`${import.meta.env.VITE_API_URL}/service`, 
                 {
                     description: newServiceDesc,
                     price: newServicePrice})

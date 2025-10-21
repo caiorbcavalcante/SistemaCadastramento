@@ -23,7 +23,7 @@ export const  NewPassword:React.FC = () => {
             const token = localStorage.getItem("token")
             const endpoint = user.role === "barber" ? "barbers" : "user"
 
-            await axios.patch( `http://localhost:3000/${endpoint}/${user.id}`,
+            await axios.patch( `${import.meta.env.VITE_API_URL}/${endpoint}/${user.id}`,
                 {password},
                 {
              headers: {

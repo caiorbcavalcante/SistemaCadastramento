@@ -50,7 +50,7 @@ const ControlPanel = () => {
 
   const handleRemoveAppointment = async (app: Appointment | null) => {
     try {
-      await axios.delete(`http://localhost:3000/appointments/${app?.id_appointment}`)
+      await axios.delete(`${import.meta.env.VITE_API_URL}/appointments/${app?.id_appointment}`)
 
       setAppointments(prevApps => prevApps.filter(a => a.id_appointment!== app?.id_appointment))
       setShowPopoutManageAppointmentRemove(false);
@@ -84,7 +84,7 @@ const ControlPanel = () => {
         const barberId = user.id;
 
         try {
-          const appointmentResponse = await axios.get(`http://localhost:3000/appointments/barber/${barberId}`)
+          const appointmentResponse = await axios.get(`${import.meta.env.VITE_API_URL}/appointments/barber/${barberId}`)
           setAppointments(appointmentResponse.data)
 
         } catch (error) {

@@ -19,7 +19,7 @@ export const Login:React.FC = () => {
         setError(null);
         
         try {
-            const res = await axios.post("http://localhost:3000/user/login", {
+            const res = await axios.post(`${import.meta.env.VITE_API_URL}/user/login`, {
                 email,
                 password: senha
             })
@@ -30,7 +30,7 @@ export const Login:React.FC = () => {
         } catch {}
 
         try {
-            const res = await axios.post("http://localhost:3000/barbers/login", {
+            const res = await axios.post(`${import.meta.env.VITE_API_URL}/barbers/login`, {
                 email,
                 password: senha
             })

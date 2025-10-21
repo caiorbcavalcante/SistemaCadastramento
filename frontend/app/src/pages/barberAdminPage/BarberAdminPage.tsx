@@ -31,7 +31,7 @@ const BarberAdminPage = () => {
 
     const giveAuth = async (barber: barber) => {
         try {
-            await axios.patch(`http://localhost:3000/barbers/${barber.id_barber}`, {
+            await axios.patch(`${import.meta.env.VITE_API_URL}/barbers/${barber.id_barber}`, {
             name: barber.name,
             email: barber.email,
             adminplus: true 

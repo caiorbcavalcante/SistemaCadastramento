@@ -17,7 +17,7 @@ const ServiceForm: React.FC = () => {
                 return
             }
             // Envia os dados para o seu backend (API)
-             await axios.post("http://localhost:3000/services", {
+             await axios.post(`${import.meta.env.VITE_API_URL}/services`, {
                 name,
                 price,
                 description

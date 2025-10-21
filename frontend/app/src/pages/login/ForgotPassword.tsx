@@ -12,7 +12,7 @@ export const ForgotPassword: React.FC = () => {
   // Envia código para o e-mail
   const handleSendCode = async () => {
     try {
-      await axios.post("http://localhost:3000/send-code", { email });
+      await axios.post(`${import.meta.env.VITE_API_URL}/send-code`, { email });
       setSent(true);
       alert("Código enviado! Verifique seu e-mail.");
     } catch {
@@ -23,7 +23,7 @@ export const ForgotPassword: React.FC = () => {
   // Verifica se o código está correto
   const handleVerifyCode = async () => {
     try {
-      const res = await axios.post("http://localhost:3000/verify-code", { email, code });
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/verify-code`, { email, code });
       if (res.data.valid) {
         alert("Código confirmado! Agora redefina sua senha.");
         navigate("/new-password"); // vai pra sua tela de redefinir
