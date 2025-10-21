@@ -104,7 +104,7 @@ export const NewAppointment: React.FC = () => {
 
   useEffect(() => {
     const fetchServices = async () => {
-      const res = await axios.get("http://localhost:3000/service");
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/service`);
       setServices(res.data.services)
     }
 
