@@ -53,7 +53,7 @@ const BarberAdminPage = () => {
 
     const removeAuth = async (barber: barber) => {
         try {
-            await axios.patch(`http://localhost:3000/barbers/${barber.id_barber}`, {
+            await axios.patch(`${import.meta.env.VITE_API_URL}/barbers/${barber.id_barber}`, {
                 name: barber.name,
                 email: barber.email,
                 adminplus: false
@@ -81,7 +81,7 @@ const BarberAdminPage = () => {
 
     const addBarber = async (name: string, email: string, password: string, number: string) => {
         try {
-            const response = await axios.post("http://localhost:3000/barbers", {
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/barbers`, {
                 name,
                 email,
                 password,
@@ -105,7 +105,7 @@ const BarberAdminPage = () => {
 
     const deleteBarber = async (id: number) => {
         try {
-            await axios.delete(`http://localhost:3000/barbers/${id}`,{
+            await axios.delete(`${import.meta.env.VITE_API_URL}/barbers/${id}`,{
                 headers: {Authorization: `Bearer ${token}`}
             });
 
@@ -129,7 +129,7 @@ const BarberAdminPage = () => {
         const fetchBarberList = async () => {
             if (user && user.role === 'barber' && user.adminplus) {
                 try {
-                    const response = await axios.get('http://localhost:3000/barbers')
+                    const response = await axios.get(`${import.meta.env.VITE_API_URL}/barbers`)
                     setBarberList(response.data.barbers);
                 } catch (error) {
                     if(axios.isAxiosError(error)){

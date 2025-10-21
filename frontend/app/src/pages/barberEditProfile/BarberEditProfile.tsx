@@ -52,7 +52,7 @@ const BarberEditProfile = () => {
         }
 
         try {
-            await axios.patch(`http://localhost:3000/barbers/${user?.id}`, patchData);
+            await axios.patch(`${import.meta.env.VITE_API_URL}/barbers/${user?.id}`, patchData);
             alert("Alterações salvas com sucesso!");
         } catch {
             alert("Erro ao salvar alterações!");
@@ -61,7 +61,7 @@ const BarberEditProfile = () => {
 
     const handlePasswordChange = async () => {
         try {
-            const res = await axios.post("http://localhost:3000/barbers/login", {
+            const res = await axios.post(`${import.meta.env.VITE_API_URL}/barbers/login`, {
                 email: user?.email,
                 password: oldPassword
             });
@@ -81,7 +81,7 @@ const BarberEditProfile = () => {
                 return;
             }
 
-            await axios.patch(`http://localhost:3000/barbers/${user?.id}`, { password: newPassword });
+            await axios.patch(`${import.meta.env.VITE_API_URL}/barbers/${user?.id}`, { password: newPassword });
             alert("Senha alterada com sucesso!");
 
             setOldPassword('');

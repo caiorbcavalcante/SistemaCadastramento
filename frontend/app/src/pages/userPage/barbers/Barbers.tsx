@@ -22,7 +22,7 @@ export const Barbers: React.FC = () => {
     if(!token) return
     const fetchBarbers = async () => {
         try{
-            const res = await axios.get(("http://localhost:3000/barbers"), {
+            const res = await axios.get((`${import.meta.env.VITE_API_URL}/barbers`), {
                 headers: { Authorization: `Bearer ${token}`,
           },})
             if (res.data && Array.isArray(res.data.barbers)) {
