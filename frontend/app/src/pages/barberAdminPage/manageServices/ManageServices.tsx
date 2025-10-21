@@ -3,7 +3,7 @@ import axios from 'axios'
 import { useAuth } from '../../../contexts/AuthContext';
 import { RiDeleteBinLine } from "react-icons/ri";
 import { FaEdit } from "react-icons/fa";
-import './manageServices.css'
+import './ManageServices.css'
 
 
 interface services {
