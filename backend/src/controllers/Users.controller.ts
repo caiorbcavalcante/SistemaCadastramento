@@ -71,7 +71,7 @@ export class UserController{
             if (error instanceof EmailAlreadyExistsError){
                 return response.status(409).json({ message: "Este email já foi cadastrado em outra conta."})
             }
-            return response.status(500).json({message:"Nãoo foi possiviel criar um usuario"})
+            return response.status(500).json({message:"Não foi possiviel criar um usuario"})
         }
     }
 

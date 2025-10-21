@@ -14,6 +14,12 @@ export const AppDataSource = new DataSource({
   ssl: process.env.PGHOST?.includes('neon') ? { rejectUnauthorized: false } : false,
   synchronize: false, // cria as tabelas automaticamente (apenas para dev)
   logging: true,
-  entities: [__dirname + '/entities/*.ts'], // suas entidades
-  migrations: [__dirname + '/migrations/*.ts'], 
+   entities: [
+    __dirname + '/entities/*.ts',   // para dev
+    __dirname + '/entities/*.js'    // para produção
+  ],
+  migrations: [
+    __dirname + '/migrations/*.ts',
+    __dirname + '/migrations/*.js'
+  ],
 })
