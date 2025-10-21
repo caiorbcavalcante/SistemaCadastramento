@@ -5,7 +5,7 @@ import "./BarberAdminPage.css"
 import axios from 'axios'
 import { FiSettings } from "react-icons/fi";
 import { FaAngleLeft } from "react-icons/fa";
-import ManageServices from './manageServices/manageServices'
+import ManageServices from './manageServices/ManageServices'
 interface barber{
     id_barber: number,
     name: string,

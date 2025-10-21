@@ -45,10 +45,12 @@ const BarberEditProfile = () => {
             }
             patchData.email = newEmail;
             setEmail(newEmail);
+            console.log(email)
         }
         if (newNumber) {
             patchData.number = newNumber
             setNumber(newNumber);
+            console.log(number)
         }
 
         try {
