@@ -42,6 +42,7 @@ const RegisterAccount: React.FC = () => {
       })
 
       navigate('/')
+      alert("conta criada com sucesso")
     } catch (error) {
       if(axios.isAxiosError(error)) {
         if(error.response){
