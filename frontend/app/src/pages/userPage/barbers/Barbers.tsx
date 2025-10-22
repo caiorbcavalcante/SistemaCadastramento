@@ -53,7 +53,7 @@ export const Barbers: React.FC = () => {
             
                     <div className="barber-avatar">
                 {/* Caminho direto do public */}
-                <img src="/image.png" alt="Barbeiro" className="barber-img" />
+                <img src="/image.jpg" alt="Barbeiro" className="barber-img" />
               </div>
 
               <div className="barber-info">

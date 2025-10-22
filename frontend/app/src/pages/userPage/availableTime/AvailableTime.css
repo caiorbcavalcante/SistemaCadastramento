@@ -120,3 +120,40 @@
     padding: 0.5rem 0.6rem;
   }
 }
+
+@media (max-width: 430px) {
+  .available-section {
+    padding: 20px 10px;
+    border-radius: 8px;
+  }
+
+  .available-title {
+    font-size: 1.25rem;
+    margin-bottom: 20px;
+  }
+
+  .barber-name {
+    font-size: 1.1rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+  }
+
+  .barber-slots-count {
+    font-size: 0.8rem;
+  }
+
+  .slots-container {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.3rem;
+  }
+
+  .slot-card {
+    flex: 1 1 60px;      /* cards ocupam espaço proporcional */
+    min-width: 55px;     /* evita ficar muito pequeno */
+    max-width: 70px;     /* limita largura */
+    padding: 0.6rem 0.7rem;
+    font-size: 0.95rem;  /* aumenta levemente para melhor visualização */
+    text-align: center;
+  }}

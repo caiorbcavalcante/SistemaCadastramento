@@ -179,3 +179,25 @@ div {
     transform: translateY(0);
   }
 }
+
+@media (max-width: 420px) {
+  div {
+    padding: 3rem 1rem;      /* reduz padding lateral para caber na tela */
+    text-align: center;      /* garante centralização */
+  }
+
+  .title {
+    font-size: 2rem;         /* diminui o título para mobile */
+    display: block;          /* ocupa toda largura */
+    margin: 0 auto 1rem auto; /* centraliza e dá margem inferior */
+  }
+
+  .subtitle {
+    font-size: 1rem;         /* texto menor para caber */
+    max-width: 90%;          /* limita largura para não estourar a tela */
+    margin: 0 auto 2rem auto; /* centraliza e espaça do conteúdo abaixo */
+    text-align: center;      /* garante que o texto fique centralizado */
+    line-height: 1.5;        /* ajusta espaçamento de linhas para mobile */
+  }
+}
+

@@ -129,3 +129,27 @@ body {
     font-size: 2rem;
   }
 }
+
+@media (max-width: 430px) {
+  /* Inputs e botão ocupam toda a largura e têm padding uniforme */
+  .login-form input,
+  .login-form button {
+    width: 100%;              /* ocupa toda a largura do container */
+    padding: 0.75rem 1rem;    /* menor padding para caber na tela pequena */
+    font-size: 0.95rem;       /* ajusta o texto para mobile */
+    border-radius: 10px;      /* borda igual para todos */
+    box-sizing: border-box;   /* padding não aumenta largura total */
+  }
+
+  /* Espaçamento uniforme entre elementos do form */
+  .login-form {
+    gap: 0.9rem;              /* controla espaçamento entre inputs e botão */
+  }
+
+  /* Ajuste do container para caber na tela */
+  .login-content {
+    max-width: 95%;            /* ocupa quase toda a tela */
+    padding: 2rem 1.2rem;      /* padding reduzido para mobile */
+  }
+}
+

@@ -77,4 +77,11 @@ header h1 {
 
 }
 
+@media (max-width: 430px) {
+  .edit-profile-btn {
+    padding: 4px 12px;   /* reduz o tamanho interno do botão */
+    margin-top: 5px;     /* diminui o espaço acima dele */
+  }
+}
+
 
