@@ -69,7 +69,6 @@ header h1 {
 
 @media (max-width: 600px) {
   header {
-   
     width: 92%; /* header ocupa 95% da tela */
   
   }
@@ -82,6 +81,36 @@ header h1 {
     padding: 4px 12px;   /* reduz o tamanho interno do botão */
     margin-top: 5px;     /* diminui o espaço acima dele */
   }
+   
 }
+
+
+@media (max-width: 395px) {
+  header {
+    width: 90%;             /* reduz ligeiramente a largura do header */
+    padding: 10px 15px;     /* deixa mais compacto */
+  }
+
+  .header-buttons {
+    width: 80%;            /* garante que os botões ocupem toda a linha */
+    align-items: stretch;   /* força os botões a crescerem na largura */
+  }
+
+  .edit-profile-btn {
+    font-size: 1rem;        /* aumenta o texto */
+    padding: 12px 0;        /* aumenta a área de toque */
+    width: 100%;            /* ocupa toda a largura disponível */
+  }
+
+  header h1 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+  }
+
+ 
+}
+
+
 
 

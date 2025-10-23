@@ -12,7 +12,7 @@ export const Header: React.FC = () => {
 
   return (
     <header>
-      <h1>Mrs. Costa</h1>
+      <h1>Sistema Barbearia</h1>
       <div className="header-buttons">
         <button className="edit-profile-btn" onClick={() => navigate("/userProfile")}>
           Editar Perfil
