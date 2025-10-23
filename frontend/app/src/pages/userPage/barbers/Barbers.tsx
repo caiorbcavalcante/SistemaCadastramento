@@ -48,12 +48,12 @@ export const Barbers: React.FC = () => {
 
       <ul className="barbers-list">
         {barbers.length > 0 ? (
-          barbers.map((b) => (
+          barbers.map((b,index) => (
             <li key={b.id_barber} className="barber-item">
             
                     <div className="barber-avatar">
                 {/* Caminho direto do public */}
-                <img src="/image.jpg" alt="Barbeiro" className="barber-img" />
+                <img  src={index === 1 ? "/image2.jpg" : "/image.jpg"} alt={b.name} className="barber-img" />
               </div>
 
               <div className="barber-info">
