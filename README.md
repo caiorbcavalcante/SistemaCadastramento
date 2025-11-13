@@ -7,27 +7,23 @@ O sistema foi construído com **React**, **Node.js**, **TypeScript** e **Postgre
 
 ## 🌐 Deploy
 
-🟢 Acesse a aplicação online: [**Barber App no Render**](https://SEU-LINK-AQUI.onrender.com)
+🟢 Acesse a aplicação online: [**Barber App no Render**](https://sistema-cadastramento-app-wzq1.onrender.com)
 
 ---
 
 ## 🖼️ Prévia do Projeto
 
-> Aqui você pode adicionar capturas de tela das principais páginas do sistema (Home, Login, Usuários, Barbeiros etc.).
+> Abaixo estão capturas de tela das principais páginas do sistema (Home, Login, Usuários, Barbeiros etc.).
 
 <div align="center">
 
 | Tela Inicial | Página de Login |
 |---------------|----------------|
-| ![Home](<img width="1872" height="934" alt="image" src="https://github.com/user-attachments/assets/52ee184e-3473-4cf7-80dd-d31ceb3d4f0d" />
-) | ![Login](<img width="1882" height="948" alt="image" src="https://github.com/user-attachments/assets/b363ef04-9a48-4dcf-9155-d5f6437d5a9e" />
-) |
+| <img src="https://github.com/user-attachments/assets/52ee184e-3473-4cf7-80dd-d31ceb3d4f0d" width="600" /> | <img src="https://github.com/user-attachments/assets/b363ef04-9a48-4dcf-9155-d5f6437d5a9e" width="600" /> |
 
 | Lista de Barbeiros | Agendamento |
 |--------------------|--------------|
-| ![Barbers](<img width="1879" height="943" alt="image" src="https://github.com/user-attachments/assets/8a278897-c653-422a-993d-9da3b35ca8ed" />
-) | ![Agendamento](<img width="1871" height="943" alt="image" src="https://github.com/user-attachments/assets/063b9983-a8c5-4d6b-acab-685fb00f6f4b" />
-) |
+| <img src="https://github.com/user-attachments/assets/8a278897-c653-422a-993d-9da3b35ca8ed" width="600" /> | <img src="https://github.com/user-attachments/assets/063b9983-a8c5-4d6b-acab-685fb00f6f4b" width="600" /> |
 
 </div>
 
@@ -100,3 +96,7 @@ npm run dev
 # Em outro terminal, inicie o frontend
 cd client
 npm start
+```
+📄 Licença
+
+Este projeto está sob a licença MIT — sinta-se livre para utilizar e modificar conforme necessário.
